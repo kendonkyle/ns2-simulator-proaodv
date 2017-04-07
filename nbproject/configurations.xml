@@ -1,0 +1,3080 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="adc">
+        <in>acto-adc.cc</in>
+        <in>actp-adc.cc</in>
+        <in>adaptive-receiver.cc</in>
+        <in>adc.cc</in>
+        <in>consrcvr.cc</in>
+        <in>estimator.cc</in>
+        <in>expavg-est.cc</in>
+        <in>hb-adc.cc</in>
+        <in>ms-adc.cc</in>
+        <in>null-estimator.cc</in>
+        <in>param-adc.cc</in>
+        <in>pointsample-est.cc</in>
+        <in>resv.cc</in>
+        <in>sa.cc</in>
+        <in>salink.cc</in>
+        <in>simple-intserv-sched.cc</in>
+        <in>tbf.cc</in>
+        <in>timewindow-est.cc</in>
+        <in>ump.cc</in>
+      </df>
+      <df name="aodv">
+        <in>aodv.cc</in>
+        <in>aodv_logs.cc</in>
+        <in>aodv_rqueue.cc</in>
+        <in>aodv_rtable.cc</in>
+      </df>
+      <df name="aomdv">
+        <in>aomdv.cc</in>
+        <in>aomdv_logs.cc</in>
+        <in>aomdv_rqueue.cc</in>
+        <in>aomdv_rtable.cc</in>
+      </df>
+      <df name="apps">
+        <in>app.cc</in>
+        <in>pbc.cc</in>
+        <in>ping.cc</in>
+        <in>rtp.cc</in>
+        <in>sctp_app1.cc</in>
+        <in>telnet.cc</in>
+        <in>udp.cc</in>
+        <in>vatrcvr.cc</in>
+        <in>worm.cc</in>
+      </df>
+      <df name="asim">
+        <in>asim.cc</in>
+        <in>asimstd.cc</in>
+      </df>
+      <df name="baytcp">
+        <in>ftpc.cc</in>
+        <in>ftps.cc</in>
+        <in>tcp-full-bay.cc</in>
+      </df>
+      <df name="blackholeaodv">
+        <in>blackholeaodv.cc</in>
+        <in>blackholeaodv_logs.cc</in>
+        <in>blackholeaodv_rqueue.cc</in>
+        <in>blackholeaodv_rtable.cc</in>
+      </df>
+      <df name="classifier">
+        <in>classifier-addr.cc</in>
+        <in>classifier-bst.cc</in>
+        <in>classifier-hash.cc</in>
+        <in>classifier-hier.cc</in>
+        <in>classifier-mac.cc</in>
+        <in>classifier-mcast.cc</in>
+        <in>classifier-mpath.cc</in>
+        <in>classifier-port.cc</in>
+        <in>classifier-qs.cc</in>
+        <in>classifier-virtual.cc</in>
+        <in>classifier.cc</in>
+        <in>filter.cc</in>
+      </df>
+      <df name="common">
+        <in>Decapsulator.cc</in>
+        <in>Encapsulator.cc</in>
+        <in>agent.cc</in>
+        <in>bi-connector.cc</in>
+        <in>connector.cc</in>
+        <in>encap.cc</in>
+        <in>fsm.cc</in>
+        <in>ip.cc</in>
+        <in>ivs.cc</in>
+        <in>main-modular.cc</in>
+        <in>main-monolithic.cc</in>
+        <in>message.cc</in>
+        <in>messpass.cc</in>
+        <in>misc.cc</in>
+        <in>mobilenode.cc</in>
+        <in>net-interface.cc</in>
+        <in>node.cc</in>
+        <in>ns-process.cc</in>
+        <in>object.cc</in>
+        <in>packet.cc</in>
+        <in>parentnode.cc</in>
+        <in>pkt-counter.cc</in>
+        <in>ptypes2tcl.cc</in>
+        <in>scheduler-map.cc</in>
+        <in>scheduler.cc</in>
+        <in>session-rtp.cc</in>
+        <in>sessionhelper.cc</in>
+        <in>simulator.cc</in>
+        <in>splay-scheduler.cc</in>
+        <in>tclAppInit.cc</in>
+        <in>timer-handler.cc</in>
+        <in>tkAppInit.cc</in>
+        <in>tp.cc</in>
+        <in>tpm.cc</in>
+        <in>ttl.cc</in>
+        <in>win32.c</in>
+      </df>
+      <df name="dccp">
+        <in>dccp.cc</in>
+        <in>dccp_ackv.cc</in>
+        <in>dccp_opt.cc</in>
+        <in>dccp_packets.cc</in>
+        <in>dccp_sb.cc</in>
+        <in>dccp_tcplike.cc</in>
+        <in>dccp_tfrc.cc</in>
+      </df>
+      <df name="delaybox">
+        <in>delaybox.cc</in>
+      </df>
+      <df name="diffserv">
+        <in>dewp.cc</in>
+        <in>dsCore.cc</in>
+        <in>dsEdge.cc</in>
+        <in>dsPolicy.cc</in>
+        <in>dsred.cc</in>
+        <in>dsredq.cc</in>
+        <in>ew.cc</in>
+      </df>
+      <df name="diffusion">
+        <in>diff_prob.cc</in>
+        <in>diff_rate.cc</in>
+        <in>diff_sink.cc</in>
+        <in>diffusion.cc</in>
+        <in>flooding.cc</in>
+        <in>hash_table.cc</in>
+        <in>iflist.cc</in>
+        <in>omni_mcast.cc</in>
+        <in>routing_table.cc</in>
+      </df>
+      <df name="diffusion3">
+        <df name="apps">
+          <df name="gear_examples">
+            <in>gear_common.cc</in>
+            <in>gear_receiver.cc</in>
+            <in>gear_sender.cc</in>
+          </df>
+          <df name="ping">
+            <in>1pp_ping_receiver.cc</in>
+            <in>1pp_ping_sender.cc</in>
+            <in>2pp_ping_receiver.cc</in>
+            <in>2pp_ping_sender.cc</in>
+            <in>ping_common.cc</in>
+            <in>push_receiver.cc</in>
+            <in>push_sender.cc</in>
+          </df>
+          <df name="rmst_examples">
+            <in>rmst_sink.cc</in>
+            <in>rmst_source.cc</in>
+          </df>
+        </df>
+        <df name="filter_core">
+          <in>filter_core.cc</in>
+          <in>iolog.cc</in>
+          <in>iostats.cc</in>
+        </df>
+        <df name="filters">
+          <df name="diffusion">
+            <in>one_phase_pull.cc</in>
+            <in>two_phase_pull.cc</in>
+          </df>
+          <df name="gear">
+            <in>gear.cc</in>
+            <in>gear_attr.cc</in>
+            <in>gear_tools.cc</in>
+          </df>
+          <df name="misc">
+            <in>log.cc</in>
+            <in>srcrt.cc</in>
+            <in>tag.cc</in>
+          </df>
+          <df name="rmst">
+            <in>rmst.cc</in>
+            <in>rmst_filter.cc</in>
+          </df>
+        </df>
+        <df name="lib">
+          <df name="main">
+            <in>attrs.cc</in>
+            <in>events.cc</in>
+            <in>iodev.cc</in>
+            <in>iohook.cc</in>
+            <in>message.cc</in>
+            <in>timers.cc</in>
+            <in>tools.cc</in>
+          </df>
+          <df name="nr">
+            <in>nr.cc</in>
+          </df>
+          <in>diffapp.cc</in>
+          <in>dr.cc</in>
+        </df>
+        <df name="ns">
+          <in>diffagent.cc</in>
+          <in>diffrtg.cc</in>
+          <in>difftimer.cc</in>
+        </df>
+      </df>
+      <df name="dsdv">
+        <in>dsdv.cc</in>
+        <in>rtable.cc</in>
+      </df>
+      <df name="dsr">
+        <in>add_sr.cc</in>
+        <in>dsr_proto.cc</in>
+        <in>dsragent.cc</in>
+        <in>flowstruct.cc</in>
+        <in>hdr_sr.cc</in>
+        <in>linkcache.cc</in>
+        <in>mobicache.cc</in>
+        <in>path.cc</in>
+        <in>requesttable.cc</in>
+        <in>routecache.cc</in>
+        <in>simplecache.cc</in>
+        <in>sr_forwarder.cc</in>
+      </df>
+      <df name="empweb">
+        <in>empftp.cc</in>
+        <in>empweb.cc</in>
+      </df>
+      <df name="emulate">
+        <in>arp.cc</in>
+        <in>ether.cc</in>
+        <in>icmp.cc</in>
+        <in>inet.c</in>
+        <in>internet.cc</in>
+        <in>iptap.cc</in>
+        <in>nat.cc</in>
+        <in>net-ip.cc</in>
+        <in>net-pcap.cc</in>
+        <in>net.cc</in>
+        <in>ping_responder.cc</in>
+        <in>tap.cc</in>
+        <in>tcptap.cc</in>
+      </df>
+      <df name="gaf">
+        <in>gaf.cc</in>
+      </df>
+      <df name="gen">
+        <in>ns_tcl.cc</in>
+        <in>ptypes.cc</in>
+        <in>version.c</in>
+      </df>
+      <df name="idsaodv">
+        <in>idsaodv.cc</in>
+        <in>idsaodv_logs.cc</in>
+        <in>idsaodv_rqueue.cc</in>
+        <in>idsaodv_rtable.cc</in>
+        <in>idsaodv_semih.cc</in>
+      </df>
+      <df name="imep">
+        <in>dest_queue.cc</in>
+        <in>imep.cc</in>
+        <in>imep_api.cc</in>
+        <in>imep_io.cc</in>
+        <in>imep_rt.cc</in>
+        <in>imep_timers.cc</in>
+        <in>imep_util.cc</in>
+        <in>rxmit_queue.cc</in>
+      </df>
+      <df name="indep-utils">
+        <df name="cmu-scen-gen">
+          <df name="setdest">
+            <in>calcdest.cc</in>
+            <in>setdest.cc</in>
+            <in>setdest2.cc</in>
+          </df>
+        </df>
+        <df name="dosdbell">
+          <in>dosdbell.c</in>
+          <in>dosdbellasim.c</in>
+          <in>dostraffic.c</in>
+          <in>flowlist.c</in>
+          <in>models.c</in>
+        </df>
+        <df name="dosreduce">
+          <in>dosreduce.c</in>
+        </df>
+        <df name="model-gen">
+          <in>http_active.c</in>
+          <in>http_connect.c</in>
+        </df>
+        <df name="propagation">
+          <in>threshold.cc</in>
+        </df>
+        <df name="webtrace-conv">
+          <df name="dec">
+            <in>formsquid.cc</in>
+            <in>formtxt.cc</in>
+            <in>my-endian.cc</in>
+            <in>proxytrace.cc</in>
+            <in>proxytrace2any.cc</in>
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="epa">
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="nlanr">
+            <in>logparse.cc</in>
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="ucb">
+            <in>logparse.cc</in>
+            <in>tr-stat.cc</in>
+            <in>utils.cc</in>
+          </df>
+        </df>
+      </df>
+      <df name="lib">
+        <in>dmalloc_support.cc</in>
+        <in>int.RVec.cc</in>
+        <in>int.Vec.cc</in>
+      </df>
+      <df name="link">
+        <in>delay.cc</in>
+        <in>dynalink.cc</in>
+        <in>hackloss.cc</in>
+      </df>
+      <df name="linkstate">
+        <in>hdr-ls.cc</in>
+        <in>ls.cc</in>
+        <in>rtProtoLS.cc</in>
+      </df>
+      <df name="mac">
+        <in>arp.cc</in>
+        <in>channel.cc</in>
+        <in>lanRouter.cc</in>
+        <in>ll.cc</in>
+        <in>mac-802_11.cc</in>
+        <in>mac-802_11Ext.cc</in>
+        <in>mac-802_3.cc</in>
+        <in>mac-csma.cc</in>
+        <in>mac-multihop.cc</in>
+        <in>mac-simple.cc</in>
+        <in>mac-tdma.cc</in>
+        <in>mac-timers.cc</in>
+        <in>mac.cc</in>
+        <in>phy.cc</in>
+        <in>smac.cc</in>
+        <in>varp.cc</in>
+        <in>wired-phy.cc</in>
+        <in>wireless-phy.cc</in>
+        <in>wireless-phyExt.cc</in>
+      </df>
+      <df name="mcast">
+        <in>classifier-lms.cc</in>
+        <in>ctrMcast.cc</in>
+        <in>lms-agent.cc</in>
+        <in>lms-receiver.cc</in>
+        <in>lms-sender.cc</in>
+        <in>mcast_ctrl.cc</in>
+        <in>rcvbuf.cc</in>
+        <in>replicator.cc</in>
+        <in>rlm.cc</in>
+        <in>srm-ssm.cc</in>
+        <in>srm-topo.cc</in>
+        <in>srm.cc</in>
+      </df>
+      <df name="mdart">
+        <in>mdart.cc</in>
+        <in>mdart_adp.cc</in>
+        <in>mdart_dht.cc</in>
+        <in>mdart_ndp.cc</in>
+        <in>mdart_neighbor.cc</in>
+        <in>mdart_queue.cc</in>
+        <in>mdart_table.cc</in>
+      </df>
+      <df name="mobile">
+        <in>antenna.cc</in>
+        <in>dem.cc</in>
+        <in>dumb-agent.cc</in>
+        <in>energy-model.cc</in>
+        <in>god.cc</in>
+        <in>gridkeeper.cc</in>
+        <in>mip-reg.cc</in>
+        <in>mip.cc</in>
+        <in>modulation.cc</in>
+        <in>nakagami.cc</in>
+        <in>omni-antenna.cc</in>
+        <in>propagation.cc</in>
+        <in>shadowing-vis.cc</in>
+        <in>shadowing.cc</in>
+        <in>topography.cc</in>
+        <in>tworayground.cc</in>
+      </df>
+      <df name="mpls">
+        <in>classifier-addr-mpls.cc</in>
+        <in>ldp.cc</in>
+        <in>mpls-module.cc</in>
+      </df>
+      <df name="nix">
+        <in>classifier-nix.cc</in>
+        <in>hdr_nv.cc</in>
+        <in>nixnode.cc</in>
+        <in>nixroute.cc</in>
+        <in>nixvec.cc</in>
+      </df>
+      <df name="packmime">
+        <in>packmime_HTTP.cc</in>
+        <in>packmime_HTTP_rng.cc</in>
+        <in>packmime_OL.cc</in>
+        <in>packmime_OL_ranvar.cc</in>
+        <in>packmime_ranvar.cc</in>
+      </df>
+      <df name="pgm">
+        <in>classifier-pgm.cc</in>
+        <in>pgm-agent.cc</in>
+        <in>pgm-receiver.cc</in>
+        <in>pgm-sender.cc</in>
+      </df>
+      <df name="plm">
+        <in>cbr-traffic-PP.cc</in>
+        <in>loss-monitor-plm.cc</in>
+      </df>
+      <df name="proaodv">
+        <in>proaodv.cc</in>
+        <in>proaodv_logs.cc</in>
+        <in>proaodv_rqueue.cc</in>
+        <in>proaodv_rtable.cc</in>
+      </df>
+      <df name="puma">
+        <in>puma.cc</in>
+      </df>
+      <df name="pushback">
+        <in>agg-spec.cc</in>
+        <in>ident-tree.cc</in>
+        <in>logging-data-struct.cc</in>
+        <in>pushback-queue.cc</in>
+        <in>pushback.cc</in>
+        <in>rate-estimator.cc</in>
+        <in>rate-limit-strategy.cc</in>
+        <in>rate-limit.cc</in>
+      </df>
+      <df name="qs">
+        <in>hdr_qs.cc</in>
+        <in>qsagent.cc</in>
+      </df>
+      <df name="queue">
+        <in>cbq.cc</in>
+        <in>delayer.cc</in>
+        <in>delaymodel.cc</in>
+        <in>demarker.cc</in>
+        <in>drop-tail.cc</in>
+        <in>drr.cc</in>
+        <in>dsr-priqueue.cc</in>
+        <in>errmodel.cc</in>
+        <in>fec.cc</in>
+        <in>fq.cc</in>
+        <in>gk.cc</in>
+        <in>jobs.cc</in>
+        <in>marker.cc</in>
+        <in>pi.cc</in>
+        <in>priqueue.cc</in>
+        <in>queue.cc</in>
+        <in>red-pd.cc</in>
+        <in>red.cc</in>
+        <in>rem.cc</in>
+        <in>rio.cc</in>
+        <in>rtqueue.cc</in>
+        <in>semantic-packetqueue.cc</in>
+        <in>semantic-red.cc</in>
+        <in>semantic-rio.cc</in>
+        <in>sfq.cc</in>
+        <in>srr.cc</in>
+        <in>vq.cc</in>
+      </df>
+      <df name="rap">
+        <in>media-app.cc</in>
+        <in>rap.cc</in>
+        <in>raplist.cc</in>
+        <in>utilities.cc</in>
+      </df>
+      <df name="realaudio">
+        <in>realaudio.cc</in>
+      </df>
+      <df name="routealgo">
+        <in>bfs.cc</in>
+        <in>dijkstra.cc</in>
+        <in>rbitmap.cc</in>
+        <in>rlookup.cc</in>
+        <in>rnode.cc</in>
+        <in>routealgo.cc</in>
+        <in>tnode.cc</in>
+      </df>
+      <df name="routing">
+        <in>addr-params.cc</in>
+        <in>address.cc</in>
+        <in>alloc-address.cc</in>
+        <in>route.cc</in>
+        <in>rtProtoDV.cc</in>
+        <in>rtmodule.cc</in>
+        <in>rttable.cc</in>
+      </df>
+      <df name="satellite">
+        <in>sat-hdlc.cc</in>
+        <in>satgeometry.cc</in>
+        <in>sathandoff.cc</in>
+        <in>satlink.cc</in>
+        <in>satnode.cc</in>
+        <in>satposition.cc</in>
+        <in>satroute.cc</in>
+        <in>sattrace.cc</in>
+      </df>
+      <df name="sctp">
+        <in>sctp-cmt.cc</in>
+        <in>sctp-hbAfterRto.cc</in>
+        <in>sctp-mfrHbAfterRto.cc</in>
+        <in>sctp-mfrTimestamp.cc</in>
+        <in>sctp-multipleFastRtx.cc</in>
+        <in>sctp-newreno.cc</in>
+        <in>sctp-timestamp.cc</in>
+        <in>sctp.cc</in>
+        <in>sctpDebug.cc</in>
+      </df>
+      <df name="sensor-nets">
+        <in>agent-list.cc</in>
+        <in>flood-agent.cc</in>
+        <in>landmark.cc</in>
+        <in>sensor-query.cc</in>
+        <in>tags.cc</in>
+      </df>
+      <df name="src_rtg">
+        <in>classifier-sr.cc</in>
+        <in>hdr_src.cc</in>
+        <in>sragent.cc</in>
+      </df>
+      <df name="tcl">
+        <df name="ex">
+          <in>picoeff.m</in>
+        </df>
+      </df>
+      <df name="tcp">
+        <df name="linux">
+          <df name="src">
+            <in>tcp_bic.c</in>
+            <in>tcp_compound.c</in>
+            <in>tcp_cong.c</in>
+            <in>tcp_cubic.c</in>
+            <in>tcp_highspeed.c</in>
+            <in>tcp_htcp.c</in>
+            <in>tcp_hybla.c</in>
+            <in>tcp_illinois.c</in>
+            <in>tcp_lp.c</in>
+            <in>tcp_scalable.c</in>
+            <in>tcp_vegas.c</in>
+            <in>tcp_veno.c</in>
+            <in>tcp_westwood.c</in>
+            <in>tcp_yeah.c</in>
+          </df>
+          <in>ns-linux-c.c</in>
+          <in>ns-linux-param.c</in>
+          <in>ns-linux-util.cc</in>
+          <in>tcp_naivereno.c</in>
+        </df>
+        <in>ack-recons.cc</in>
+        <in>chost.cc</in>
+        <in>nilist.cc</in>
+        <in>rq.cc</in>
+        <in>rtcp.cc</in>
+        <in>saack.cc</in>
+        <in>scoreboard-rh.cc</in>
+        <in>scoreboard-rq.cc</in>
+        <in>scoreboard.cc</in>
+        <in>scoreboard1.cc</in>
+        <in>snoop.cc</in>
+        <in>tcp-abs.cc</in>
+        <in>tcp-asym-fs.cc</in>
+        <in>tcp-asym-sink.cc</in>
+        <in>tcp-asym.cc</in>
+        <in>tcp-fack.cc</in>
+        <in>tcp-fs.cc</in>
+        <in>tcp-full.cc</in>
+        <in>tcp-int.cc</in>
+        <in>tcp-linux.cc</in>
+        <in>tcp-newreno.cc</in>
+        <in>tcp-rbp.cc</in>
+        <in>tcp-reno.cc</in>
+        <in>tcp-rfc793edu.cc</in>
+        <in>tcp-sack-rh.cc</in>
+        <in>tcp-sack1.cc</in>
+        <in>tcp-session.cc</in>
+        <in>tcp-sink.cc</in>
+        <in>tcp-vegas.cc</in>
+        <in>tcp.cc</in>
+        <in>tcplib-telnet.cc</in>
+        <in>tfrc-sink.cc</in>
+        <in>tfrc.cc</in>
+      </df>
+      <df name="tmix">
+        <in>tmix.cc</in>
+        <in>tmixAgent.cc</in>
+        <in>tmix_delaybox.cc</in>
+      </df>
+      <df name="tools">
+        <in>cbr_traffic.cc</in>
+        <in>expoo.cc</in>
+        <in>flowmon.cc</in>
+        <in>integrator.cc</in>
+        <in>loss-monitor.cc</in>
+        <in>measuremod.cc</in>
+        <in>pareto.cc</in>
+        <in>queue-monitor.cc</in>
+        <in>random.cc</in>
+        <in>ranvar.cc</in>
+        <in>rng.cc</in>
+        <in>trafgen.cc</in>
+      </df>
+      <df name="tora">
+        <in>tora.cc</in>
+        <in>tora_api.cc</in>
+        <in>tora_dest.cc</in>
+        <in>tora_io.cc</in>
+        <in>tora_logs.cc</in>
+        <in>tora_neighbor.cc</in>
+      </df>
+      <df name="trace">
+        <in>basetrace.cc</in>
+        <in>cmu-trace.cc</in>
+        <in>trace-ip.cc</in>
+        <in>trace.cc</in>
+        <in>traffictrace.cc</in>
+      </df>
+      <df name="webcache">
+        <in>http-aux.cc</in>
+        <in>http.cc</in>
+        <in>inval-agent.cc</in>
+        <in>logweb.cc</in>
+        <in>mcache.cc</in>
+        <in>pagepool.cc</in>
+        <in>tcp-simple.cc</in>
+        <in>tcpapp.cc</in>
+        <in>webserver.cc</in>
+        <in>webtraf.cc</in>
+      </df>
+      <df name="wpan">
+        <in>p802_15_4csmaca.cc</in>
+        <in>p802_15_4fail.cc</in>
+        <in>p802_15_4hlist.cc</in>
+        <in>p802_15_4mac.cc</in>
+        <in>p802_15_4nam.cc</in>
+        <in>p802_15_4phy.cc</in>
+        <in>p802_15_4sscs.cc</in>
+        <in>p802_15_4timer.cc</in>
+        <in>p802_15_4trace.cc</in>
+        <in>p802_15_4transac.cc</in>
+      </df>
+      <df name="xcp">
+        <in>xcp-end-sys.cc</in>
+        <in>xcp.cc</in>
+        <in>xcpq.cc</in>
+      </df>
+      <in>ns_tclsh.cc</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>configure</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-O2"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="adc/acto-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/actp-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/adaptive-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/consrcvr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/expavg-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/hb-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/ms-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/null-estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/param-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/pointsample-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/resv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/sa.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/salink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/simple-intserv-sched.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/tbf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/timewindow-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/ump.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/app.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/pbc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/ping.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/rtp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/sctp_app1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/telnet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/udp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/vatrcvr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/worm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="asim/asim.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="asim/asimstd.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/ftpc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/ftps.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/tcp-full-bay.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_logs.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_rqueue.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_rtable.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="classifier/classifier-addr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-bst.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-hash.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-hier.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mpath.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-port.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-qs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-virtual.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/filter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/Decapsulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/Encapsulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/bi-connector.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/connector.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/encap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/fsm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ivs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/main-modular.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/main-monolithic.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/message.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/messpass.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/misc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/mobilenode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/net-interface.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/node.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ns-process.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/object.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/packet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/parentnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/pkt-counter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ptypes2tcl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/scheduler-map.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/scheduler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/session-rtp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/sessionhelper.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/simulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/splay-scheduler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tclAppInit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/timer-handler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tkAppInit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tpm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ttl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/win32.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="dccp/dccp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_ackv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_opt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_packets.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_sb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_tcplike.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_tfrc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="delaybox/delaybox.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dewp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsCore.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsEdge.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsPolicy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsred.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsredq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/ew.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_prob.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_rate.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diffusion.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/flooding.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/hash_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/iflist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/omni_mcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/routing_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_common.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/1pp_ping_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/1pp_ping_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/2pp_ping_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/2pp_ping_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/ping_common.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/push_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/push_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/rmst_examples/rmst_sink.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/rmst_examples/rmst_source.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/filter_core.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/iolog.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/iostats.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/diffusion/one_phase_pull.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/diffusion/two_phase_pull.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear_attr.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear_tools.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/log.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/srcrt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/tag.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/rmst/rmst.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/rmst/rmst_filter.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/lib/diffapp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/dr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/attrs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/events.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/iodev.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/iohook.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/message.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/tools.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/nr/nr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/diffagent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/diffrtg.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/difftimer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsdv/dsdv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsdv/rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/add_sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/dsr_proto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/dsragent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/flowstruct.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/hdr_sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/linkcache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/mobicache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/path.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/requesttable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/routecache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/simplecache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/sr_forwarder.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="empweb/empftp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="empweb/empweb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/arp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/ether.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/icmp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/inet.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="emulate/internet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/iptap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/nat.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net-ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net-pcap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/ping_responder.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/tap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/tcptap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gaf/gaf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/ns_tcl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/ptypes.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/version.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="idsaodv/idsaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_semih.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/dest_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_api.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_io.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_rt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_util.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/rxmit_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/calcdest.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/setdest.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/setdest2.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/dosdbell/dosdbell.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/dosdbellasim.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/dostraffic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/flowlist.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/models.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosreduce/dosreduce.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/model-gen/http_active.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/model-gen/http_connect.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/propagation/threshold.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/formsquid.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/formtxt.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/my-endian.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/proxytrace.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/proxytrace2any.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/epa/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/nlanr/logparse.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/nlanr/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/logparse.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/utils.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="lib/dmalloc_support.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="lib/int.RVec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="lib/int.Vec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/delay.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/dynalink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/hackloss.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="linkstate/hdr-ls.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="linkstate/ls.cc" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>../tclcl-1.20</pElem>
+            <pElem>../otcl-1.14</pElem>
+            <pElem>../include</pElem>
+            <pElem>/usr/include/pcap</pElem>
+            <pElem>tcp</pElem>
+            <pElem>sctp</pElem>
+            <pElem>common</pElem>
+            <pElem>link</pElem>
+            <pElem>queue</pElem>
+            <pElem>adc</pElem>
+            <pElem>apps</pElem>
+            <pElem>mac</pElem>
+            <pElem>mobile</pElem>
+            <pElem>trace</pElem>
+            <pElem>routing</pElem>
+            <pElem>tools</pElem>
+            <pElem>classifier</pElem>
+            <pElem>mcast</pElem>
+            <pElem>diffusion3/lib/main</pElem>
+            <pElem>diffusion3/lib</pElem>
+            <pElem>diffusion3/lib/nr</pElem>
+            <pElem>diffusion3/ns</pElem>
+            <pElem>diffusion3/filter_core</pElem>
+            <pElem>asim</pElem>
+            <pElem>qs</pElem>
+            <pElem>diffserv</pElem>
+            <pElem>satellite</pElem>
+            <pElem>wpan</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPP_NAMESPACE=std</Elem>
+            <Elem>HAVE_CONFIG_H</Elem>
+            <Elem>HAVE_LIBOTCL1_14</Elem>
+            <Elem>HAVE_LIBTCL8_5</Elem>
+            <Elem>HAVE_LIBTCLCL</Elem>
+            <Elem>HAVE_LIBTK8_5</Elem>
+            <Elem>HAVE_OTCL_H</Elem>
+            <Elem>HAVE_TCLCL_H</Elem>
+            <Elem>HAVE_TCLINT_H</Elem>
+            <Elem>HAVE_TCL_H</Elem>
+            <Elem>HAVE_TK_H</Elem>
+            <Elem>LINUX_TCP_HEADER</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>NO_TK</Elem>
+            <Elem>NS_DIFFUSION</Elem>
+            <Elem>SMAC_NO_SYNC</Elem>
+            <Elem>TCLCL_CLASSINSTVAR</Elem>
+            <Elem>TCP_DELAY_BIND_ALL</Elem>
+            <Elem>USE_SHM</Elem>
+            <Elem>USE_SINGLE_ADDRESS_SPACE</Elem>
+            <Elem>rng_test</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="linkstate/rtProtoLS.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/arp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/channel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/lanRouter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/ll.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_11.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_11Ext.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_3.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-csma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-multihop.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-simple.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-tdma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/smac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/varp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wired-phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wireless-phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wireless-phyExt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/classifier-lms.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/ctrMcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-sender.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/mcast_ctrl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/rcvbuf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/replicator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/rlm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm-ssm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm-topo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_adp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_dht.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_ndp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_neighbor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/antenna.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/dem.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/dumb-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/energy-model.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/god.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/gridkeeper.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/mip-reg.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/mip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/modulation.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/nakagami.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/omni-antenna.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/propagation.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/shadowing-vis.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/shadowing.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/topography.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/tworayground.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/classifier-addr-mpls.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/ldp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/mpls-module.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/classifier-nix.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/hdr_nv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixroute.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixvec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="ns_tclsh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_HTTP.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_HTTP_rng.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_OL.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_OL_ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/classifier-pgm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-sender.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="plm/cbr-traffic-PP.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="plm/loss-monitor-plm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="puma/puma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/agg-spec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/ident-tree.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/logging-data-struct.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/pushback-queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/pushback.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-limit-strategy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-limit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="qs/hdr_qs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="qs/qsagent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/cbq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/delayer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/delaymodel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/demarker.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/drop-tail.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/drr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/dsr-priqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/errmodel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/fec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/fq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/gk.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/jobs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/marker.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/pi.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/priqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/red-pd.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/red.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rem.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rtqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-packetqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-red.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-rio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/sfq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/srr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/vq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/media-app.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/rap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/raplist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/utilities.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="realaudio/realaudio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/bfs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/dijkstra.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rbitmap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rlookup.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/routealgo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/tnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/addr-params.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/address.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/alloc-address.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/route.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rtProtoDV.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rtmodule.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rttable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sat-hdlc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satgeometry.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sathandoff.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satlink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satposition.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satroute.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sattrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-cmt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-hbAfterRto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-mfrHbAfterRto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-mfrTimestamp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-multipleFastRtx.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-newreno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-timestamp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctpDebug.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/agent-list.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/flood-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/landmark.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/sensor-query.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/tags.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/classifier-sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/hdr_src.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/sragent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcl/ex/picoeff.m" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/ack-recons.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/chost.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/linux/ns-linux-c.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/ns-linux-param.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/ns-linux-util.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/linux/src/tcp_bic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_compound.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_cong.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_cubic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_highspeed.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_htcp.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_hybla.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_illinois.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_lp.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_scalable.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_vegas.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_veno.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_westwood.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_yeah.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/tcp_naivereno.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/nilist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/rq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/rtcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/saack.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard-rh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard-rq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/snoop.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-abs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym-fs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-fack.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-fs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-full.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-int.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-linux.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-newreno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-rbp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-reno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-rfc793edu.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sack-rh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sack1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-session.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-vegas.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcplib-telnet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tfrc-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tfrc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmix.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmixAgent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmix_delaybox.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/cbr_traffic.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/expoo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/flowmon.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/integrator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/loss-monitor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/measuremod.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/pareto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/queue-monitor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/random.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/rng.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/trafgen.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_api.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_dest.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_io.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_neighbor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/basetrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/cmu-trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/trace-ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/traffictrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/http-aux.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/http.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/inval-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/logweb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/mcache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/pagepool.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/tcp-simple.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/tcpapp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/webserver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/webtraf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4csmaca.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4fail.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4hlist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4nam.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4sscs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4timer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4transac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcp-end-sys.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcpq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+    <conf name="NS2" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-O2"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <incDir>
+              <pElem>trace</pElem>
+            </incDir>
+            <incFile>
+              <pElem>trace/cmu-trace.h</pElem>
+            </incFile>
+          </cTool>
+          <ccTool>
+            <incDir>
+              <pElem>trace</pElem>
+            </incDir>
+          </ccTool>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="adc/acto-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/actp-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/adaptive-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/consrcvr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/expavg-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/hb-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/ms-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/null-estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/param-adc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/pointsample-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/resv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/sa.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/salink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/simple-intserv-sched.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/tbf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/timewindow-est.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="adc/ump.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aodv/aodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="aomdv/aomdv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/app.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/pbc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/ping.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/rtp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/sctp_app1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/telnet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/udp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/vatrcvr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="apps/worm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="asim/asim.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="asim/asimstd.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/ftpc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/ftps.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="baytcp/tcp-full-bay.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_logs.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_rqueue.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="blackholeaodv/blackholeaodv_rtable.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="classifier/classifier-addr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-bst.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-hash.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-hier.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-mpath.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-port.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-qs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier-virtual.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/classifier.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="classifier/filter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/Decapsulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/Encapsulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/bi-connector.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/connector.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/encap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/fsm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ivs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/main-modular.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/main-monolithic.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/message.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/messpass.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/misc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/mobilenode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/net-interface.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/node.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ns-process.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/object.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/packet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/parentnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/pkt-counter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ptypes2tcl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/scheduler-map.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/scheduler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/session-rtp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/sessionhelper.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/simulator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/splay-scheduler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tclAppInit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/timer-handler.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tkAppInit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/tpm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/ttl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="common/win32.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="dccp/dccp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_ackv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_opt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_packets.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_sb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_tcplike.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dccp/dccp_tfrc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="delaybox/delaybox.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dewp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsCore.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsEdge.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsPolicy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsred.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/dsredq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffserv/ew.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_prob.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_rate.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diff_sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/diffusion.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/flooding.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/hash_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/iflist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/omni_mcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion/routing_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_common.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/gear_examples/gear_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/1pp_ping_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/1pp_ping_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/2pp_ping_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/2pp_ping_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/ping_common.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/push_receiver.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/ping/push_sender.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/rmst_examples/rmst_sink.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/apps/rmst_examples/rmst_source.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/filter_core.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/iolog.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filter_core/iostats.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/diffusion/one_phase_pull.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/diffusion/two_phase_pull.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear_attr.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/gear/gear_tools.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/log.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/srcrt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/misc/tag.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/rmst/rmst.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/filters/rmst/rmst_filter.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="diffusion3/lib/diffapp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/dr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/attrs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/events.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/iodev.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/iohook.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/message.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/main/tools.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/lib/nr/nr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/diffagent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/diffrtg.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="diffusion3/ns/difftimer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsdv/dsdv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsdv/rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/add_sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/dsr_proto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/dsragent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/flowstruct.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/hdr_sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/linkcache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/mobicache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/path.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/requesttable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/routecache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/simplecache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="dsr/sr_forwarder.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="empweb/empftp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="empweb/empweb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/arp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/ether.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/icmp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/inet.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="emulate/internet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/iptap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/nat.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net-ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net-pcap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/net.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/ping_responder.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/tap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="emulate/tcptap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gaf/gaf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/ns_tcl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/ptypes.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="gen/version.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="idsaodv/idsaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="idsaodv/idsaodv_semih.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/dest_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_api.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_io.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_rt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/imep_util.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="imep/rxmit_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/calcdest.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/setdest.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/cmu-scen-gen/setdest/setdest2.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/dosdbell/dosdbell.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/dosdbellasim.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/dostraffic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/flowlist.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosdbell/models.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/dosreduce/dosreduce.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="indep-utils/model-gen/http_active.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/model-gen/http_connect.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+      </item>
+      <item path="indep-utils/propagation/threshold.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/formsquid.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/formtxt.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/my-endian.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/proxytrace.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/proxytrace2any.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/dec/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/epa/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/nlanr/logparse.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/nlanr/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/logparse.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/tr-stat.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="indep-utils/webtrace-conv/ucb/utils.cc"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="lib/dmalloc_support.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="lib/int.RVec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="lib/int.Vec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/delay.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/dynalink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="link/hackloss.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="linkstate/hdr-ls.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="linkstate/ls.cc" ex="false" tool="1" flavor2="9">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>../tclcl-1.20</pElem>
+            <pElem>../otcl-1.14</pElem>
+            <pElem>../include</pElem>
+            <pElem>/usr/include/pcap</pElem>
+            <pElem>tcp</pElem>
+            <pElem>sctp</pElem>
+            <pElem>common</pElem>
+            <pElem>link</pElem>
+            <pElem>queue</pElem>
+            <pElem>adc</pElem>
+            <pElem>apps</pElem>
+            <pElem>mac</pElem>
+            <pElem>mobile</pElem>
+            <pElem>trace</pElem>
+            <pElem>routing</pElem>
+            <pElem>tools</pElem>
+            <pElem>classifier</pElem>
+            <pElem>mcast</pElem>
+            <pElem>diffusion3/lib/main</pElem>
+            <pElem>diffusion3/lib</pElem>
+            <pElem>diffusion3/lib/nr</pElem>
+            <pElem>diffusion3/ns</pElem>
+            <pElem>diffusion3/filter_core</pElem>
+            <pElem>asim</pElem>
+            <pElem>qs</pElem>
+            <pElem>diffserv</pElem>
+            <pElem>satellite</pElem>
+            <pElem>wpan</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPP_NAMESPACE=std</Elem>
+            <Elem>HAVE_CONFIG_H</Elem>
+            <Elem>HAVE_LIBOTCL1_14</Elem>
+            <Elem>HAVE_LIBTCL8_5</Elem>
+            <Elem>HAVE_LIBTCLCL</Elem>
+            <Elem>HAVE_LIBTK8_5</Elem>
+            <Elem>HAVE_OTCL_H</Elem>
+            <Elem>HAVE_TCLCL_H</Elem>
+            <Elem>HAVE_TCLINT_H</Elem>
+            <Elem>HAVE_TCL_H</Elem>
+            <Elem>HAVE_TK_H</Elem>
+            <Elem>LINUX_TCP_HEADER</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>NO_TK</Elem>
+            <Elem>NS_DIFFUSION</Elem>
+            <Elem>SMAC_NO_SYNC</Elem>
+            <Elem>TCLCL_CLASSINSTVAR</Elem>
+            <Elem>TCP_DELAY_BIND_ALL</Elem>
+            <Elem>USE_SHM</Elem>
+            <Elem>USE_SINGLE_ADDRESS_SPACE</Elem>
+            <Elem>rng_test</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="linkstate/rtProtoLS.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/arp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/channel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/lanRouter.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/ll.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_11.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_11Ext.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-802_3.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-csma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-multihop.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-simple.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-tdma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac-timers.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/smac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/varp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wired-phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wireless-phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mac/wireless-phyExt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/classifier-lms.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/ctrMcast.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/lms-sender.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/mcast_ctrl.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/rcvbuf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/replicator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/rlm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm-ssm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm-topo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mcast/srm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_adp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_dht.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_ndp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_neighbor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mdart/mdart_table.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/antenna.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/dem.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/dumb-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/energy-model.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/god.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/gridkeeper.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/mip-reg.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/mip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/modulation.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/nakagami.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/omni-antenna.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/propagation.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/shadowing-vis.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/shadowing.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/topography.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mobile/tworayground.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/classifier-addr-mpls.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/ldp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="mpls/mpls-module.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/classifier-nix.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/hdr_nv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixroute.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="nix/nixvec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="ns_tclsh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_HTTP.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_HTTP_rng.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_OL.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_OL_ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="packmime/packmime_ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/classifier-pgm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-receiver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pgm/pgm-sender.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="plm/cbr-traffic-PP.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="plm/loss-monitor-plm.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_rqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="proaodv/proaodv_rtable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="puma/puma.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/agg-spec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/ident-tree.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/logging-data-struct.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/pushback-queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/pushback.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-estimator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-limit-strategy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="pushback/rate-limit.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="qs/hdr_qs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="qs/qsagent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/cbq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/delayer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/delaymodel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/demarker.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/drop-tail.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/drr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/dsr-priqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/errmodel.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/fec.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/fq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/gk.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/jobs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/marker.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/pi.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/priqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/queue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/red-pd.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/red.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rem.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/rtqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-packetqueue.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-red.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/semantic-rio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/sfq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/srr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="queue/vq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/media-app.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/rap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/raplist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="rap/utilities.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="realaudio/realaudio.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/bfs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/dijkstra.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rbitmap.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rlookup.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/rnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/routealgo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routealgo/tnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/addr-params.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/address.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/alloc-address.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/route.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rtProtoDV.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rtmodule.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="routing/rttable.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sat-hdlc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satgeometry.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sathandoff.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satlink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satnode.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satposition.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/satroute.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="satellite/sattrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-cmt.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-hbAfterRto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-mfrHbAfterRto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-mfrTimestamp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-multipleFastRtx.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-newreno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp-timestamp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sctp/sctpDebug.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/agent-list.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/flood-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/landmark.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/sensor-query.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="sensor-nets/tags.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/classifier-sr.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/hdr_src.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src_rtg/sragent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcl/ex/picoeff.m" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/ack-recons.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/chost.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/linux/ns-linux-c.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/ns-linux-param.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/ns-linux-util.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/linux/src/tcp_bic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_compound.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_cong.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_cubic.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_highspeed.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_htcp.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_hybla.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_illinois.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_lp.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_scalable.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_vegas.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_veno.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_westwood.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/src/tcp_yeah.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/linux/tcp_naivereno.c" ex="false" tool="0" flavor2="2">
+      </item>
+      <item path="tcp/nilist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/rq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/rtcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/saack.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard-rh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard-rq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/scoreboard1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/snoop.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-abs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym-fs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-asym.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-fack.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-fs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-full.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-int.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-linux.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-newreno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-rbp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-reno.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-rfc793edu.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sack-rh.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sack1.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-session.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp-vegas.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tcplib-telnet.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tfrc-sink.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tcp/tfrc.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmix.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmixAgent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tmix/tmix_delaybox.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/cbr_traffic.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/expoo.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/flowmon.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/integrator.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/loss-monitor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/measuremod.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/pareto.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/queue-monitor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/random.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/ranvar.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/rng.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tools/trafgen.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_api.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_dest.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_io.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_logs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tora/tora_neighbor.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/basetrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/cmu-trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/trace-ip.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="trace/traffictrace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/http-aux.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/http.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/inval-agent.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/logweb.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/mcache.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/pagepool.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/tcp-simple.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/tcpapp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/webserver.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="webcache/webtraf.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4csmaca.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4fail.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4hlist.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4mac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4nam.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4phy.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4sscs.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4timer.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4trace.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="wpan/p802_15_4transac.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcp-end-sys.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcp.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="xcp/xcpq.cc" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

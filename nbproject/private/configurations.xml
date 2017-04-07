@@ -1,0 +1,1551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="adc">
+        <in>acto-adc.cc</in>
+        <in>actp-adc.cc</in>
+        <in>adaptive-receiver.cc</in>
+        <in>adaptive-receiver.h</in>
+        <in>adc.cc</in>
+        <in>adc.h</in>
+        <in>consrcvr.cc</in>
+        <in>estimator.cc</in>
+        <in>estimator.h</in>
+        <in>expavg-est.cc</in>
+        <in>hb-adc.cc</in>
+        <in>ms-adc.cc</in>
+        <in>null-estimator.cc</in>
+        <in>param-adc.cc</in>
+        <in>pointsample-est.cc</in>
+        <in>resv.cc</in>
+        <in>resv.h</in>
+        <in>sa.cc</in>
+        <in>sa.h</in>
+        <in>salink.cc</in>
+        <in>salink.h</in>
+        <in>simple-intserv-sched.cc</in>
+        <in>tbf.cc</in>
+        <in>tbf.h</in>
+        <in>timewindow-est.cc</in>
+        <in>ump.cc</in>
+        <in>ump.h</in>
+      </df>
+      <df name="allinone">
+      </df>
+      <df name="aodv">
+        <in>aodv.cc</in>
+        <in>aodv.h</in>
+        <in>aodv_logs.cc</in>
+        <in>aodv_packet.h</in>
+        <in>aodv_rqueue.cc</in>
+        <in>aodv_rqueue.h</in>
+        <in>aodv_rtable.cc</in>
+        <in>aodv_rtable.h</in>
+      </df>
+      <df name="aomdv">
+        <in>aomdv.cc</in>
+        <in>aomdv.h</in>
+        <in>aomdv_logs.cc</in>
+        <in>aomdv_packet.h</in>
+        <in>aomdv_rqueue.cc</in>
+        <in>aomdv_rqueue.h</in>
+        <in>aomdv_rtable.cc</in>
+        <in>aomdv_rtable.h</in>
+      </df>
+      <df name="apps">
+        <in>app.cc</in>
+        <in>app.h</in>
+        <in>bitops.h</in>
+        <in>pbc.cc</in>
+        <in>pbc.h</in>
+        <in>ping.cc</in>
+        <in>ping.h</in>
+        <in>rtp.cc</in>
+        <in>rtp.h</in>
+        <in>sctp_app1.cc</in>
+        <in>sctp_app1.h</in>
+        <in>telnet.cc</in>
+        <in>telnet.h</in>
+        <in>udp.cc</in>
+        <in>udp.h</in>
+        <in>vat.h</in>
+        <in>vatrcvr.cc</in>
+        <in>worm.cc</in>
+        <in>worm.h</in>
+      </df>
+      <df name="asim">
+        <in>asim.cc</in>
+        <in>asim.h</in>
+        <in>asimstd.cc</in>
+      </df>
+      <df name="baytcp">
+        <in>ftp.h</in>
+        <in>ftpc.cc</in>
+        <in>ftps.cc</in>
+        <in>tcp-full-bay.cc</in>
+        <in>tcp-full-bay.h</in>
+      </df>
+      <df name="bin">
+        <df name="NS">
+        </df>
+      </df>
+      <df name="bitmap">
+      </df>
+      <df name="blackholeaodv">
+        <in>blackholeaodv.cc</in>
+        <in>blackholeaodv.h</in>
+        <in>blackholeaodv_logs.cc</in>
+        <in>blackholeaodv_rqueue.cc</in>
+        <in>blackholeaodv_rqueue.h</in>
+        <in>blackholeaodv_rtable.cc</in>
+        <in>blackholeaodv_rtable.h</in>
+      </df>
+      <df name="classifier">
+        <in>classifier-addr.cc</in>
+        <in>classifier-addr.h</in>
+        <in>classifier-bst.cc</in>
+        <in>classifier-hash.cc</in>
+        <in>classifier-hash.h</in>
+        <in>classifier-hier.cc</in>
+        <in>classifier-hier.h</in>
+        <in>classifier-mac.cc</in>
+        <in>classifier-mcast.cc</in>
+        <in>classifier-mcast.h</in>
+        <in>classifier-mpath.cc</in>
+        <in>classifier-port.cc</in>
+        <in>classifier-port.h</in>
+        <in>classifier-qs.cc</in>
+        <in>classifier-qs.h</in>
+        <in>classifier-virtual.cc</in>
+        <in>classifier.cc</in>
+        <in>classifier.h</in>
+        <in>filter.cc</in>
+        <in>filter.h</in>
+      </df>
+      <df name="common">
+        <in>Decapsulator.cc</in>
+        <in>Decapsulator.h</in>
+        <in>Encapsulator.cc</in>
+        <in>Encapsulator.h</in>
+        <in>agent.cc</in>
+        <in>agent.h</in>
+        <in>bi-connector.cc</in>
+        <in>bi-connector.h</in>
+        <in>connector.cc</in>
+        <in>connector.h</in>
+        <in>encap.cc</in>
+        <in>encap.h</in>
+        <in>flags.h</in>
+        <in>fsm.cc</in>
+        <in>fsm.h</in>
+        <in>heap.h</in>
+        <in>ip.cc</in>
+        <in>ip.h</in>
+        <in>ivs.cc</in>
+        <in>location.h</in>
+        <in>main-modular.cc</in>
+        <in>main-monolithic.cc</in>
+        <in>message.cc</in>
+        <in>message.h</in>
+        <in>messpass.cc</in>
+        <in>messpass.h</in>
+        <in>misc.cc</in>
+        <in>mobilenode.cc</in>
+        <in>mobilenode.h</in>
+        <in>net-interface.cc</in>
+        <in>net-interface.h</in>
+        <in>node.cc</in>
+        <in>node.h</in>
+        <in>ns-process.cc</in>
+        <in>ns-process.h</in>
+        <in>object.cc</in>
+        <in>object.h</in>
+        <in>packet-stamp.h</in>
+        <in>packet.cc</in>
+        <in>packet.h</in>
+        <in>parentnode.cc</in>
+        <in>parentnode.h</in>
+        <in>pkt-counter.cc</in>
+        <in>ptypes2tcl.cc</in>
+        <in>scheduler-map.cc</in>
+        <in>scheduler.cc</in>
+        <in>scheduler.h</in>
+        <in>session-rtp.cc</in>
+        <in>sessionhelper.cc</in>
+        <in>simulator.cc</in>
+        <in>simulator.h</in>
+        <in>splay-scheduler.cc</in>
+        <in>tclAppInit.cc</in>
+        <in>timer-handler.cc</in>
+        <in>timer-handler.h</in>
+        <in>tkAppInit.cc</in>
+        <in>tp.cc</in>
+        <in>tp.h</in>
+        <in>tpm.cc</in>
+        <in>tpm.h</in>
+        <in>ttl.cc</in>
+        <in>win32.c</in>
+      </df>
+      <df name="conf">
+      </df>
+      <df name="dccp">
+        <in>bsd_queue.h</in>
+        <in>dccp.cc</in>
+        <in>dccp.h</in>
+        <in>dccp_ackv.cc</in>
+        <in>dccp_ackv.h</in>
+        <in>dccp_opt.cc</in>
+        <in>dccp_opt.h</in>
+        <in>dccp_packets.cc</in>
+        <in>dccp_packets.h</in>
+        <in>dccp_sb.cc</in>
+        <in>dccp_sb.h</in>
+        <in>dccp_tcplike.cc</in>
+        <in>dccp_tcplike.h</in>
+        <in>dccp_tfrc.cc</in>
+        <in>dccp_tfrc.h</in>
+        <in>dccp_types.h</in>
+      </df>
+      <df name="delaybox">
+        <in>delaybox.cc</in>
+        <in>delaybox.h</in>
+      </df>
+      <df name="diffserv">
+        <in>dewp.cc</in>
+        <in>dewp.h</in>
+        <in>dsCore.cc</in>
+        <in>dsCore.h</in>
+        <in>dsEdge.cc</in>
+        <in>dsEdge.h</in>
+        <in>dsPolicy.cc</in>
+        <in>dsPolicy.h</in>
+        <in>dsred.cc</in>
+        <in>dsred.h</in>
+        <in>dsredq.cc</in>
+        <in>dsredq.h</in>
+        <in>ew.cc</in>
+        <in>ew.h</in>
+      </df>
+      <df name="diffusion">
+        <in>diff_header.h</in>
+        <in>diff_prob.cc</in>
+        <in>diff_prob.h</in>
+        <in>diff_rate.cc</in>
+        <in>diff_rate.h</in>
+        <in>diff_sink.cc</in>
+        <in>diff_sink.h</in>
+        <in>diffusion.cc</in>
+        <in>diffusion.h</in>
+        <in>flooding.cc</in>
+        <in>flooding.h</in>
+        <in>hash_table.cc</in>
+        <in>hash_table.h</in>
+        <in>iflist.cc</in>
+        <in>iflist.h</in>
+        <in>omni_mcast.cc</in>
+        <in>omni_mcast.h</in>
+        <in>routing_table.cc</in>
+        <in>routing_table.h</in>
+      </df>
+      <df name="diffusion3">
+        <df name="apps">
+          <df name="gear_examples">
+            <in>gear_common.cc</in>
+            <in>gear_common.hh</in>
+            <in>gear_receiver.cc</in>
+            <in>gear_receiver.hh</in>
+            <in>gear_sender.cc</in>
+            <in>gear_sender.hh</in>
+          </df>
+          <df name="ping">
+            <in>1pp_ping_receiver.cc</in>
+            <in>1pp_ping_receiver.hh</in>
+            <in>1pp_ping_sender.cc</in>
+            <in>1pp_ping_sender.hh</in>
+            <in>2pp_ping_receiver.cc</in>
+            <in>2pp_ping_receiver.hh</in>
+            <in>2pp_ping_sender.cc</in>
+            <in>2pp_ping_sender.hh</in>
+            <in>ping.hh</in>
+            <in>ping_common.cc</in>
+            <in>push_receiver.cc</in>
+            <in>push_receiver.hh</in>
+            <in>push_sender.cc</in>
+            <in>push_sender.hh</in>
+          </df>
+          <df name="rmst_examples">
+            <in>rmst_sink.cc</in>
+            <in>rmst_sink.hh</in>
+            <in>rmst_source.cc</in>
+            <in>rmst_source.hh</in>
+          </df>
+        </df>
+        <df name="filter_core">
+          <in>filter_core.cc</in>
+          <in>filter_core.hh</in>
+          <in>iolog.cc</in>
+          <in>iolog.hh</in>
+          <in>iostats.cc</in>
+          <in>iostats.hh</in>
+        </df>
+        <df name="filters">
+          <df name="diffusion">
+            <in>one_phase_pull.cc</in>
+            <in>one_phase_pull.hh</in>
+            <in>two_phase_pull.cc</in>
+            <in>two_phase_pull.hh</in>
+          </df>
+          <df name="gear">
+            <in>gear.cc</in>
+            <in>gear.hh</in>
+            <in>gear_attr.cc</in>
+            <in>gear_attr.hh</in>
+            <in>gear_tools.cc</in>
+            <in>gear_tools.hh</in>
+          </df>
+          <df name="misc">
+            <in>log.cc</in>
+            <in>log.hh</in>
+            <in>srcrt.cc</in>
+            <in>srcrt.hh</in>
+            <in>tag.cc</in>
+            <in>tag.hh</in>
+          </df>
+          <df name="rmst">
+            <in>rmst.cc</in>
+            <in>rmst.hh</in>
+            <in>rmst_filter.cc</in>
+            <in>rmst_filter.hh</in>
+          </df>
+        </df>
+        <df name="lib">
+          <df name="main">
+            <in>attrs.cc</in>
+            <in>attrs.hh</in>
+            <in>config.hh</in>
+            <in>events.cc</in>
+            <in>events.hh</in>
+            <in>filter.hh</in>
+            <in>header.hh</in>
+            <in>iodev.cc</in>
+            <in>iodev.hh</in>
+            <in>iohook.cc</in>
+            <in>iohook.hh</in>
+            <in>message.cc</in>
+            <in>message.hh</in>
+            <in>timers.cc</in>
+            <in>timers.hh</in>
+            <in>tools.cc</in>
+            <in>tools.hh</in>
+          </df>
+          <df name="nr">
+            <in>nr.cc</in>
+            <in>nr.hh</in>
+          </df>
+          <in>diffapp.cc</in>
+          <in>diffapp.hh</in>
+          <in>dr.cc</in>
+          <in>dr.hh</in>
+        </df>
+        <df name="ns">
+          <in>diffagent.cc</in>
+          <in>diffagent.h</in>
+          <in>diffrtg.cc</in>
+          <in>diffrtg.h</in>
+          <in>difftimer.cc</in>
+          <in>difftimer.h</in>
+        </df>
+      </df>
+      <df name="doc">
+        <df name="figures">
+        </df>
+        <df name="kannan">
+        </df>
+        <df name="kfall">
+        </df>
+        <df name="kkumar">
+        </df>
+        <df name="polly">
+        </df>
+      </df>
+      <df name="dsdv">
+        <in>dsdv.cc</in>
+        <in>dsdv.h</in>
+        <in>rtable.cc</in>
+        <in>rtable.h</in>
+      </df>
+      <df name="dsr">
+        <in>add_sr.cc</in>
+        <in>cache_stats.h</in>
+        <in>constants.h</in>
+        <in>dsr_proto.cc</in>
+        <in>dsr_proto.h</in>
+        <in>dsragent.cc</in>
+        <in>dsragent.h</in>
+        <in>flowstruct.cc</in>
+        <in>flowstruct.h</in>
+        <in>hdr_sr.cc</in>
+        <in>hdr_sr.h</in>
+        <in>linkcache.cc</in>
+        <in>mobicache.cc</in>
+        <in>path.cc</in>
+        <in>path.h</in>
+        <in>requesttable.cc</in>
+        <in>requesttable.h</in>
+        <in>routecache.cc</in>
+        <in>routecache.h</in>
+        <in>simplecache.cc</in>
+        <in>sr_forwarder.cc</in>
+        <in>sr_forwarder.h</in>
+        <in>srpacket.h</in>
+      </df>
+      <df name="empweb">
+        <df name="scripts">
+        </df>
+        <in>empftp.cc</in>
+        <in>empftp.h</in>
+        <in>empweb.cc</in>
+        <in>empweb.h</in>
+        <in>persconn.h</in>
+      </df>
+      <df name="emulate">
+        <df name="support">
+          <df name="src">
+            <df name="nrgarp">
+            </df>
+          </df>
+        </df>
+        <in>arp.cc</in>
+        <in>ether.cc</in>
+        <in>ether.h</in>
+        <in>icmp.cc</in>
+        <in>inet.c</in>
+        <in>inet.h</in>
+        <in>internet.cc</in>
+        <in>internet.h</in>
+        <in>iptap.cc</in>
+        <in>iptap.h</in>
+        <in>nat.cc</in>
+        <in>net-ip.cc</in>
+        <in>net-pcap.cc</in>
+        <in>net.cc</in>
+        <in>net.h</in>
+        <in>ping_responder.cc</in>
+        <in>tap.cc</in>
+        <in>tap.h</in>
+        <in>tcptap.cc</in>
+        <in>tcptap.h</in>
+      </df>
+      <df name="gaf">
+        <in>gaf.cc</in>
+        <in>gaf.h</in>
+      </df>
+      <df name="gen">
+        <in>ns_tcl.cc</in>
+        <in>ptypes.cc</in>
+        <in>version.c</in>
+      </df>
+      <df name="idsaodv">
+        <in>idsaodv.cc</in>
+        <in>idsaodv.h</in>
+        <in>idsaodv_logs.cc</in>
+        <in>idsaodv_rqueue.cc</in>
+        <in>idsaodv_rqueue.h</in>
+        <in>idsaodv_rtable.cc</in>
+        <in>idsaodv_rtable.h</in>
+        <in>idsaodv_semih.cc</in>
+      </df>
+      <df name="imep">
+        <in>dest_queue.cc</in>
+        <in>dest_queue.h</in>
+        <in>imep.cc</in>
+        <in>imep.h</in>
+        <in>imep_api.cc</in>
+        <in>imep_io.cc</in>
+        <in>imep_rt.cc</in>
+        <in>imep_spec.h</in>
+        <in>imep_stats.h</in>
+        <in>imep_timers.cc</in>
+        <in>imep_util.cc</in>
+        <in>rxmit_queue.cc</in>
+        <in>rxmit_queue.h</in>
+      </df>
+      <df name="indep-utils">
+        <df name="cmu-scen-gen">
+          <df name="setdest">
+            <in>calcdest.cc</in>
+            <in>setdest.cc</in>
+            <in>setdest.h</in>
+            <in>setdest2.cc</in>
+          </df>
+        </df>
+        <df name="dosdbell">
+          <in>dosdbell.c</in>
+          <in>dosdbell.h</in>
+          <in>dosdbellasim.c</in>
+          <in>dostraffic.c</in>
+          <in>dostraffic.h</in>
+          <in>flowlist.c</in>
+          <in>flowlist.h</in>
+          <in>models.c</in>
+          <in>models.h</in>
+        </df>
+        <df name="dosreduce">
+          <in>dosreduce.c</in>
+        </df>
+        <df name="model-gen">
+          <in>http_active.c</in>
+          <in>http_connect.c</in>
+        </df>
+        <df name="propagation">
+          <in>threshold.cc</in>
+        </df>
+        <df name="webtrace-conv">
+          <df name="dec">
+            <in>formsquid.cc</in>
+            <in>formtxt.cc</in>
+            <in>my-endian.cc</in>
+            <in>my-endian.h</in>
+            <in>proxytrace.cc</in>
+            <in>proxytrace.h</in>
+            <in>proxytrace2any.cc</in>
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="epa">
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="nlanr">
+            <in>logparse.cc</in>
+            <in>logparse.h</in>
+            <in>tr-stat.cc</in>
+          </df>
+          <df name="ucb">
+            <in>config.h</in>
+            <in>logparse.cc</in>
+            <in>logparse.h</in>
+            <in>tr-stat.cc</in>
+            <in>utils.cc</in>
+            <in>utils.h</in>
+          </df>
+        </df>
+      </df>
+      <df name="lib">
+        <in>bsd-list.h</in>
+        <in>builtin.h</in>
+        <in>dmalloc_support.cc</in>
+        <in>int.RVec.cc</in>
+        <in>int.RVec.h</in>
+        <in>int.Vec.cc</in>
+        <in>int.Vec.h</in>
+        <in>int.defs.h</in>
+      </df>
+      <df name="link">
+        <in>delay.cc</in>
+        <in>delay.h</in>
+        <in>dynalink.cc</in>
+        <in>hackloss.cc</in>
+      </df>
+      <df name="linkstate">
+        <in>hdr-ls.cc</in>
+        <in>hdr-ls.h</in>
+        <in>ls.cc</in>
+        <in>ls.h</in>
+        <in>rtProtoLS.cc</in>
+        <in>rtProtoLS.h</in>
+      </df>
+      <df name="mac">
+        <in>arp.cc</in>
+        <in>arp.h</in>
+        <in>channel.cc</in>
+        <in>channel.h</in>
+        <in>lanRouter.cc</in>
+        <in>lanRouter.h</in>
+        <in>ll.cc</in>
+        <in>ll.h</in>
+        <in>mac-802_11.cc</in>
+        <in>mac-802_11.h</in>
+        <in>mac-802_11Ext.cc</in>
+        <in>mac-802_11Ext.h</in>
+        <in>mac-802_3.cc</in>
+        <in>mac-802_3.h</in>
+        <in>mac-csma.cc</in>
+        <in>mac-csma.h</in>
+        <in>mac-multihop.cc</in>
+        <in>mac-multihop.h</in>
+        <in>mac-simple.cc</in>
+        <in>mac-simple.h</in>
+        <in>mac-tdma.cc</in>
+        <in>mac-tdma.h</in>
+        <in>mac-timers.cc</in>
+        <in>mac-timers.h</in>
+        <in>mac.cc</in>
+        <in>mac.h</in>
+        <in>marshall.h</in>
+        <in>phy.cc</in>
+        <in>phy.h</in>
+        <in>smac.cc</in>
+        <in>smac.h</in>
+        <in>varp.cc</in>
+        <in>varp.h</in>
+        <in>wired-phy.cc</in>
+        <in>wired-phy.h</in>
+        <in>wireless-phy.cc</in>
+        <in>wireless-phy.h</in>
+        <in>wireless-phyExt.cc</in>
+        <in>wireless-phyExt.h</in>
+      </df>
+      <df name="mcast">
+        <in>classifier-lms.cc</in>
+        <in>ctrMcast.cc</in>
+        <in>ctrMcast.h</in>
+        <in>lms-agent.cc</in>
+        <in>lms-receiver.cc</in>
+        <in>lms-sender.cc</in>
+        <in>lms.h</in>
+        <in>mcast_ctrl.cc</in>
+        <in>mcast_ctrl.h</in>
+        <in>rcvbuf.cc</in>
+        <in>rcvbuf.h</in>
+        <in>replicator.cc</in>
+        <in>rlm.cc</in>
+        <in>srm-headers.h</in>
+        <in>srm-ssm.cc</in>
+        <in>srm-ssm.h</in>
+        <in>srm-state.h</in>
+        <in>srm-topo.cc</in>
+        <in>srm-topo.h</in>
+        <in>srm.cc</in>
+        <in>srm.h</in>
+      </df>
+      <df name="mdart">
+        <in>mdart.cc</in>
+        <in>mdart.h</in>
+        <in>mdart_adp.cc</in>
+        <in>mdart_adp.h</in>
+        <in>mdart_dht.cc</in>
+        <in>mdart_dht.h</in>
+        <in>mdart_function.h</in>
+        <in>mdart_ndp.cc</in>
+        <in>mdart_ndp.h</in>
+        <in>mdart_neighbor.cc</in>
+        <in>mdart_neighbor.h</in>
+        <in>mdart_packet.h</in>
+        <in>mdart_queue.cc</in>
+        <in>mdart_queue.h</in>
+        <in>mdart_table.cc</in>
+        <in>mdart_table.h</in>
+      </df>
+      <df name="mobile">
+        <in>antenna.cc</in>
+        <in>antenna.h</in>
+        <in>dem.cc</in>
+        <in>dem.h</in>
+        <in>dumb-agent.cc</in>
+        <in>dumb-agent.h</in>
+        <in>energy-model.cc</in>
+        <in>energy-model.h</in>
+        <in>god.cc</in>
+        <in>god.h</in>
+        <in>gridkeeper.cc</in>
+        <in>gridkeeper.h</in>
+        <in>mip-reg.cc</in>
+        <in>mip.cc</in>
+        <in>mip.h</in>
+        <in>modulation.cc</in>
+        <in>modulation.h</in>
+        <in>nakagami.cc</in>
+        <in>nakagami.h</in>
+        <in>omni-antenna.cc</in>
+        <in>omni-antenna.h</in>
+        <in>propagation.cc</in>
+        <in>propagation.h</in>
+        <in>shadowing-vis.cc</in>
+        <in>shadowing-vis.h</in>
+        <in>shadowing.cc</in>
+        <in>shadowing.h</in>
+        <in>topography.cc</in>
+        <in>topography.h</in>
+        <in>tworayground.cc</in>
+        <in>tworayground.h</in>
+      </df>
+      <df name="mpls">
+        <in>classifier-addr-mpls.cc</in>
+        <in>classifier-addr-mpls.h</in>
+        <in>ldp.cc</in>
+        <in>ldp.h</in>
+        <in>mpls-module.cc</in>
+        <in>mpls-module.h</in>
+      </df>
+      <df name="nix">
+        <in>classifier-nix.cc</in>
+        <in>classifier-nix.h</in>
+        <in>hdr_nv.cc</in>
+        <in>hdr_nv.h</in>
+        <in>nixnode.cc</in>
+        <in>nixnode.h</in>
+        <in>nixroute.cc</in>
+        <in>nixvec.cc</in>
+        <in>nixvec.h</in>
+      </df>
+      <df name="packmime">
+        <in>packmime_HTTP.cc</in>
+        <in>packmime_HTTP.h</in>
+        <in>packmime_HTTP_rng.cc</in>
+        <in>packmime_OL.cc</in>
+        <in>packmime_OL.h</in>
+        <in>packmime_OL_ranvar.cc</in>
+        <in>packmime_OL_ranvar.h</in>
+        <in>packmime_ranvar.cc</in>
+        <in>packmime_ranvar.h</in>
+      </df>
+      <df name="pgm">
+        <in>classifier-pgm.cc</in>
+        <in>pgm-agent.cc</in>
+        <in>pgm-receiver.cc</in>
+        <in>pgm-sender.cc</in>
+        <in>pgm.h</in>
+      </df>
+      <df name="plm">
+        <in>cbr-traffic-PP.cc</in>
+        <in>loss-monitor-plm.cc</in>
+      </df>
+      <df name="proaodv">
+        <in>proaodv.cc</in>
+        <in>proaodv.h</in>
+        <in>proaodv_logs.cc</in>
+        <in>proaodv_rqueue.cc</in>
+        <in>proaodv_rqueue.h</in>
+        <in>proaodv_rtable.cc</in>
+        <in>proaodv_rtable.h</in>
+      </df>
+      <df name="puma">
+        <in>puma.cc</in>
+        <in>puma.h</in>
+        <in>puma_pkt.h</in>
+      </df>
+      <df name="pushback">
+        <in>agg-spec.cc</in>
+        <in>agg-spec.h</in>
+        <in>ident-tree.cc</in>
+        <in>ident-tree.h</in>
+        <in>logging-data-struct.cc</in>
+        <in>logging-data-struct.h</in>
+        <in>pushback-constants.h</in>
+        <in>pushback-message.h</in>
+        <in>pushback-queue.cc</in>
+        <in>pushback-queue.h</in>
+        <in>pushback.cc</in>
+        <in>pushback.h</in>
+        <in>rate-estimator.cc</in>
+        <in>rate-estimator.h</in>
+        <in>rate-limit-strategy.cc</in>
+        <in>rate-limit-strategy.h</in>
+        <in>rate-limit.cc</in>
+        <in>rate-limit.h</in>
+      </df>
+      <df name="qs">
+        <in>hdr_qs.cc</in>
+        <in>hdr_qs.h</in>
+        <in>qsagent.cc</in>
+        <in>qsagent.h</in>
+      </df>
+      <df name="queue">
+        <in>cbq.cc</in>
+        <in>delayer.cc</in>
+        <in>delayer.h</in>
+        <in>delaymodel.cc</in>
+        <in>delaymodel.h</in>
+        <in>demarker.cc</in>
+        <in>demarker.h</in>
+        <in>drop-tail.cc</in>
+        <in>drop-tail.h</in>
+        <in>drr.cc</in>
+        <in>dsr-priqueue.cc</in>
+        <in>dsr-priqueue.h</in>
+        <in>errmodel.cc</in>
+        <in>errmodel.h</in>
+        <in>fec.cc</in>
+        <in>fec.h</in>
+        <in>fq.cc</in>
+        <in>gk.cc</in>
+        <in>gk.h</in>
+        <in>jobs.cc</in>
+        <in>jobs.h</in>
+        <in>marker.cc</in>
+        <in>marker.h</in>
+        <in>pi.cc</in>
+        <in>pi.h</in>
+        <in>priqueue.cc</in>
+        <in>priqueue.h</in>
+        <in>queue.cc</in>
+        <in>queue.h</in>
+        <in>red-pd.cc</in>
+        <in>red-pd.h</in>
+        <in>red.cc</in>
+        <in>red.h</in>
+        <in>rem.cc</in>
+        <in>rem.h</in>
+        <in>rio.cc</in>
+        <in>rio.h</in>
+        <in>rtqueue.cc</in>
+        <in>rtqueue.h</in>
+        <in>semantic-packetqueue.cc</in>
+        <in>semantic-packetqueue.h</in>
+        <in>semantic-red.cc</in>
+        <in>semantic-rio.cc</in>
+        <in>sfq.cc</in>
+        <in>srr.cc</in>
+        <in>vq.cc</in>
+        <in>vq.h</in>
+        <in>wss.h</in>
+      </df>
+      <df name="rap">
+        <in>media-app.cc</in>
+        <in>media-app.h</in>
+        <in>rap.cc</in>
+        <in>rap.h</in>
+        <in>raplist.cc</in>
+        <in>raplist.h</in>
+        <in>utilities.cc</in>
+        <in>utilities.h</in>
+      </df>
+      <df name="realaudio">
+        <in>realaudio.cc</in>
+      </df>
+      <df name="routealgo">
+        <in>bfs.cc</in>
+        <in>bfs.h</in>
+        <in>dijkstra.cc</in>
+        <in>dijkstra.h</in>
+        <in>rbitmap.cc</in>
+        <in>rbitmap.h</in>
+        <in>rlookup.cc</in>
+        <in>rlookup.h</in>
+        <in>rnode.cc</in>
+        <in>rnode.h</in>
+        <in>routealgo.cc</in>
+        <in>routealgo.h</in>
+        <in>tnode.cc</in>
+        <in>tnode.h</in>
+      </df>
+      <df name="routing">
+        <in>addr-params.cc</in>
+        <in>addr-params.h</in>
+        <in>address.cc</in>
+        <in>address.h</in>
+        <in>alloc-address.cc</in>
+        <in>route.cc</in>
+        <in>route.h</in>
+        <in>rtProtoDV.cc</in>
+        <in>rtProtoDV.h</in>
+        <in>rtmodule.cc</in>
+        <in>rtmodule.h</in>
+        <in>rttable.cc</in>
+        <in>rttable.h</in>
+      </df>
+      <df name="rtproto">
+        <in>rtproto.h</in>
+      </df>
+      <df name="satellite">
+        <in>sat-hdlc.cc</in>
+        <in>sat-hdlc.h</in>
+        <in>satgeometry.cc</in>
+        <in>satgeometry.h</in>
+        <in>sathandoff.cc</in>
+        <in>sathandoff.h</in>
+        <in>satlink.cc</in>
+        <in>satlink.h</in>
+        <in>satnode.cc</in>
+        <in>satnode.h</in>
+        <in>satposition.cc</in>
+        <in>satposition.h</in>
+        <in>satroute.cc</in>
+        <in>satroute.h</in>
+        <in>sattrace.cc</in>
+        <in>sattrace.h</in>
+      </df>
+      <df name="sctp">
+        <in>sctp-cmt.cc</in>
+        <in>sctp-cmt.h</in>
+        <in>sctp-hbAfterRto.cc</in>
+        <in>sctp-hbAfterRto.h</in>
+        <in>sctp-mfrHbAfterRto.cc</in>
+        <in>sctp-mfrHbAfterRto.h</in>
+        <in>sctp-mfrTimestamp.cc</in>
+        <in>sctp-mfrTimestamp.h</in>
+        <in>sctp-multipleFastRtx.cc</in>
+        <in>sctp-multipleFastRtx.h</in>
+        <in>sctp-newreno.cc</in>
+        <in>sctp-newreno.h</in>
+        <in>sctp-timestamp.cc</in>
+        <in>sctp-timestamp.h</in>
+        <in>sctp.cc</in>
+        <in>sctp.h</in>
+        <in>sctpDebug.cc</in>
+        <in>sctpDebug.h</in>
+      </df>
+      <df name="sensor-nets">
+        <in>agent-list.cc</in>
+        <in>agent-list.h</in>
+        <in>flood-agent.cc</in>
+        <in>flood-agent.h</in>
+        <in>landmark.cc</in>
+        <in>landmark.h</in>
+        <in>sensor-query.cc</in>
+        <in>sensor-query.h</in>
+        <in>tags.cc</in>
+        <in>tags.h</in>
+      </df>
+      <df name="src_rtg">
+        <in>classifier-sr.cc</in>
+        <in>classifier-sr.h</in>
+        <in>hdr_src.cc</in>
+        <in>hdr_src.h</in>
+        <in>sragent.cc</in>
+        <in>sragent.h</in>
+      </df>
+      <df name="tcl">
+        <df name="ctr-mcast">
+        </df>
+        <df name="delaybox">
+        </df>
+        <df name="edu">
+          <df name="chan-interference">
+          </df>
+          <df name="hidden-terminal">
+          </df>
+          <df name="rts-cts">
+          </df>
+        </df>
+        <df name="emulate">
+        </df>
+        <df name="ex">
+          <df name="802.11">
+          </df>
+          <df name="asym">
+          </df>
+          <df name="BST">
+          </df>
+          <df name="delaybox">
+          </df>
+          <df name="diffserv">
+          </df>
+          <df name="diffusion3">
+          </df>
+          <df name="empweb">
+            <df name="cdf">
+            </df>
+            <df name="simple">
+              <df name="cdf">
+              </df>
+            </df>
+          </df>
+          <df name="hdlc">
+          </df>
+          <df name="jobs">
+          </df>
+          <df name="mdart">
+          </df>
+          <df name="packmime">
+          </df>
+          <df name="pgm">
+          </df>
+          <df name="pi">
+          </df>
+          <df name="PIdemo">
+          </df>
+          <df name="realaudio">
+          </df>
+          <df name="red-pd">
+            <df name="allTCP">
+            </df>
+            <df name="allUDP">
+            </df>
+            <df name="mix">
+            </df>
+            <df name="multi">
+            </df>
+            <df name="PIdent">
+            </df>
+            <df name="pktsVsBytes">
+            </df>
+            <df name="response">
+            </df>
+            <df name="singleVsMulti">
+            </df>
+            <df name="testFRp">
+            </df>
+            <df name="testFRp_tcp">
+            </df>
+            <df name="tfrc">
+            </df>
+            <df name="varying">
+            </df>
+            <df name="web">
+            </df>
+          </df>
+          <df name="scuba">
+            <df name="complete">
+            </df>
+            <df name="noscuba-equal">
+            </df>
+            <df name="noscuba-sat">
+            </df>
+            <df name="simple">
+            </df>
+          </df>
+          <df name="snoop">
+          </df>
+          <df name="tcp-fs">
+          </df>
+          <df name="tcp-linux">
+          </df>
+          <df name="tmix">
+          </df>
+          <df name="wireless-scripts">
+          </df>
+          <df name="wpan">
+          </df>
+          <df name="xcp">
+            <df name="parking_lot_topo">
+              <df name="out">
+              </df>
+            </df>
+          </df>
+          <in>picoeff.m</in>
+        </df>
+        <df name="http">
+          <df name="data">
+          </df>
+        </df>
+        <df name="interface">
+        </df>
+        <df name="lan">
+        </df>
+        <df name="lib">
+        </df>
+        <df name="mcast">
+        </df>
+        <df name="mobility">
+          <df name="scene">
+          </df>
+        </df>
+        <df name="mpls">
+        </df>
+        <df name="nam-demo">
+        </df>
+        <df name="old">
+        </df>
+        <df name="packmime">
+        </df>
+        <df name="pgm">
+        </df>
+        <df name="plm">
+        </df>
+        <df name="rlm">
+        </df>
+        <df name="rtglib">
+        </df>
+        <df name="rtp">
+        </df>
+        <df name="scenario-generation">
+          <df name="scen-lib">
+          </df>
+        </df>
+        <df name="session">
+        </df>
+        <df name="test">
+          <df name="test-output-adaptive-red">
+          </df>
+          <df name="test-output-aimd">
+          </df>
+          <df name="test-output-algo-routing">
+          </df>
+          <df name="test-output-broken">
+          </df>
+          <df name="test-output-cbq">
+          </df>
+          <df name="test-output-delaybox">
+          </df>
+          <df name="test-output-diffserv">
+          </df>
+          <df name="test-output-diffusion3">
+          </df>
+          <df name="test-output-ecn">
+          </df>
+          <df name="test-output-ecn-ack">
+          </df>
+          <df name="test-output-ecn-full">
+          </df>
+          <df name="test-output-energy">
+          </df>
+          <df name="test-output-examples">
+          </df>
+          <df name="test-output-friendly">
+          </df>
+          <df name="test-output-frto">
+          </df>
+          <df name="test-output-full">
+          </df>
+          <df name="test-output-full-fixes">
+          </df>
+          <df name="test-output-gk">
+          </df>
+          <df name="test-output-greis">
+          </df>
+          <df name="test-output-hier-routing">
+          </df>
+          <df name="test-output-intserv">
+          </df>
+          <df name="test-output-jobs">
+          </df>
+          <df name="test-output-lan">
+          </df>
+          <df name="test-output-LimTransmit">
+          </df>
+          <df name="test-output-links">
+          </df>
+          <df name="test-output-linkstate">
+          </df>
+          <df name="test-output-manual-routing">
+          </df>
+          <df name="test-output-mcache">
+          </df>
+          <df name="test-output-mcast">
+          </df>
+          <df name="test-output-message">
+          </df>
+          <df name="test-output-mip">
+          </df>
+          <df name="test-output-misc">
+          </df>
+          <df name="test-output-mixmode">
+          </df>
+          <df name="test-output-monitor">
+          </df>
+          <df name="test-output-mpls">
+          </df>
+          <df name="test-output-newreno">
+          </df>
+          <df name="test-output-nixvec">
+          </df>
+          <df name="test-output-oddBehaviors">
+          </df>
+          <df name="test-output-packmime">
+          </df>
+          <df name="test-output-pi">
+          </df>
+          <df name="test-output-plm">
+          </df>
+          <df name="test-output-pushback">
+          </df>
+          <df name="test-output-quickstart">
+          </df>
+          <df name="test-output-quiescent">
+          </df>
+          <df name="test-output-rap">
+          </df>
+          <df name="test-output-rbp">
+          </df>
+          <df name="test-output-realaudio">
+          </df>
+          <df name="test-output-red">
+          </df>
+          <df name="test-output-red-pd">
+          </df>
+          <df name="test-output-rem">
+          </df>
+          <df name="test-output-rfc2581">
+          </df>
+          <df name="test-output-rfc793edu">
+          </df>
+          <df name="test-output-rio">
+          </df>
+          <df name="test-output-rng">
+          </df>
+          <df name="test-output-sack">
+          </df>
+          <df name="test-output-sack-full">
+          </df>
+          <df name="test-output-satellite">
+          </df>
+          <df name="test-output-schedule">
+          </df>
+          <df name="test-output-sctp">
+          </df>
+          <df name="test-output-session">
+          </df>
+          <df name="test-output-simple">
+          </df>
+          <df name="test-output-simple-full">
+          </df>
+          <df name="test-output-sliding-window">
+          </df>
+          <df name="test-output-smac">
+          </df>
+          <df name="test-output-smac-multihop">
+          </df>
+          <df name="test-output-snoop">
+          </df>
+          <df name="test-output-source-routing">
+          </df>
+          <df name="test-output-srm">
+          </df>
+          <df name="test-output-tagged-trace">
+          </df>
+          <df name="test-output-tcp">
+          </df>
+          <df name="test-output-tcp-init-win">
+          </df>
+          <df name="test-output-tcp-init-win-full">
+          </df>
+          <df name="test-output-tcpHighspeed">
+          </df>
+          <df name="test-output-tcpLinux">
+          </df>
+          <df name="test-output-tcpOptions">
+          </df>
+          <df name="test-output-tcpReset">
+          </df>
+          <df name="test-output-tcpVariants">
+          </df>
+          <df name="test-output-testReno">
+          </df>
+          <df name="test-output-testReno-bayfull">
+          </df>
+          <df name="test-output-testReno-full">
+          </df>
+          <df name="test-output-tmix">
+          </df>
+          <df name="test-output-vc">
+          </df>
+          <df name="test-output-vq">
+          </df>
+          <df name="test-output-webcache">
+          </df>
+          <df name="test-output-webtraf">
+          </df>
+          <df name="test-output-wireless-diffusion">
+          </df>
+          <df name="test-output-wireless-gridkeeper">
+          </df>
+          <df name="test-output-wireless-infra">
+          </df>
+          <df name="test-output-wireless-lan">
+          </df>
+          <df name="test-output-wireless-lan-newnode-80211Ext">
+          </df>
+          <df name="test-output-wireless-shadowing">
+          </df>
+          <df name="test-output-wireless-tdma">
+          </df>
+          <df name="test-output-WLtutorial">
+          </df>
+          <df name="test-output-wpan">
+          </df>
+          <df name="test-output-xcp">
+          </df>
+          <in>temp.s</in>
+        </df>
+        <df name="tmix">
+        </df>
+        <df name="webcache">
+        </df>
+      </df>
+      <df name="tcp">
+        <df name="linux">
+          <df name="src">
+            <in>tcp_bic.c</in>
+            <in>tcp_compound.c</in>
+            <in>tcp_cong.c</in>
+            <in>tcp_cubic.c</in>
+            <in>tcp_highspeed.c</in>
+            <in>tcp_htcp.c</in>
+            <in>tcp_hybla.c</in>
+            <in>tcp_illinois.c</in>
+            <in>tcp_lp.c</in>
+            <in>tcp_scalable.c</in>
+            <in>tcp_vegas.c</in>
+            <in>tcp_vegas.h</in>
+            <in>tcp_veno.c</in>
+            <in>tcp_westwood.c</in>
+            <in>tcp_yeah.c</in>
+          </df>
+          <in>ns-linux-c.c</in>
+          <in>ns-linux-c.h</in>
+          <in>ns-linux-param.c</in>
+          <in>ns-linux-param.h</in>
+          <in>ns-linux-util.cc</in>
+          <in>ns-linux-util.h</in>
+          <in>tcp_naivereno.c</in>
+        </df>
+        <in>ack-recons.cc</in>
+        <in>ack-recons.h</in>
+        <in>chost.cc</in>
+        <in>chost.h</in>
+        <in>formula-with-inverse.h</in>
+        <in>formula.h</in>
+        <in>nilist.cc</in>
+        <in>nilist.h</in>
+        <in>rq.cc</in>
+        <in>rq.h</in>
+        <in>rtcp.cc</in>
+        <in>saack.cc</in>
+        <in>scoreboard-rh.cc</in>
+        <in>scoreboard-rh.h</in>
+        <in>scoreboard-rq.cc</in>
+        <in>scoreboard-rq.h</in>
+        <in>scoreboard.cc</in>
+        <in>scoreboard.h</in>
+        <in>scoreboard1.cc</in>
+        <in>scoreboard1.h</in>
+        <in>snoop.cc</in>
+        <in>snoop.h</in>
+        <in>tcp-abs.cc</in>
+        <in>tcp-abs.h</in>
+        <in>tcp-asym-fs.cc</in>
+        <in>tcp-asym-sink.cc</in>
+        <in>tcp-asym.cc</in>
+        <in>tcp-asym.h</in>
+        <in>tcp-fack.cc</in>
+        <in>tcp-fack.h</in>
+        <in>tcp-fs.cc</in>
+        <in>tcp-fs.h</in>
+        <in>tcp-full.cc</in>
+        <in>tcp-full.h</in>
+        <in>tcp-int.cc</in>
+        <in>tcp-int.h</in>
+        <in>tcp-linux.cc</in>
+        <in>tcp-linux.h</in>
+        <in>tcp-newreno.cc</in>
+        <in>tcp-rbp.cc</in>
+        <in>tcp-reno.cc</in>
+        <in>tcp-rfc793edu.cc</in>
+        <in>tcp-rfc793edu.h</in>
+        <in>tcp-sack-rh.cc</in>
+        <in>tcp-sack1.cc</in>
+        <in>tcp-session.cc</in>
+        <in>tcp-session.h</in>
+        <in>tcp-sink.cc</in>
+        <in>tcp-sink.h</in>
+        <in>tcp-vegas.cc</in>
+        <in>tcp.cc</in>
+        <in>tcp.h</in>
+        <in>tcplib-telnet.cc</in>
+        <in>template.h</in>
+        <in>tfrc-sink.cc</in>
+        <in>tfrc-sink.h</in>
+        <in>tfrc.cc</in>
+        <in>tfrc.h</in>
+      </df>
+      <df name="tmix">
+        <in>tmix.cc</in>
+        <in>tmix.h</in>
+        <in>tmixAgent.cc</in>
+        <in>tmixAgent.h</in>
+        <in>tmix_delaybox.cc</in>
+        <in>tmix_delaybox.h</in>
+      </df>
+      <df name="tools">
+        <in>cbr_traffic.cc</in>
+        <in>expoo.cc</in>
+        <in>flowmon.cc</in>
+        <in>flowmon.h</in>
+        <in>integrator.cc</in>
+        <in>integrator.h</in>
+        <in>loss-monitor.cc</in>
+        <in>loss-monitor.h</in>
+        <in>measuremod.cc</in>
+        <in>measuremod.h</in>
+        <in>mem-trace.h</in>
+        <in>pareto.cc</in>
+        <in>queue-monitor.cc</in>
+        <in>queue-monitor.h</in>
+        <in>random.cc</in>
+        <in>random.h</in>
+        <in>ranvar.cc</in>
+        <in>ranvar.h</in>
+        <in>rng.cc</in>
+        <in>rng.h</in>
+        <in>trafgen.cc</in>
+        <in>trafgen.h</in>
+      </df>
+      <df name="tora">
+        <in>tora.cc</in>
+        <in>tora.h</in>
+        <in>tora_api.cc</in>
+        <in>tora_dest.cc</in>
+        <in>tora_dest.h</in>
+        <in>tora_io.cc</in>
+        <in>tora_logs.cc</in>
+        <in>tora_neighbor.cc</in>
+        <in>tora_neighbor.h</in>
+        <in>tora_packet.h</in>
+      </df>
+      <df name="trace">
+        <in>basetrace.cc</in>
+        <in>basetrace.h</in>
+        <in>cmu-trace.cc</in>
+        <in>cmu-trace.h</in>
+        <in>trace-ip.cc</in>
+        <in>trace.cc</in>
+        <in>trace.h</in>
+        <in>traffictrace.cc</in>
+      </df>
+      <df name="webcache">
+        <in>http-aux.cc</in>
+        <in>http-aux.h</in>
+        <in>http.cc</in>
+        <in>http.h</in>
+        <in>inval-agent.cc</in>
+        <in>inval-agent.h</in>
+        <in>logweb.cc</in>
+        <in>logweb.h</in>
+        <in>mcache.cc</in>
+        <in>mcache.h</in>
+        <in>pagepool.cc</in>
+        <in>pagepool.h</in>
+        <in>tcp-simple.cc</in>
+        <in>tcp-simple.h</in>
+        <in>tcpapp.cc</in>
+        <in>tcpapp.h</in>
+        <in>webserver.cc</in>
+        <in>webserver.h</in>
+        <in>webtraf.cc</in>
+        <in>webtraf.h</in>
+      </df>
+      <df name="wpan">
+        <in>p802_15_4const.h</in>
+        <in>p802_15_4csmaca.cc</in>
+        <in>p802_15_4csmaca.h</in>
+        <in>p802_15_4def.h</in>
+        <in>p802_15_4fail.cc</in>
+        <in>p802_15_4fail.h</in>
+        <in>p802_15_4field.h</in>
+        <in>p802_15_4hlist.cc</in>
+        <in>p802_15_4hlist.h</in>
+        <in>p802_15_4mac.cc</in>
+        <in>p802_15_4mac.h</in>
+        <in>p802_15_4nam.cc</in>
+        <in>p802_15_4nam.h</in>
+        <in>p802_15_4phy.cc</in>
+        <in>p802_15_4phy.h</in>
+        <in>p802_15_4pkt.h</in>
+        <in>p802_15_4sscs.cc</in>
+        <in>p802_15_4sscs.h</in>
+        <in>p802_15_4timer.cc</in>
+        <in>p802_15_4timer.h</in>
+        <in>p802_15_4trace.cc</in>
+        <in>p802_15_4trace.h</in>
+        <in>p802_15_4transac.cc</in>
+        <in>p802_15_4transac.h</in>
+      </df>
+      <df name="xcp">
+        <in>xcp-end-sys.cc</in>
+        <in>xcp-end-sys.h</in>
+        <in>xcp.cc</in>
+        <in>xcp.h</in>
+        <in>xcpq.cc</in>
+        <in>xcpq.h</in>
+      </df>
+      <in>autoconf-win32.h</in>
+      <in>autoconf.h</in>
+      <in>config.h</in>
+      <in>ns_tclsh.cc</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="NS2" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

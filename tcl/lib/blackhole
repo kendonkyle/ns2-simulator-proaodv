@@ -1,0 +1,9 @@
+ns-lib.tcl
+
+
+633:		    blackholeAODV {
+634:			set ragent [$self create-blackholeaodv-agent $node]
+
+
+864:Simulator instproc create-blackholeaodv-agent { node } {
+866:	set ragent [new Agent/blackholeAODV [$node node-addr]]
