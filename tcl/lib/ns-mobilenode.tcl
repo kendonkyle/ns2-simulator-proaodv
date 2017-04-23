@@ -197,6 +197,12 @@ Node/MobileNode instproc add-target { agent port } {
 	if {$aodvonly != -1 } {
 		$agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC
 	}
+    
+    # Special processing for AODV
+	set proaodvonly [string first "PROAODV" [$agent info class]] 
+	if {$aodvonly != -1 } {
+		$agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC
+	}
 	
 	#<zheng: add>
 	# Special processing for ZBR

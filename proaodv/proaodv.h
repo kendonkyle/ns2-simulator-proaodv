@@ -28,8 +28,8 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 
 */
 
-#ifndef __aodv_h__
-#define __aodv_h__
+#ifndef __proaodv_h__
+#define __proaodv_h__
 
 //#include <agent.h>
 //#include <packet.h>
@@ -39,8 +39,8 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 
 #include <cmu-trace.h>
 #include <priqueue.h>
-#include <aodv/aodv_rtable.h>
-#include <aodv/aodv_rqueue.h>
+#include <proaodv/proaodv_rtable.h>
+#include <proaodv/proaodv_rqueue.h>
 #include <classifier/classifier-port.h>
 
 /*
@@ -71,7 +71,7 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 //#define AODV_USE_GOD_FEEDBACK
 
 
-class AODV;
+class PROAODV;
 
 #define MY_ROUTE_TIMEOUT        10                      	// 100 seconds
 #define ACTIVE_ROUTE_TIMEOUT    10				// 50 seconds
@@ -125,48 +125,48 @@ class AODV;
 /*
   Timers (Broadcast ID, Hello, Neighbor Cache, Route Cache)
 */
-class BroadcastTimer : public Handler {
+class ProAodvBroadcastTimer : public Handler {
 public:
-        BroadcastTimer(AODV* a) : agent(a) {}
+        ProAodvBroadcastTimer(PROAODV* a) : agent(a) {}
         void	handle(Event*);
 private:
-        AODV    *agent;
+        PROAODV    *agent;
 	Event	intr;
 };
 
-class HelloTimer : public Handler {
+class ProAodvHelloTimer : public Handler {
 public:
-        HelloTimer(AODV* a) : agent(a) {}
+        ProAodvHelloTimer(PROAODV* a) : agent(a) {}
         void	handle(Event*);
 private:
-        AODV    *agent;
+        PROAODV    *agent;
 	Event	intr;
 };
 
-class NeighborTimer : public Handler {
+class ProAodvNeighborTimer : public Handler {
 public:
-        NeighborTimer(AODV* a) : agent(a) {}
+        ProAodvNeighborTimer(PROAODV* a) : agent(a) {}
         void	handle(Event*);
 private:
-        AODV    *agent;
+        PROAODV    *agent;
 	Event	intr;
 };
 
-class RouteCacheTimer : public Handler {
+class ProAodvRouteCacheTimer : public Handler {
 public:
-        RouteCacheTimer(AODV* a) : agent(a) {}
+        ProAodvRouteCacheTimer(PROAODV* a) : agent(a) {}
         void	handle(Event*);
 private:
-        AODV    *agent;
+        PROAODV    *agent;
 	Event	intr;
 };
 
-class LocalRepairTimer : public Handler {
+class ProAodvLocalRepairTimer : public Handler {
 public:
-        LocalRepairTimer(AODV* a) : agent(a) {}
+        ProAodvLocalRepairTimer(PROAODV* a) : agent(a) {}
         void	handle(Event*);
 private:
-        AODV    *agent;
+        PROAODV    *agent;
 	Event	intr;
 };
 
@@ -174,40 +174,41 @@ private:
 /*
   Broadcast ID Cache
 */
-class BroadcastID {
-        friend class AODV;
+class ProAodvBroadcastID {
+        friend class PROAODV;
  public:
-        BroadcastID(nsaddr_t i, u_int32_t b) { src = i; id = b;  }
+        ProAodvBroadcastID(nsaddr_t i, u_int32_t b) { src = i; id = b;  }
  protected:
-        LIST_ENTRY(BroadcastID) link;
+        LIST_ENTRY(ProAodvBroadcastID) link;
         nsaddr_t        src;
         u_int32_t       id;
         double          expire;         // now + BCAST_ID_SAVE s
 };
 
-LIST_HEAD(aodv_bcache, BroadcastID);
+LIST_HEAD(aodv_bcache, ProAodvBroadcastID);
 
 
 /*
   The Routing Agent
 */
-class AODV: public Agent {
+class PROAODV: public Agent {
 
   /*
    * make some friends first 
    */
 
-        friend class aodv_rt_entry;
-        friend class BroadcastTimer;
-        friend class HelloTimer;
-        friend class NeighborTimer;
-        friend class RouteCacheTimer;
-        friend class LocalRepairTimer;
+        friend class proaodv_rt_entry;
+        friend class ProAodvBroadcastTimer;
+        friend class ProAodvHelloTimer;
+        friend class ProAodvNeighborTimer;
+        friend class ProAodvRouteCacheTimer;
+        friend class ProAodvLocalRepairTimer;
 
  public:
-        AODV(nsaddr_t id);
+        PROAODV(nsaddr_t id);
 
         void		recv(Packet *p, Handler *);
+        bool        isClusterhead();
 
  protected:
         int             command(int, const char *const *);
@@ -217,25 +218,25 @@ class AODV: public Agent {
          * Route Table Management
          */
         void            rt_resolve(Packet *p);
-        void            rt_update(aodv_rt_entry *rt, u_int32_t seqnum,
+        void            rt_update(proaodv_rt_entry *rt, u_int32_t seqnum,
 		     	  	u_int16_t metric, nsaddr_t nexthop,
 		      		double expire_time);
-        void            rt_down(aodv_rt_entry *rt);
-        void            local_rt_repair(aodv_rt_entry *rt, Packet *p);
+        void            rt_down(proaodv_rt_entry *rt);
+        void            local_rt_repair(proaodv_rt_entry *rt, Packet *p);
  public:
         void            rt_ll_failed(Packet *p);
         void            handle_link_failure(nsaddr_t id);
  protected:
         void            rt_purge(void);
 
-        void            enque(aodv_rt_entry *rt, Packet *p);
-        Packet*         deque(aodv_rt_entry *rt);
+        void            enque(proaodv_rt_entry *rt, Packet *p);
+        Packet*         deque(proaodv_rt_entry *rt);
 
         /*
          * Neighbor Management
          */
         void            nb_insert(nsaddr_t id);
-        AODV_Neighbor*       nb_lookup(nsaddr_t id);
+        PROAODV_Neighbor*       nb_lookup(nsaddr_t id);
         void            nb_delete(nsaddr_t id);
         void            nb_purge(void);
 
@@ -250,8 +251,9 @@ class AODV: public Agent {
         /*
          * Packet TX Routines
          */
-        void            forward(aodv_rt_entry *rt, Packet *p, double delay);
+        void            forward(proaodv_rt_entry *rt, Packet *p, double delay);
         void            sendHello(void);
+        void            sendChMsg(nsaddr_t src);
         void            sendRequest(nsaddr_t dst);
 
         void            sendReply(nsaddr_t ipdst, u_int32_t hop_count,
@@ -262,8 +264,9 @@ class AODV: public Agent {
         /*
          * Packet RX Routines
          */
-        void            recvAODV(Packet *p);
+        void            recvPROAODV(Packet *p);
         void            recvHello(Packet *p);
+        void            recvChMsg(Packet *p);
         void            recvRequest(Packet *p);
         void            recvReply(Packet *p);
         void            recvError(Packet *p);
@@ -272,35 +275,35 @@ class AODV: public Agent {
 	 * History management
 	 */
 	
-	double 		PerHopTime(aodv_rt_entry *rt);
+	double 		PerHopTime(proaodv_rt_entry *rt);
 
 
         nsaddr_t        index;                  // IP Address of this node
         u_int32_t       seqno;                  // Sequence Number
         int             bid;                    // Broadcast ID
 
-        aodv_rtable         rthead;                 // routing table
-        aodv_ncache         nbhead;                 // Neighbor Cache
+        proaodv_rtable         rthead;                 // routing table
+        proaodv_ncache         nbhead;                 // Neighbor Cache
         aodv_bcache          bihead;                 // Broadcast ID Cache
 
         /*
          * Timers
          */
-        BroadcastTimer  btimer;
-        HelloTimer      htimer;
-        NeighborTimer   ntimer;
-        RouteCacheTimer rtimer;
-        LocalRepairTimer lrtimer;
+        ProAodvBroadcastTimer  btimer;
+        ProAodvHelloTimer      htimer;
+        ProAodvNeighborTimer   ntimer;
+        ProAodvRouteCacheTimer rtimer;
+        ProAodvLocalRepairTimer lrtimer;
 
         /*
          * Routing Table
          */
-        aodv_rtable          rtable;
+        proaodv_rtable          rtable;
         /*
          *  A "drop-front" queue used by the routing layer to buffer
          *  packets to which it does not have a route.
          */
-        aodv_rqueue         rqueue;
+        proaodv_rqueue         rqueue;
 
         /*
          * A mechanism for logging the contents of the routing
@@ -323,7 +326,12 @@ class AODV: public Agent {
 
 	/* for passing packets up to agents */
 	PortClassifier *dmux_;
-
+    
+    /**
+     * Cluster Head management
+     */
+    int clusterhead;
+    bool sendSM;
 };
 
 #endif /* __aodv_h__ */

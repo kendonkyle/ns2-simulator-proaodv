@@ -89,6 +89,7 @@ PriQueue::recv(Packet *p, Handler *h)
 		case PT_DSR:
 		case PT_MESSAGE:
                 case PT_TORA:
+                case PT_PROAODV:
                 case PT_AODV:
 		case PT_AOMDV:
 		case PT_MDART:

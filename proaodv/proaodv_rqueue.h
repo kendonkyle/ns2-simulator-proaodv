@@ -29,8 +29,8 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 */
 
 
-#ifndef __aodv_rqueue_h__
-#define __aodv_rqueue_h_
+#ifndef __proaodv_rqueue_h__
+#define __proaodv_rqueue_h_
 
 //#include <packet.h>
 #include <ip.h>
@@ -39,17 +39,17 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 /*
  * The maximum number of packets that we allow a routing protocol to buffer.
  */
-#define AODV_RTQ_MAX_LEN     64      // packets
+#define PROAODV_RTQ_MAX_LEN     64      // packets
 
 /*
  *  The maximum period of time that a routing protocol is allowed to buffer
  *  a packet for.
  */
-#define AODV_RTQ_TIMEOUT     30	// seconds
+#define PROAODV_RTQ_TIMEOUT     30	// seconds
 
-class aodv_rqueue : public Connector {
+class proaodv_rqueue : public Connector {
  public:
-        aodv_rqueue();
+        proaodv_rqueue();
 
         void            recv(Packet *, Handler*) { abort(); }
 
@@ -89,4 +89,4 @@ class aodv_rqueue : public Connector {
 
 };
 
-#endif /* __aodv_rqueue_h__ */
+#endif /* __proaodv_rqueue_h__ */

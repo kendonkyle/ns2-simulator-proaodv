@@ -170,6 +170,7 @@ set protolist {
         LRWPAN  # zheng, wpan/p802_15_4mac.cc
 	Mac 	# network wireless stack
 # Mobility, Ad-Hoc Networks, Sensor Nets:
+	PROAODV	# routing protocol for ad-hoc networks
 	AODV 	# routing protocol for ad-hoc networks
 	Diffusion 	# diffusion/diffusion.cc
 	IMEP 	# Internet MANET Encapsulation Protocol, for ad-hoc networks

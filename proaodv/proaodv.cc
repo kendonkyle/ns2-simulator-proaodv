@@ -30,8 +30,8 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 
 //#include <ip.h>
 
-#include <aodv/aodv.h>
-#include <aodv/aodv_packet.h>
+#include <proaodv/proaodv.h>
+#include <proaodv/proaodv_packet.h>
 #include <random.h>
 #include <cmu-trace.h>
 //#include <energy-model.h>
@@ -39,7 +39,7 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #define max(a,b)        ( (a) > (b) ? (a) : (b) )
 #define CURRENT_TIME    Scheduler::instance().clock()
 
-//#define DEBUG
+#define DEBUG = true;
 //#define ERROR
 
 #ifdef DEBUG
@@ -52,28 +52,28 @@ static int route_request = 0;
 */
 
 
-int hdr_aodv::offset_;
-static class AODVHeaderClass : public PacketHeaderClass {
+int hdr_proaodv::offset_;
+static class PROAODVHeaderClass : public PacketHeaderClass {
 public:
-        AODVHeaderClass() : PacketHeaderClass("PacketHeader/AODV",
-                                              sizeof(hdr_all_aodv)) {
-	  bind_offset(&hdr_aodv::offset_);
+        PROAODVHeaderClass() : PacketHeaderClass("PacketHeader/PROAODV",
+                                              sizeof(hdr_all_proaodv)) {
+	  bind_offset(&hdr_proaodv::offset_);
 	} 
 } class_rtProtoAODV_hdr;
 
-static class AODVclass : public TclClass {
+static class PROAODVclass : public TclClass {
 public:
-        AODVclass() : TclClass("Agent/AODV") {}
+        PROAODVclass() : TclClass("Agent/PROAODV") {}
         TclObject* create(int argc, const char*const* argv) {
           assert(argc == 5);
           //return (new AODV((nsaddr_t) atoi(argv[4])));
-	  return (new AODV((nsaddr_t) Address::instance().str2addr(argv[4])));
+	  return (new PROAODV((nsaddr_t) Address::instance().str2addr(argv[4])));
         }
 } class_rtProtoAODV;
 
 
 int
-AODV::command(int argc, const char*const* argv) {
+PROAODV::command(int argc, const char*const* argv) {
   if(argc == 2) {
   Tcl& tcl = Tcl::instance();
     
@@ -81,6 +81,14 @@ AODV::command(int argc, const char*const* argv) {
       tcl.resultf("%d", index);
       return TCL_OK;
     }
+  if(strncasecmp(argv[1],"clusterh", 8) == 0)  {
+    fprintf(stderr,"node %d, has clusterhead = %d : command is %s\n", index, clusterhead, argv[1]);
+    this->clusterhead = 99;
+#ifdef DEBUG
+    fprintf(stderr,"node %d, has clusterhead = %d : command is %s\n", index, clusterhead, argv[1]);
+#endif
+    return TCL_OK;
+  }
     
     if(strncasecmp(argv[1], "start", 2) == 0) {
       btimer.handle((Event*) 0);
@@ -135,14 +143,15 @@ AODV::command(int argc, const char*const* argv) {
    Constructor
 */
 
-AODV::AODV(nsaddr_t id) : Agent(PT_AODV),
+PROAODV::PROAODV(nsaddr_t id) : Agent(PT_PROAODV),
 			  btimer(this), htimer(this), ntimer(this), 
 			  rtimer(this), lrtimer(this), rqueue() {
- 
-                
+//    bind
   index = id;
   seqno = 2;
   bid = 1;
+  clusterhead = 1;
+//  bind("clusterhead_", &clusterhead); 
 
   LIST_INIT(&nbhead);
   LIST_INIT(&bihead);
@@ -156,13 +165,13 @@ AODV::AODV(nsaddr_t id) : Agent(PT_AODV),
 */
 
 void
-BroadcastTimer::handle(Event*) {
+ProAodvBroadcastTimer::handle(Event*) {
   agent->id_purge();
   Scheduler::instance().schedule(this, &intr, BCAST_ID_SAVE);
 }
 
 void
-HelloTimer::handle(Event*) {
+ProAodvHelloTimer::handle(Event*) {
    agent->sendHello();
    double interval = MinHelloInterval + 
                  ((MaxHelloInterval - MinHelloInterval) * Random::uniform());
@@ -171,21 +180,21 @@ HelloTimer::handle(Event*) {
 }
 
 void
-NeighborTimer::handle(Event*) {
+ProAodvNeighborTimer::handle(Event*) {
   agent->nb_purge();
   Scheduler::instance().schedule(this, &intr, HELLO_INTERVAL);
 }
 
 void
-RouteCacheTimer::handle(Event*) {
+ProAodvRouteCacheTimer::handle(Event*) {
   agent->rt_purge();
 #define FREQUENCY 0.5 // sec
   Scheduler::instance().schedule(this, &intr, FREQUENCY);
 }
 
 void
-LocalRepairTimer::handle(Event* p)  {  // SRD: 5/4/99
-aodv_rt_entry *rt;
+ProAodvLocalRepairTimer::handle(Event* p)  {  // SRD: 5/4/99
+proaodv_rt_entry *rt;
 struct hdr_ip *ih = HDR_IP( (Packet *)p);
 
    /* you get here after the timeout in a local repair attempt */
@@ -218,8 +227,8 @@ struct hdr_ip *ih = HDR_IP( (Packet *)p);
 
 
 void
-AODV::id_insert(nsaddr_t id, u_int32_t bid) {
-BroadcastID *b = new BroadcastID(id, bid);
+PROAODV::id_insert(nsaddr_t id, u_int32_t bid) {
+ProAodvBroadcastID *b = new ProAodvBroadcastID(id, bid);
 
  assert(b);
  b->expire = CURRENT_TIME + BCAST_ID_SAVE;
@@ -228,8 +237,8 @@ BroadcastID *b = new BroadcastID(id, bid);
 
 /* SRD */
 bool
-AODV::id_lookup(nsaddr_t id, u_int32_t bid) {
-BroadcastID *b = bihead.lh_first;
+PROAODV::id_lookup(nsaddr_t id, u_int32_t bid) {
+ProAodvBroadcastID *b = bihead.lh_first;
  
  // Search the list for a match of source and bid
  for( ; b; b = b->link.le_next) {
@@ -240,9 +249,9 @@ BroadcastID *b = bihead.lh_first;
 }
 
 void
-AODV::id_purge() {
-BroadcastID *b = bihead.lh_first;
-BroadcastID *bn;
+PROAODV::id_purge() {
+ProAodvBroadcastID *b = bihead.lh_first;
+ProAodvBroadcastID *bn;
 double now = CURRENT_TIME;
 
  for(; b; b = bn) {
@@ -259,7 +268,7 @@ double now = CURRENT_TIME;
 */
 
 double
-AODV::PerHopTime(aodv_rt_entry *rt) {
+PROAODV::PerHopTime(proaodv_rt_entry *rt) {
 int num_non_zero = 0, i;
 double total_latency = 0.0;
 
@@ -284,21 +293,21 @@ double total_latency = 0.0;
 */
 
 static void
-aodv_rt_failed_callback(Packet *p, void *arg) {
-  ((AODV*) arg)->rt_ll_failed(p);
+proaodv_rt_failed_callback(Packet *p, void *arg) {
+  ((PROAODV*) arg)->rt_ll_failed(p);
 }
 
 /*
  * This routine is invoked when the link-layer reports a route failed.
  */
 void
-AODV::rt_ll_failed(Packet *p) {
+PROAODV::rt_ll_failed(Packet *p) {
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-aodv_rt_entry *rt;
+proaodv_rt_entry *rt;
 nsaddr_t broken_nbr = ch->next_hop_;
 
-#ifndef AODV_LINK_LAYER_DETECTION
+#ifndef PROAODV_LINK_LAYER_DETECTION
  drop(p, DROP_RTR_MAC_CALLBACK);
 #else 
 
@@ -317,7 +326,7 @@ nsaddr_t broken_nbr = ch->next_hop_;
   }
   log_link_del(ch->next_hop_);
 
-#ifdef AODV_LOCAL_REPAIR
+#ifdef PROAODV_LOCAL_REPAIR
   /* if the broken link is closer to the dest than source, 
      attempt a local repair. Otherwise, bring down the route. */
 
@@ -345,10 +354,10 @@ while((p = ifqueue->filter(broken_nbr))) {
 }
 
 void
-AODV::handle_link_failure(nsaddr_t id) {
-aodv_rt_entry *rt, *rtn;
+PROAODV::handle_link_failure(nsaddr_t id) {
+proaodv_rt_entry *rt, *rtn;
 Packet *rerr = Packet::alloc();
-struct hdr_aodv_error *re = HDR_AODV_ERROR(rerr);
+struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(rerr);
 
  re->DestCount = 0;
  for(rt = rtable.head(); rt; rt = rtn) {  // for each rt entry
@@ -383,7 +392,7 @@ struct hdr_aodv_error *re = HDR_AODV_ERROR(rerr);
 }
 
 void
-AODV::local_rt_repair(aodv_rt_entry *rt, Packet *p) {
+PROAODV::local_rt_repair(proaodv_rt_entry *rt, Packet *p) {
 #ifdef DEBUG
   fprintf(stderr,"%s: Dst - %d\n", __FUNCTION__, rt->rt_dst); 
 #endif  
@@ -400,7 +409,7 @@ AODV::local_rt_repair(aodv_rt_entry *rt, Packet *p) {
 }
 
 void
-AODV::rt_update(aodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
+PROAODV::rt_update(proaodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
 	       	nsaddr_t nexthop, double expire_time) {
 
      rt->rt_seqno = seqnum;
@@ -411,7 +420,7 @@ AODV::rt_update(aodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
 }
 
 void
-AODV::rt_down(aodv_rt_entry *rt) {
+PROAODV::rt_down(proaodv_rt_entry *rt) {
   /*
    *  Make sure that you don't "down" a route more than once.
    */
@@ -434,16 +443,16 @@ AODV::rt_down(aodv_rt_entry *rt) {
 */
 
 void
-AODV::rt_resolve(Packet *p) {
+PROAODV::rt_resolve(Packet *p) {
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-aodv_rt_entry *rt;
+proaodv_rt_entry *rt;
 
  /*
   *  Set the transmit failure callback.  That
   *  won't change.
   */
- ch->xmit_failure_ = aodv_rt_failed_callback;
+ ch->xmit_failure_ = proaodv_rt_failed_callback;
  ch->xmit_failure_data_ = (void*) this;
 	rt = rtable.rt_lookup(ih->daddr());
  if(rt == 0) {
@@ -478,7 +487,7 @@ aodv_rt_entry *rt;
   */
  else {
  Packet *rerr = Packet::alloc();
- struct hdr_aodv_error *re = HDR_AODV_ERROR(rerr);
+ struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(rerr);
  /* 
   * For now, drop the packet and send error upstream.
   * Now the route errors are broadcast to upstream
@@ -501,8 +510,8 @@ aodv_rt_entry *rt;
 }
 
 void
-AODV::rt_purge() {
-aodv_rt_entry *rt, *rtn;
+PROAODV::rt_purge() {
+proaodv_rt_entry *rt, *rtn;
 double now = CURRENT_TIME;
 double delay = 0.0;
 Packet *p;
@@ -554,7 +563,7 @@ Packet *p;
 */
 
 void
-AODV::recv(Packet *p, Handler*) {
+PROAODV::recv(Packet *p, Handler*) {
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
 
@@ -562,9 +571,9 @@ struct hdr_ip *ih = HDR_IP(p);
  //assert(p->incoming == 0);
  // XXXXX NOTE: use of incoming flag has been depracated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
 
- if(ch->ptype() == PT_AODV) {
+ if(ch->ptype() == PT_PROAODV) {
    ih->ttl_ -= 1;
-   recvAODV(p);
+   recvPROAODV(p);
    return;
  }
 
@@ -610,13 +619,13 @@ else if(ih->saddr() == index) {
  if ( (u_int32_t)ih->daddr() != IP_BROADCAST)
    rt_resolve(p);
  else
-   forward((aodv_rt_entry*) 0, p, NO_DELAY);
+   forward((proaodv_rt_entry*) 0, p, NO_DELAY);
 }
 
 
 void
-AODV::recvAODV(Packet *p) {
- struct hdr_aodv *ah = HDR_AODV(p);
+PROAODV::recvPROAODV(Packet *p) {
+ struct hdr_proaodv *ah = HDR_PROAODV(p);
 
  assert(HDR_IP (p)->sport() == RT_PORT);
  assert(HDR_IP (p)->dport() == RT_PORT);
@@ -626,20 +635,28 @@ AODV::recvAODV(Packet *p) {
   */
  switch(ah->ah_type) {
 
- case AODVTYPE_RREQ:
+ case PROAODVTYPE_RREQ:
    recvRequest(p);
    break;
 
- case AODVTYPE_RREP:
+ case PROAODVTYPE_RREP:
    recvReply(p);
+   if(this->sendSM){
+       struct hdr_proaodv_reply *mrp = HDR_PROAODV_REPLY(p);
+       sendChMsg(mrp->rp_src);
+   }
    break;
 
- case AODVTYPE_RERR:
+ case PROAODVTYPE_RERR:
    recvError(p);
    break;
 
- case AODVTYPE_HELLO:
+ case PROAODVTYPE_HELLO:
    recvHello(p);
+   break;
+   
+ case PROAODVTYPE_SP_MSG:
+   recvChMsg(p);
    break;
         
  default:
@@ -651,10 +668,10 @@ AODV::recvAODV(Packet *p) {
 
 
 void
-AODV::recvRequest(Packet *p) {
+PROAODV::recvRequest(Packet *p) {
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_request *rq = HDR_AODV_REQUEST(p);
-aodv_rt_entry *rt;
+struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+proaodv_rt_entry *rt;
 
   /*
    * Drop if:
@@ -692,7 +709,7 @@ aodv_rt_entry *rt;
   * REPLY. Before we do anything, we make sure that the REVERSE
   * route is in the route table.
   */
- aodv_rt_entry *rt0; // rt0 is the reverse route 
+ proaodv_rt_entry *rt0; // rt0 is the reverse route 
    
    rt0 = rtable.rt_lookup(rq->rq_src);
    if(rt0 == 0) { /* if not in the route table */
@@ -814,18 +831,18 @@ rt_update(rt0, rq->rq_src_seqno, rq->rq_hop_count, ih->saddr(),
    rq->rq_hop_count += 1;
    // Maximum sequence number seen en route
    if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
-   forward((aodv_rt_entry*) 0, p, DELAY);
+   forward((proaodv_rt_entry*) 0, p, DELAY);
  }
 
 }
 
 
 void
-AODV::recvReply(Packet *p) {
+PROAODV::recvReply(Packet *p) {
 //struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_reply *rp = HDR_AODV_REPLY(p);
-aodv_rt_entry *rt;
+struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+proaodv_rt_entry *rt;
 char suppress_reply = 0;
 double delay = 0.0;
 	
@@ -880,6 +897,8 @@ if (ih->daddr() == index) { // If I am the original source
     rt->hist_indx = (rt->hist_indx + 1) % MAX_HISTORY;
   }	
 
+//  sendChMsg(rp->rp_src);
+  this->sendSM = true;
   /*
    * Send all packets queued in the sendbuffer destined for
    * this destination. 
@@ -912,7 +931,7 @@ if(ih->daddr() == index || suppress_reply) {
   */
  else {
  // Find the rt entry
-aodv_rt_entry *rt0 = rtable.rt_lookup(ih->daddr());
+proaodv_rt_entry *rt0 = rtable.rt_lookup(ih->daddr());
    // If the rt is up, forward
    if(rt0 && (rt0->rt_hops != INFINITY2)) {
         assert (rt0->rt_flags == RTF_UP);
@@ -936,13 +955,13 @@ aodv_rt_entry *rt0 = rtable.rt_lookup(ih->daddr());
 
 
 void
-AODV::recvError(Packet *p) {
+PROAODV::recvError(Packet *p) {
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_error *re = HDR_AODV_ERROR(p);
-aodv_rt_entry *rt;
+struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(p);
+proaodv_rt_entry *rt;
 u_int8_t i;
 Packet *rerr = Packet::alloc();
-struct hdr_aodv_error *nre = HDR_AODV_ERROR(rerr);
+struct hdr_proaodv_error *nre = HDR_PROAODV_ERROR(rerr);
 
  nre->DestCount = 0;
 
@@ -998,7 +1017,7 @@ struct hdr_aodv_error *nre = HDR_AODV_ERROR(rerr);
 */
 
 void
-AODV::forward(aodv_rt_entry *rt, Packet *p, double delay) {
+PROAODV::forward(proaodv_rt_entry *rt, Packet *p, double delay) {
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
 
@@ -1012,7 +1031,7 @@ struct hdr_ip *ih = HDR_IP(p);
   return;
  }
 
- if ((( ch->ptype() != PT_AODV && ch->direction() == hdr_cmn::UP ) &&
+ if ((( ch->ptype() != PT_PROAODV && ch->direction() == hdr_cmn::UP ) &&
 	((u_int32_t)ih->daddr() == IP_BROADCAST))
 		|| (ih->daddr() == here_.addr_)) {
 	dmux_->recv(p,0);
@@ -1027,7 +1046,7 @@ struct hdr_ip *ih = HDR_IP(p);
    ch->direction() = hdr_cmn::DOWN;       //important: change the packet's direction
  }
  else { // if it is a broadcast packet
-   // assert(ch->ptype() == PT_AODV); // maybe a diff pkt type like gaf
+   // assert(ch->ptype() == PT_PROAODV); // maybe a diff pkt type like gaf
    assert(ih->daddr() == (nsaddr_t) IP_BROADCAST);
    ch->addr_type() = NS_AF_NONE;
    ch->direction() = hdr_cmn::DOWN;       //important: change the packet's direction
@@ -1036,7 +1055,7 @@ struct hdr_ip *ih = HDR_IP(p);
 if (ih->daddr() == (nsaddr_t) IP_BROADCAST) {
  // If it is a broadcast packet
    assert(rt == 0);
-   if (ch->ptype() == PT_AODV) {
+   if (ch->ptype() == PT_PROAODV) {
      /*
       *  Jitter the sending of AODV broadcast packets by 10ms
       */
@@ -1060,13 +1079,13 @@ if (ih->daddr() == (nsaddr_t) IP_BROADCAST) {
 
 
 void
-AODV::sendRequest(nsaddr_t dst) {
+PROAODV::sendRequest(nsaddr_t dst) {
 // Allocate a RREQ packet 
 Packet *p = Packet::alloc();
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_request *rq = HDR_AODV_REQUEST(p);
-aodv_rt_entry *rt = rtable.rt_lookup(dst);
+struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+proaodv_rt_entry *rt = rtable.rt_lookup(dst);
 
  assert(rt);
 
@@ -1154,7 +1173,7 @@ aodv_rt_entry *rt = rtable.rt_lookup(dst);
 
  // Fill out the RREQ packet 
  // ch->uid() = 0;
- ch->ptype() = PT_AODV;
+ ch->ptype() = PT_PROAODV;
  ch->size() = IP_HDR_LEN + rq->size();
  ch->iface() = -2;
  ch->error() = 0;
@@ -1167,7 +1186,7 @@ aodv_rt_entry *rt = rtable.rt_lookup(dst);
  ih->dport() = RT_PORT;
 
  // Fill up some more fields. 
- rq->rq_type = AODVTYPE_RREQ;
+ rq->rq_type = PROAODVTYPE_RREQ;
  rq->rq_hop_count = 1;
  rq->rq_bcast_id = bid++;
  rq->rq_dst = dst;
@@ -1183,20 +1202,20 @@ aodv_rt_entry *rt = rtable.rt_lookup(dst);
 }
 
 void
-AODV::sendReply(nsaddr_t ipdst, u_int32_t hop_count, nsaddr_t rpdst,
+PROAODV::sendReply(nsaddr_t ipdst, u_int32_t hop_count, nsaddr_t rpdst,
                 u_int32_t rpseq, u_int32_t lifetime, double timestamp) {
 Packet *p = Packet::alloc();
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_reply *rp = HDR_AODV_REPLY(p);
-aodv_rt_entry *rt = rtable.rt_lookup(ipdst);
+struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+proaodv_rt_entry *rt = rtable.rt_lookup(ipdst);
 
 #ifdef DEBUG
 fprintf(stderr, "sending Reply from %d at %.2f\n", index, Scheduler::instance().clock());
 #endif // DEBUG
  assert(rt);
 
- rp->rp_type = AODVTYPE_RREP;
+ rp->rp_type = PROAODVTYPE_RREP;
  //rp->rp_flags = 0x00;
  rp->rp_hop_count = hop_count;
  rp->rp_dst = rpdst;
@@ -1206,7 +1225,7 @@ fprintf(stderr, "sending Reply from %d at %.2f\n", index, Scheduler::instance().
  rp->rp_timestamp = timestamp;
    
  // ch->uid() = 0;
- ch->ptype() = PT_AODV;
+ ch->ptype() = PT_PROAODV;
  ch->size() = IP_HDR_LEN + rp->size();
  ch->iface() = -2;
  ch->error() = 0;
@@ -1226,21 +1245,21 @@ fprintf(stderr, "sending Reply from %d at %.2f\n", index, Scheduler::instance().
 }
 
 void
-AODV::sendError(Packet *p, bool jitter) {
+PROAODV::sendError(Packet *p, bool jitter) {
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_error *re = HDR_AODV_ERROR(p);
+struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(p);
     
 #ifdef ERROR
 fprintf(stderr, "sending Error from %d at %.2f\n", index, Scheduler::instance().clock());
 #endif // DEBUG
 
- re->re_type = AODVTYPE_RERR;
+ re->re_type = PROAODVTYPE_RERR;
  //re->reserved[0] = 0x00; re->reserved[1] = 0x00;
  // DestCount and list of unreachable destinations are already filled
 
  // ch->uid() = 0;
- ch->ptype() = PT_AODV;
+ ch->ptype() = PT_PROAODV;
  ch->size() = IP_HDR_LEN + re->size();
  ch->iface() = -2;
  ch->error() = 0;
@@ -1269,17 +1288,18 @@ fprintf(stderr, "sending Error from %d at %.2f\n", index, Scheduler::instance().
 */
 
 void
-AODV::sendHello() {
+PROAODV::sendHello() {
 Packet *p = Packet::alloc();
 struct hdr_cmn *ch = HDR_CMN(p);
 struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_reply *rh = HDR_AODV_REPLY(p);
+struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
 
 #ifdef DEBUG
 fprintf(stderr, "sending Hello from %d at %.2f\n", index, Scheduler::instance().clock());
 #endif // DEBUG
 
- rh->rp_type = AODVTYPE_HELLO;
+ rh->rp_type = PROAODVTYPE_HELLO;
+// rh->clusterhead = clusterhead;
  //rh->rp_flags = 0x00;
  rh->rp_hop_count = 1;
  rh->rp_dst = index;
@@ -1287,7 +1307,7 @@ fprintf(stderr, "sending Hello from %d at %.2f\n", index, Scheduler::instance().
  rh->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
 
  // ch->uid() = 0;
- ch->ptype() = PT_AODV;
+ ch->ptype() = PT_PROAODV;
  ch->size() = IP_HDR_LEN + rh->size();
  ch->iface() = -2;
  ch->error() = 0;
@@ -1303,13 +1323,14 @@ fprintf(stderr, "sending Hello from %d at %.2f\n", index, Scheduler::instance().
  Scheduler::instance().schedule(target_, p, 0.0);
 }
 
-
 void
-AODV::recvHello(Packet *p) {
+PROAODV::recvHello(Packet *p) {
 //struct hdr_ip *ih = HDR_IP(p);
-struct hdr_aodv_reply *rp = HDR_AODV_REPLY(p);
-AODV_Neighbor *nb;
-
+struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+PROAODV_Neighbor *nb;
+//if(rp->clusterhead) {
+//  // do something
+//}
  nb = nb_lookup(rp->rp_dst);
  if(nb == 0) {
    nb_insert(rp->rp_dst);
@@ -1322,9 +1343,97 @@ AODV_Neighbor *nb;
  Packet::free(p);
 }
 
+/**
+ * Reveice Special Message Packet
+ * @param p
+ * @return 
+ */
 void
-AODV::nb_insert(nsaddr_t id) {
-AODV_Neighbor *nb = new AODV_Neighbor(id);
+PROAODV::recvChMsg(Packet *p) {
+#ifdef DEBUG
+    fprintf(stdout, "Node %d Received Cluster Head a Special Message at %.2f\n", index, Scheduler::instance().clock());
+#endif
+    if(!isClusterhead()) {
+        #ifdef DEBUG
+            fprintf(stdout, "I (%d) am not a Cluster Head Discarding at %.2f\n", index, Scheduler::instance().clock());
+        #endif
+        Packet::free(p);
+    }
+    else {
+        #ifdef DEBUG
+            fprintf(stdout, "I am a Cluster Head Processing at %.2f\n", Scheduler::instance().clock());
+        #endif
+        //struct hdr_ip *ih = HDR_IP(p);
+        struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+        struct hdr_proaodv_sp_msg *sp = HDR_PROAODV_SP_MSG(p);
+        PROAODV_Neighbor *nb;
+        //if(rp->clusterhead) {
+        //  // do something
+        //}
+         nb = nb_lookup(rp->rp_dst);
+         if(nb == 0) {
+           // neighbor is not in local routing table we should forward the packet to other Clusterheads/
+         }
+         else {
+           // Neighbor is on Local Table We will monitor
+         }
+
+         Packet::free(p);
+    }
+}
+
+/**
+ * Send the Special message to the cluster head
+ */
+void 
+PROAODV::sendChMsg(nsaddr_t src) {
+Packet *p = Packet::alloc();
+struct hdr_cmn *ch = HDR_CMN(p);
+struct hdr_ip *ih = HDR_IP(p);
+struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
+struct hdr_proaodv_sp_msg *smh = HDR_PROAODV_SP_MSG(p);
+
+#ifdef DEBUG
+//fprintf(stderr, "sending Cluster Head a Special Message from %d at %.2f\n", index, Scheduler::instance().clock());
+fprintf(stdout, "sending Cluster Head a Special Message from %d at %.2f\n", index, Scheduler::instance().clock());
+#endif // DEBUG
+
+ smh->rrp_dst = src;
+ rh->rp_type = PROAODVTYPE_SP_MSG;
+ rh->rp_hop_count = 1;
+ rh->rp_dst = index;
+ rh->rp_dst_seqno = seqno;
+ rh->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
+#ifdef DEBUG
+fprintf(stdout, "Filled out SP_MSH_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
+#endif // DEBUG
+ // ch->uid() = 0;
+ ch->ptype() = PT_PROAODV;
+ ch->size() = IP_HDR_LEN + smh->size();
+ ch->iface() = -2;
+ ch->error() = 0;
+ ch->addr_type() = NS_AF_NONE;
+ ch->prev_hop_ = index;          // AODV hack
+#ifdef DEBUG
+fprintf(stdout, "Filled out CH FROM %d at %.2f\n", index, Scheduler::instance().clock());
+#endif // DEBUG
+
+ ih->saddr() = index;
+ ih->daddr() = IP_BROADCAST;
+ ih->sport() = RT_PORT;
+ ih->dport() = RT_PORT;
+ ih->ttl_ = 1;
+ 
+#ifdef DEBUG
+fprintf(stdout, "Filled out IP_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
+#endif // DEBUG
+
+ Scheduler::instance().schedule(target_, p, 0.0);
+}
+
+void
+PROAODV::nb_insert(nsaddr_t id) {
+PROAODV_Neighbor *nb = new PROAODV_Neighbor(id);
 
  assert(nb);
  nb->nb_expire = CURRENT_TIME +
@@ -1335,9 +1444,9 @@ AODV_Neighbor *nb = new AODV_Neighbor(id);
 }
 
 
-AODV_Neighbor*
-AODV::nb_lookup(nsaddr_t id) {
-AODV_Neighbor *nb = nbhead.lh_first;
+PROAODV_Neighbor*
+PROAODV::nb_lookup(nsaddr_t id) {
+PROAODV_Neighbor *nb = nbhead.lh_first;
 
  for(; nb; nb = nb->nb_link.le_next) {
    if(nb->nb_addr == id) break;
@@ -1351,8 +1460,8 @@ AODV_Neighbor *nb = nbhead.lh_first;
  * is no longer reachable.
  */
 void
-AODV::nb_delete(nsaddr_t id) {
-AODV_Neighbor *nb = nbhead.lh_first;
+PROAODV::nb_delete(nsaddr_t id) {
+PROAODV_Neighbor *nb = nbhead.lh_first;
 
  log_link_del(id);
  seqno += 2;     // Set of neighbors changed
@@ -1376,9 +1485,9 @@ AODV_Neighbor *nb = nbhead.lh_first;
  * HELLO_INTERVAL * 1.5 seconds.
  */
 void
-AODV::nb_purge() {
-AODV_Neighbor *nb = nbhead.lh_first;
-AODV_Neighbor *nbn;
+PROAODV::nb_purge() {
+PROAODV_Neighbor *nb = nbhead.lh_first;
+PROAODV_Neighbor *nbn;
 double now = CURRENT_TIME;
 
  for(; nb; nb = nbn) {
@@ -1388,4 +1497,18 @@ double now = CURRENT_TIME;
    }
  }
 
+}
+
+/**
+ * Returns true is the node is a cluster head
+ * @return boolean
+ */
+bool
+PROAODV::isClusterhead() {
+  if(99==clusterhead) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }

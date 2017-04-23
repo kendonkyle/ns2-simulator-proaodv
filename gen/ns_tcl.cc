@@ -1151,6 +1151,11 @@ if {$aodvonly != -1 } {\n\
 $agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC\n\
 }\n\
 \n\
+set proaodvonly [string first \"PROAODV\" [$agent info class]] \n\
+if {$aodvonly != -1 } {\n\
+$agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC\n\
+}\n\
+\n\
 \n\
 if { $port == [Node set rtagent_port_] } {			\n\
 $self add-target-rtagent $agent $port\n\
@@ -3435,6 +3440,7 @@ GAF 	# Geographic Adaptive Delity, for ad-hoc networks\n\
 LL 	# network wireless stack\n\
 LRWPAN  # zheng, wpan/p802_15_4mac.cc\n\
 Mac 	# network wireless stack\n\
+PROAODV	# routing protocol for ad-hoc networks\n\
 AODV 	# routing protocol for ad-hoc networks\n\
 Diffusion 	# diffusion/diffusion.cc\n\
 IMEP 	# Internet MANET Encapsulation Protocol, for ad-hoc networks\n\
@@ -4278,6 +4284,13 @@ $self next $args\n\
 \n\
 Agent/AODV set sport_   0\n\
 Agent/AODV set dport_   0\n\
+\n\
+Agent/PROAODV instproc init args {\n\
+$self next $args\n\
+}\n\
+\n\
+Agent/PROAODV set sport_   0\n\
+Agent/PROAODV set dport_   0\n\
 \n\
 Agent/AOMDV set sport_   0\n\
 Agent/AOMDV set dport_   0\n\
@@ -21141,6 +21154,9 @@ $self at 0.0 \"$node start-dsr\"\n\
 AODV {\n\
 set ragent [$self create-aodv-agent $node]\n\
 }\n\
+PROAODV {\n\
+set ragent [$self create-proaodv-agent $node]\n\
+}\n\
 idsAODV {\n\
 set ragent [$self create-idsaodv-agent $node]\n\
 }\n\
@@ -21358,6 +21374,13 @@ return $ragent\n\
 Simulator instproc create-blackholeaodv-agent { node } {\n\
 \n\
 set ragent [new Agent/blackholeAODV [$node node-addr]]\n\
+$self at 0.0 \"$ragent start\"     ;# start BEACON/HELLO Messages\n\
+$node set ragent_ $ragent\n\
+return $ragent\n\
+}\n\
+\n\
+Simulator instproc create-proaodv-agent { node } {\n\
+set ragent [new Agent/PROAODV [$node node-addr]]\n\
 $self at 0.0 \"$ragent start\"     ;# start BEACON/HELLO Messages\n\
 $node set ragent_ $ragent\n\
 return $ragent\n\

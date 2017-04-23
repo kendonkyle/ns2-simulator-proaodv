@@ -171,6 +171,7 @@ packet_t nam_pktName2Type(const char *name)
                (strcmp(packet_info.name(PT_TORA),name) == 0)?PT_TORA: 
                (strcmp(packet_info.name(PT_DSR),name) == 0)?PT_DSR: 
                (strcmp(packet_info.name(PT_AODV),name) == 0)?PT_AODV: 
+               (strcmp(packet_info.name(PT_PROAODV),name) == 0)?PT_PROAODV: 
                (strcmp(packet_info.name(PT_IMEP),name) == 0)?PT_IMEP: 
                (strcmp(packet_info.name(PT_PING),name) == 0)?PT_PING: 
                (strcmp(packet_info.name(PT_LDP),name) == 0)?PT_LDP: 

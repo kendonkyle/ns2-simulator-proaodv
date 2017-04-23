@@ -77,7 +77,7 @@ INCLUDES = \
 
 LIB	= \
 	-L/home/kendon/UNISA/2017_Msc/ns-allinone-2.35/tclcl-1.20 -ltclcl -L/home/kendon/UNISA/2017_Msc/ns-allinone-2.35/otcl-1.14 -lotcl -L/home/kendon/UNISA/2017_Msc/ns-allinone-2.35/lib -ltk8.5 -L/home/kendon/UNISA/2017_Msc/ns-allinone-2.35/lib -ltcl8.5 \
-	-lX11 \
+	-lXext -lX11 \
 	 -lnsl -ldl \
 	-lm -lm 
 #	-L${exec_prefix}/lib \
@@ -275,6 +275,8 @@ OBJ_CC = \
 	dsr/simplecache.o dsr/sr_forwarder.o \
 	aodv/aodv_logs.o aodv/aodv.o \
 	aodv/aodv_rtable.o aodv/aodv_rqueue.o \
+	proaodv/proaodv_logs.o proaodv/proaodv.o \
+	proaodv/proaodv_rtable.o proaodv/proaodv_rqueue.o \
 	aomdv/aomdv_logs.o aomdv/aomdv.o \
 	aomdv/aomdv_rtable.o aomdv/aomdv_rqueue.o \
 	puma/puma.o \

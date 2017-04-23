@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
+      <df name=".vimbackups">
+        <df name="swaps">
+        </df>
+      </df>
       <df name="adc">
         <in>acto-adc.cc</in>
         <in>actp-adc.cc</in>
@@ -714,6 +718,7 @@
         <in>proaodv.cc</in>
         <in>proaodv.h</in>
         <in>proaodv_logs.cc</in>
+        <in>proaodv_packet.h</in>
         <in>proaodv_rqueue.cc</in>
         <in>proaodv_rqueue.h</in>
         <in>proaodv_rtable.cc</in>
@@ -864,6 +869,12 @@
         <in>satroute.h</in>
         <in>sattrace.cc</in>
         <in>sattrace.h</in>
+      </df>
+      <df name="scenarios">
+        <df name=".vimbackups">
+          <df name="swaps">
+          </df>
+        </df>
       </df>
       <df name="sctp">
         <in>sctp-cmt.cc</in>
@@ -1525,6 +1536,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -1537,9 +1550,17 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" WirelessSim.AODV.tcl PROAODV high 20 1
+</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" ../../SimulatorScripts/WirelessSim.AODV.tcl PROAODV high 20 1</runcommandpicklistitem>
+          <runcommandpicklistitem>./ns ../../SimulationScripts/WirelessSim.AODV.tcl PROAODV high 20 1</runcommandpicklistitem>
+          <runcommandpicklistitem>ns ../../SimulationScripts/WirelessSim.AODV.tcl PROAODV low 7 1</runcommandpicklistitem>
+          <runcommandpicklistitem>ns SimulationScripts/WirelessSim.AODV.tcl PROAODV low 7 1</runcommandpicklistitem>
+          <runcommandpicklistitem>ns WirelessSim.AODV.tcl PROAODV low 7 1</runcommandpicklistitem>
+          <runcommandpicklistitem>ns WirelessSim.PROAODV.Test.tcl PROAODV low 7 0</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
-        <rundir>.</rundir>
+        <runcommand>ns WirelessSim.PROAODV.Test.tcl PROAODV low 7 0</runcommand>
+        <rundir>/home/kendon/UNISA/2017_Msc/ns-allinone-2.35/ns-2.35/../../SimulationScripts/</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>

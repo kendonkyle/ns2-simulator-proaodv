@@ -201,9 +201,10 @@ static const packet_t PT_DCCP_RESET = 71;
 static const packet_t PT_MDART = 72;
 
 static const packet_t PT_blackholeAODV = 73;
+static const packet_t PT_PROAODV = 74;
 	
         // insert new packet types here
-static packet_t       PT_NTYPE = 74; // This MUST be the LAST one
+static packet_t       PT_NTYPE = 75; // This MUST be the LAST one
 
 enum packetClass
 {
@@ -270,6 +271,7 @@ public:
 		    type == PT_TORA ||
 		    type == PT_PUMA ||
 		    type == PT_AODV ||
+            type == PT_PROAODV || // Our new Protocol
 		    type == PT_MDART)
 			return ROUTING;		
 		if (type == PT_TCP || 
@@ -421,6 +423,7 @@ public:
 		name_[PT_DCCP_RESET]="DCCP_Reset";
 
 		name_[PT_blackholeAODV]= "blackholeAODV";
+		name_[PT_PROAODV]= "PROAODV";
 
 		name_[PT_NTYPE]= "undefined";
 	}

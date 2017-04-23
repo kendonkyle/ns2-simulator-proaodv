@@ -24,12 +24,12 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-The AODV code developed by the CMU/MONARCH group was optimized and tuned by Samir Das and Mahesh Marina, University of Cincinnati. The work was partially done in Sun Microsystems.
+The PROAODV code developed by the CMU/MONARCH group was optimized and tuned by Samir Das and Mahesh Marina, University of Cincinnati. The work was partially done in Sun Microsystems.
  
 */
 
-#include <aodv/aodv.h>
-#include <aodv/aodv_packet.h>
+#include <proaodv/proaodv.h>
+#include <proaodv/proaodv_packet.h>
 #include <ip.h>
 
 #define CURRENT_TIME    Scheduler::instance().clock()
@@ -40,7 +40,7 @@ static const int verbose = 0;
    Logging Functions
    ===================================================================== */
 void
-AODV::log_link_del(nsaddr_t dst)
+PROAODV::log_link_del(nsaddr_t dst)
 {
         static int link_del = 0;
 
@@ -62,7 +62,7 @@ AODV::log_link_del(nsaddr_t dst)
 
 
 void
-AODV::log_link_broke(Packet *p)
+PROAODV::log_link_broke(Packet *p)
 {
         static int link_broke = 0;
         struct hdr_cmn *ch = HDR_CMN(p);
@@ -82,7 +82,7 @@ AODV::log_link_broke(Packet *p)
 }
 
 void
-AODV::log_link_kept(nsaddr_t dst)
+PROAODV::log_link_kept(nsaddr_t dst)
 {
         static int link_kept = 0;
 

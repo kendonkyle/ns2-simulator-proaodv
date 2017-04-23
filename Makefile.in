@@ -275,6 +275,8 @@ OBJ_CC = \
 	dsr/simplecache.o dsr/sr_forwarder.o \
 	aodv/aodv_logs.o aodv/aodv.o \
 	aodv/aodv_rtable.o aodv/aodv_rqueue.o \
+	proaodv/proaodv_logs.o proaodv/proaodv.o \
+	proaodv/proaodv_rtable.o proaodv/proaodv_rqueue.o \
 	aomdv/aomdv_logs.o aomdv/aomdv.o \
 	aomdv/aomdv_rtable.o aomdv/aomdv_rqueue.o \
 	puma/puma.o \

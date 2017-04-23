@@ -28,36 +28,40 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 */
 
 
-#ifndef __aodv_packet_h__
-#define __aodv_packet_h__
+#ifndef __proaodv_packet_h__
+#define __proaodv_packet_h__
 
 //#include <config.h>
 //#include "aodv.h"
-#define AODV_MAX_ERRORS 100
+#define PROAODV_MAX_ERRORS 100
 
 
 /* =====================================================================
    Packet Formats...
    ===================================================================== */
-#define AODVTYPE_HELLO  	0x01
-#define AODVTYPE_RREQ   	0x02
-#define AODVTYPE_RREP   	0x04
-#define AODVTYPE_RERR   	0x08
-#define AODVTYPE_RREP_ACK  	0x10
+#define PROAODVTYPE_HELLO  	0x01
+#define PROAODVTYPE_RREQ   	0x02
+#define PROAODVTYPE_RREP   	0x04
+#define PROAODVTYPE_RERR   	0x08
+#define PROAODVTYPE_RREP_ACK  	0x10
+#define PROAODVTYPE_SP_MSG  	0x12
+//#define PROAODVTYPE_SP_ALERT  	0x14
 
 /*
  * AODV Routing Protocol Header Macros
  */
-#define HDR_AODV(p)		((struct hdr_aodv*)hdr_aodv::access(p))
-#define HDR_AODV_REQUEST(p)  	((struct hdr_aodv_request*)hdr_aodv::access(p))
-#define HDR_AODV_REPLY(p)	((struct hdr_aodv_reply*)hdr_aodv::access(p))
-#define HDR_AODV_ERROR(p)	((struct hdr_aodv_error*)hdr_aodv::access(p))
-#define HDR_AODV_RREP_ACK(p)	((struct hdr_aodv_rrep_ack*)hdr_aodv::access(p))
+#define HDR_PROAODV(p)		((struct hdr_proaodv*)hdr_proaodv::access(p))
+#define HDR_PROAODV_REQUEST(p)  	((struct hdr_proaodv_request*)hdr_proaodv::access(p))
+#define HDR_PROAODV_REPLY(p)	((struct hdr_proaodv_reply*)hdr_proaodv::access(p))
+#define HDR_PROAODV_ERROR(p)	((struct hdr_proaodv_error*)hdr_proaodv::access(p))
+#define HDR_PROAODV_RREP_ACK(p)	((struct hdr_proaodv_rrep_ack*)hdr_proaodv::access(p))
+#define HDR_PROAODV_SP_MSG(p)	((struct hdr_proaodv_sp_msg*)hdr_proaodv::access(p))
+//#define HDR_PROAODV_SP_ALERT(p)	((struct hdr_proaodv_rrep_ack*)hdr_proaodv::access(p))
 
 /*
  * General AODV Header - shared by all formats
  */
-struct hdr_aodv {
+struct hdr_proaodv {
         u_int8_t        ah_type;
 	/*
         u_int8_t        ah_reserved[2];
@@ -66,12 +70,13 @@ struct hdr_aodv {
 		// Header access methods
 	static int offset_; // required by PacketHeaderManager
 	inline static int& offset() { return offset_; }
-	inline static hdr_aodv* access(const Packet* p) {
-		return (hdr_aodv*) p->access(offset_);
+	inline static hdr_proaodv* access(const Packet* p) {
+		return (hdr_proaodv*) p->access(offset_);
 	}
 };
 
-struct hdr_aodv_request {
+struct hdr_proaodv_request {
+//        u_int8_t        clusterhead; //Cluster Head
         u_int8_t        rq_type;	// Packet Type
         u_int8_t        reserved[2];
         u_int8_t        rq_hop_count;   // Hop Count
@@ -108,7 +113,8 @@ struct hdr_aodv_request {
   }
 };
 
-struct hdr_aodv_reply {
+struct hdr_proaodv_reply {
+//        u_int8_t        clusterhead; //Cluster Head
         u_int8_t        rp_type;        // Packet Type
         u_int8_t        reserved[2];
         u_int8_t        rp_hop_count;           // Hop Count
@@ -139,13 +145,35 @@ struct hdr_aodv_reply {
 
 };
 
-struct hdr_aodv_error {
+struct hdr_proaodv_sp_msg {
+        nsaddr_t        rrp_dst;                 // IP Address of node to monitor
+						
+  inline int size() { 
+  int sz = 0;
+  /*
+  	sz = sizeof(u_int8_t)		// rp_type
+	     + 2*sizeof(u_int8_t) 	// rp_flags + reserved
+	     + sizeof(u_int8_t)		// rp_hop_count
+	     + sizeof(double)		// rp_timestamp
+	     + sizeof(nsaddr_t)		// rp_dst
+	     + sizeof(u_int32_t)	// rp_dst_seqno
+	     + sizeof(nsaddr_t)		// rp_src
+	     + sizeof(u_int32_t);	// rp_lifetime
+  */
+  	sz = 1*sizeof(nsaddr_t);
+  	assert (sz >= 0);
+	return sz;
+  }
+
+};
+
+struct hdr_proaodv_error {
         u_int8_t        re_type;                // Type
         u_int8_t        reserved[2];            // Reserved
         u_int8_t        DestCount;                 // DestCount
         // List of Unreachable destination IP addresses and sequence numbers
-        nsaddr_t        unreachable_dst[AODV_MAX_ERRORS];   
-        u_int32_t       unreachable_dst_seqno[AODV_MAX_ERRORS];   
+        nsaddr_t        unreachable_dst[PROAODV_MAX_ERRORS];   
+        u_int32_t       unreachable_dst_seqno[PROAODV_MAX_ERRORS];   
 
   inline int size() { 
   int sz = 0;
@@ -162,18 +190,19 @@ struct hdr_aodv_error {
 
 };
 
-struct hdr_aodv_rrep_ack {
+struct hdr_proaodv_rrep_ack {
 	u_int8_t	rpack_type;
 	u_int8_t	reserved;
 };
 
 // for size calculation of header-space reservation
-union hdr_all_aodv {
-  hdr_aodv          ah;
-  hdr_aodv_request  rreq;
-  hdr_aodv_reply    rrep;
-  hdr_aodv_error    rerr;
-  hdr_aodv_rrep_ack rrep_ack;
+union hdr_all_proaodv {
+  hdr_proaodv          ah;
+  hdr_proaodv_request  rreq;
+  hdr_proaodv_reply    rrep;
+  hdr_proaodv_error    rerr;
+  hdr_proaodv_rrep_ack rrep_ack;
+  hdr_proaodv_sp_msg sp_msg;
 };
 
 #endif /* __aodv_packet_h__ */

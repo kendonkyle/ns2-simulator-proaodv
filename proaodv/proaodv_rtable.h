@@ -24,12 +24,12 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-The AODV code developed by the CMU/MONARCH group was optimized and tuned by Samir Das and Mahesh Marina, University of Cincinnati. The work was partially done in Sun Microsystems.
+The PROAODV code developed by the CMU/MONARCH group was optimized and tuned by Samir Das and Mahesh Marina, University of Cincinnati. The work was partially done in Sun Microsystems.
 */
 
 
-#ifndef __aodv_rtable_h__
-#define __aodv_rtable_h__
+#ifndef __proaodv_rtable_h__
+#define __proaodv_rtable_h__
 
 #include <assert.h>
 #include <sys/types.h>
@@ -41,56 +41,56 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #define INFINITY2        0xff
 
 /*
-   AODV Neighbor Cache Entry
+   PROAODV Neighbor Cache Entry
 */
-class AODV_Neighbor {
-        friend class AODV;
-        friend class aodv_rt_entry;
+class PROAODV_Neighbor {
+        friend class PROAODV;
+        friend class proaodv_rt_entry;
  public:
-        AODV_Neighbor(u_int32_t a) { nb_addr = a; }
+        PROAODV_Neighbor(u_int32_t a) { nb_addr = a; }
 
  protected:
-        LIST_ENTRY(AODV_Neighbor) nb_link;
+        LIST_ENTRY(PROAODV_Neighbor) nb_link;
         nsaddr_t        nb_addr;
         double          nb_expire;      // ALLOWED_HELLO_LOSS * HELLO_INTERVAL
 };
 
-LIST_HEAD(aodv_ncache, AODV_Neighbor);
+LIST_HEAD(proaodv_ncache, PROAODV_Neighbor);
 
 /*
-   AODV Precursor list data structure
+   PROAODV Precursor list data structure
 */
-class AODV_Precursor {
-        friend class AODV;
-        friend class aodv_rt_entry;
+class PROAODV_Precursor {
+        friend class PROAODV;
+        friend class proaodv_rt_entry;
  public:
-        AODV_Precursor(u_int32_t a) { pc_addr = a; }
+        PROAODV_Precursor(u_int32_t a) { pc_addr = a; }
 
  protected:
-        LIST_ENTRY(AODV_Precursor) pc_link;
+        LIST_ENTRY(PROAODV_Precursor) pc_link;
         nsaddr_t        pc_addr;	// precursor address
 };
 
-LIST_HEAD(aodv_precursors, AODV_Precursor);
+LIST_HEAD(proaodv_precursors, PROAODV_Precursor);
 
 
 /*
   Route Table Entry
 */
 
-class aodv_rt_entry {
-        friend class aodv_rtable;
-        friend class AODV;
-	friend class LocalRepairTimer;
+class proaodv_rt_entry {
+        friend class proaodv_rtable;
+        friend class PROAODV;
+	friend class ProAodvLocalRepairTimer;
  public:
-        aodv_rt_entry();
-        ~aodv_rt_entry();
+        proaodv_rt_entry();
+        ~proaodv_rt_entry();
 
         void            nb_insert(nsaddr_t id);
-        AODV_Neighbor*  nb_lookup(nsaddr_t id);
+        PROAODV_Neighbor*  nb_lookup(nsaddr_t id);
 
         void            pc_insert(nsaddr_t id);
-        AODV_Precursor* pc_lookup(nsaddr_t id);
+        PROAODV_Precursor* pc_lookup(nsaddr_t id);
         void 		pc_delete(nsaddr_t id);
         void 		pc_delete(void);
         bool 		pc_empty(void);
@@ -99,7 +99,7 @@ class aodv_rt_entry {
         u_int8_t        rt_req_cnt;             // number of route requests
 	
  protected:
-        LIST_ENTRY(aodv_rt_entry) rt_link;
+        LIST_ENTRY(proaodv_rt_entry) rt_link;
 
         nsaddr_t        rt_dst;
         u_int32_t       rt_seqno;
@@ -108,7 +108,7 @@ class aodv_rt_entry {
 	int 		rt_last_hop_count;	// last valid hop count
         nsaddr_t        rt_nexthop;    		// next hop IP address
 	/* list of precursors */ 
-        aodv_precursors rt_pclist;
+        proaodv_precursors rt_pclist;
         double          rt_expire;     		// when entry expires
         u_int8_t        rt_flags;
 
@@ -136,7 +136,7 @@ class aodv_rt_entry {
         /*
          * a list of neighbors that are using this route.
          */
-        aodv_ncache          rt_nblist;
+        proaodv_ncache          rt_nblist;
 };
 
 
@@ -144,18 +144,18 @@ class aodv_rt_entry {
   The Routing Table
 */
 
-class aodv_rtable {
+class proaodv_rtable {
  public:
-	aodv_rtable() { LIST_INIT(&rthead); }
+	proaodv_rtable() { LIST_INIT(&rthead); }
 
-        aodv_rt_entry*       head() { return rthead.lh_first; }
+        proaodv_rt_entry*       head() { return rthead.lh_first; }
 
-        aodv_rt_entry*       rt_add(nsaddr_t id);
+        proaodv_rt_entry*       rt_add(nsaddr_t id);
         void                 rt_delete(nsaddr_t id);
-        aodv_rt_entry*       rt_lookup(nsaddr_t id);
+        proaodv_rt_entry*       rt_lookup(nsaddr_t id);
 
  private:
-        LIST_HEAD(aodv_rthead, aodv_rt_entry) rthead;
+        LIST_HEAD(proaodv_rthead, proaodv_rt_entry) rthead;
 };
 
-#endif /* _aodv__rtable_h__ */
+#endif /* _proaodv__rtable_h__ */

@@ -192,6 +192,15 @@ Agent/AODV instproc init args {
 Agent/AODV set sport_   0
 Agent/AODV set dport_   0
 
+# New PRO AODV Protocol Agent
+Agent/PROAODV instproc init args {
+         $self next $args
+}
+
+Agent/PROAODV set sport_   0
+Agent/PROAODV set dport_   0
+#Agent/PROAODV set clusterhead_   1
+
 # AOMDV patch
 Agent/AOMDV set sport_   0
 Agent/AOMDV set dport_   0

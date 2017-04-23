@@ -51,6 +51,7 @@
 #include <tora/tora_packet.h> //TORA
 #include <imep/imep_spec.h>         // IMEP
 #include <aodv/aodv_packet.h> //AODV
+#include <proaodv/proaodv_packet.h> //PROAODV
 #include <aomdv/aomdv_packet.h>
 #include <mdart/mdart_packet.h>
 #include <mdart/mdart_function.h>
@@ -865,7 +866,6 @@ CMUTrace::format_aodv(Packet *p, int offset)
         struct hdr_aodv_request *rq = HDR_AODV_REQUEST(p);
         struct hdr_aodv_reply *rp = HDR_AODV_REPLY(p);
 
-
         switch(ah->ah_type) {
         case AODVTYPE_RREQ:
 
@@ -880,7 +880,9 @@ CMUTrace::format_aodv(Packet *p, int offset)
                             rq->rq_dst,
                             rq->rq_dst_seqno,
                             rq->rq_src,
-                            rq->rq_src_seqno);
+                            rq->rq_src_seqno
+//                            rq->clusterhead
+                    );
 		} else if (newtrace_) {
 
 		    sprintf(pt_->buffer() + offset,
@@ -905,6 +907,7 @@ CMUTrace::format_aodv(Packet *p, int offset)
                         rq->rq_dst_seqno,
                         rq->rq_src,
                         rq->rq_src_seqno);
+//                    rq->clusterhead);
 		}
                 break;
 
@@ -939,7 +942,7 @@ CMUTrace::format_aodv(Packet *p, int offset)
 	        } else {
 			
 			sprintf(pt_->buffer() + offset,
-				"[0x%x %d [%d %d] %f] (%s)",
+				"[0x%x %d [%d %d] %f] (%s) ",
 				rp->rp_type,
 				rp->rp_hop_count,
 				rp->rp_dst,
@@ -948,6 +951,7 @@ CMUTrace::format_aodv(Packet *p, int offset)
 				rp->rp_type == AODVTYPE_RREP ? "REPLY" :
 				(rp->rp_type == AODVTYPE_RERR ? "ERROR" :
 				 "HELLO"));
+//                  rp->clusterhead);
 		}
                 break;
 		
@@ -958,6 +962,129 @@ CMUTrace::format_aodv(Packet *p, int offset)
 #else
 		fprintf(stderr,
 		        "%s: invalid AODV packet type\n", __FUNCTION__);
+#endif
+                abort();
+        }
+}
+
+
+void
+CMUTrace::format_proaodv(Packet *p, int offset)
+{
+        struct hdr_proaodv *ah = HDR_PROAODV(p);
+        struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+        struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+        struct hdr_proaodv_sp_msg *sp = HDR_PROAODV_SP_MSG(p);
+
+        sprintf(pt_->buffer() + offset,"In the %s function", __FUNCTION__);
+
+#ifdef DEBUG
+        fprintf(stdout,"In the %s function", __FUNCTION__);
+#endif
+
+        switch(ah->ah_type) {
+        case PROAODVTYPE_RREQ:
+
+		if (pt_->tagged()) {
+		    sprintf(pt_->buffer() + offset,
+			    "-proaodv:t %x -proaodv:h %d -proaodv:b %d -proaodv:d %d "
+			    "-proaodv:ds %d -proaodv:s %d -proaodv:ss %d "
+			    "-proaodv:c REQUEST ",
+			    rq->rq_type,
+                            rq->rq_hop_count,
+                            rq->rq_bcast_id,
+                            rq->rq_dst,
+                            rq->rq_dst_seqno,
+                            rq->rq_src,
+                            rq->rq_src_seqno);
+		} else if (newtrace_) {
+
+		    sprintf(pt_->buffer() + offset,
+			"-P proaodv -Pt 0x%x -Ph %d -Pb %d -Pd %d -Pds %d -Ps %d -Pss %d -Pc REQUEST ",
+			rq->rq_type,
+                        rq->rq_hop_count,
+                        rq->rq_bcast_id,
+                        rq->rq_dst,
+                        rq->rq_dst_seqno,
+                        rq->rq_src,
+                        rq->rq_src_seqno);
+
+
+		} else {
+
+		    sprintf(pt_->buffer() + offset,
+			"[0x%x %d %d [%d %d] [%d %d]] (REQUEST)",
+			rq->rq_type,
+                        rq->rq_hop_count,
+                        rq->rq_bcast_id,
+                        rq->rq_dst,
+                        rq->rq_dst_seqno,
+                        rq->rq_src,
+                        rq->rq_src_seqno);
+		}
+                break;
+
+        case PROAODVTYPE_RREP:
+        case PROAODVTYPE_HELLO:
+	case PROAODVTYPE_RERR:
+		
+		if (pt_->tagged()) {
+		    sprintf(pt_->buffer() + offset,
+			    "-proaodv:t %x -proaodv:h %d -proaodv:d %d -adov:ds %d "
+			    "-proaodv:l %f -proaodv:c %s ",
+			    rp->rp_type,
+			    rp->rp_hop_count,
+			    rp->rp_dst,
+			    rp->rp_dst_seqno,
+			    rp->rp_lifetime,
+			    rp->rp_type == PROAODVTYPE_RREP ? "REPLY" :
+			    (rp->rp_type == PROAODVTYPE_RERR ? "ERROR" :
+			     "HELLO"));
+		} else if (newtrace_) {
+			
+			sprintf(pt_->buffer() + offset,
+			    "-P proaodv -Pt 0x%x -Ph %d -Pd %d -Pds %d -Pl %f -Pc %s ",
+				rp->rp_type,
+				rp->rp_hop_count,
+				rp->rp_dst,
+				rp->rp_dst_seqno,
+				rp->rp_lifetime,
+				rp->rp_type == PROAODVTYPE_RREP ? "REPLY" :
+				(rp->rp_type == PROAODVTYPE_RERR ? "ERROR" :
+				 "HELLO"));
+	        } else {
+			
+			sprintf(pt_->buffer() + offset,
+				"[0x%x %d [%d %d] %f] (%s)",
+				rp->rp_type,
+				rp->rp_hop_count,
+				rp->rp_dst,
+				rp->rp_dst_seqno,
+				rp->rp_lifetime,
+				rp->rp_type == PROAODVTYPE_RREP ? "REPLY" :
+				(rp->rp_type == PROAODVTYPE_RERR ? "ERROR" :
+				 "HELLO"));
+		}
+                break;
+            case PROAODVTYPE_SP_MSG:
+                    sprintf(pt_->buffer() + offset,
+                        "[0x%x %d (rrd %d) [%d %d] %f] (%s)",
+                        rp->rp_type,
+                        rp->rp_hop_count,
+                        sp->rrp_dst,
+                        rp->rp_dst,
+                        rp->rp_dst_seqno,
+                        rp->rp_lifetime,
+                        "SPECIAL_REQ");
+                    break;
+		
+        default:
+#ifdef WIN32
+                fprintf(stderr,
+		        "CMUTrace::format_proaodv: invalid PROAODV packet type\n");
+#else
+		fprintf(stderr,
+		        "%s: invalid PROAODV packet type\n", __FUNCTION__);
 #endif
                 abort();
         }
@@ -1421,6 +1548,9 @@ void CMUTrace::format(Packet* p, const char *why)
 		switch(ch->ptype()) {
 		case PT_AODV:
 			format_aodv(p, offset);
+			break;
+		case PT_PROAODV:
+			format_proaodv(p, offset);
 			break;
 		// AOMDV patch
 		case PT_AOMDV:

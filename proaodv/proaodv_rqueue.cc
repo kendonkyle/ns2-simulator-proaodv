@@ -31,24 +31,24 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #include <assert.h>
 
 #include <cmu-trace.h>
-#include <aodv/aodv_rqueue.h>
+#include <proaodv/proaodv_rqueue.h>
 
 #define CURRENT_TIME    Scheduler::instance().clock()
 #define QDEBUG
 
 /*
-  Packet Queue used by AODV.
+  Packet Queue used by PROAODV.
 */
 
-aodv_rqueue::aodv_rqueue() {
+proaodv_rqueue::proaodv_rqueue() {
   head_ = tail_ = 0;
   len_ = 0;
-  limit_ = AODV_RTQ_MAX_LEN;
-  timeout_ = AODV_RTQ_TIMEOUT;
+  limit_ = PROAODV_RTQ_MAX_LEN;
+  timeout_ = PROAODV_RTQ_TIMEOUT;
 }
 
 void
-aodv_rqueue::enque(Packet *p) {
+proaodv_rqueue::enque(Packet *p) {
 struct hdr_cmn *ch = HDR_CMN(p);
 
  /*
@@ -86,7 +86,7 @@ struct hdr_cmn *ch = HDR_CMN(p);
                 
 
 Packet*
-aodv_rqueue::deque() {
+proaodv_rqueue::deque() {
 Packet *p;
 
  /*
@@ -104,7 +104,7 @@ Packet *p;
 
 
 Packet*
-aodv_rqueue::deque(nsaddr_t dst) {
+proaodv_rqueue::deque(nsaddr_t dst) {
 Packet *p, *prev;
 
  /*
@@ -138,7 +138,7 @@ Packet *p, *prev;
 }
 
 char 
-aodv_rqueue::find(nsaddr_t dst) {
+proaodv_rqueue::find(nsaddr_t dst) {
 Packet *p, *prev;  
 	
  findPacketWithDst(dst, p, prev);
@@ -157,7 +157,7 @@ Packet *p, *prev;
 */
 
 Packet*
-aodv_rqueue::remove_head() {
+proaodv_rqueue::remove_head() {
 Packet *p = head_;
         
  if(head_ == tail_) {
@@ -174,7 +174,7 @@ Packet *p = head_;
 }
 
 void
-aodv_rqueue::findPacketWithDst(nsaddr_t dst, Packet*& p, Packet*& prev) {
+proaodv_rqueue::findPacketWithDst(nsaddr_t dst, Packet*& p, Packet*& prev) {
   
   p = prev = 0;
   for(p = head_; p; p = p->next_) {
@@ -188,7 +188,7 @@ aodv_rqueue::findPacketWithDst(nsaddr_t dst, Packet*& p, Packet*& prev) {
 
 
 void
-aodv_rqueue::verifyQueue() {
+proaodv_rqueue::verifyQueue() {
 Packet *p, *prev = 0;
 int cnt = 0;
 
@@ -217,7 +217,7 @@ Packet *p;
 */
 
 bool
-aodv_rqueue::findAgedPacket(Packet*& p, Packet*& prev) {
+proaodv_rqueue::findAgedPacket(Packet*& p, Packet*& prev) {
   
   p = prev = 0;
   for(p = head_; p; p = p->next_) {
@@ -230,7 +230,7 @@ aodv_rqueue::findAgedPacket(Packet*& p, Packet*& prev) {
 }
 
 void
-aodv_rqueue::purge() {
+proaodv_rqueue::purge() {
 Packet *p, *prev;
 
  while ( findAgedPacket(p, prev) ) {

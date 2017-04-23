@@ -318,6 +318,7 @@ CMUPriQueue::prq_assign_queue(Packet *p)
 
 	switch(ch->ptype()) {
 	case PT_AODV:
+	case PT_PROAODV:
 	case PT_DSR:
 	case PT_IMEP:
 	case PT_MESSAGE:	/* used by DSDV */

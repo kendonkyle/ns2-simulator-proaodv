@@ -630,6 +630,9 @@ Simulator instproc create-wireless-node args {
 		    AODV {
 			    set ragent [$self create-aodv-agent $node]
 		    }
+		    PROAODV {
+			    set ragent [$self create-proaodv-agent $node]
+		    }
 		    idsAODV {
 			    set ragent [$self create-idsaodv-agent $node]
 		    }
@@ -874,6 +877,14 @@ Simulator instproc create-idsaodv-agent { node } {
 Simulator instproc create-blackholeaodv-agent { node } {
        
 	set ragent [new Agent/blackholeAODV [$node node-addr]]
+        $self at 0.0 "$ragent start"     ;# start BEACON/HELLO Messages
+        $node set ragent_ $ragent
+        return $ragent
+}
+
+Simulator instproc create-proaodv-agent { node } {
+    #  Create PROAODV routing agent
+	set ragent [new Agent/PROAODV [$node node-addr]]
         $self at 0.0 "$ragent start"     ;# start BEACON/HELLO Messages
         $node set ragent_ $ragent
         return $ragent

@@ -28,14 +28,14 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 */
 
 
-#include <aodv/aodv_rtable.h>
+#include <proaodv/proaodv_rtable.h>
 //#include <cmu/aodv/aodv.h>
 
 /*
   The Routing Table
 */
 
-aodv_rt_entry::aodv_rt_entry()
+proaodv_rt_entry::proaodv_rt_entry()
 {
 int i;
 
@@ -67,16 +67,16 @@ int i;
 }
 
 
-aodv_rt_entry::~aodv_rt_entry()
+proaodv_rt_entry::~proaodv_rt_entry()
 {
-AODV_Neighbor *nb;
+PROAODV_Neighbor *nb;
 
  while((nb = rt_nblist.lh_first)) {
    LIST_REMOVE(nb, nb_link);
    delete nb;
  }
 
-AODV_Precursor *pc;
+PROAODV_Precursor *pc;
 
  while((pc = rt_pclist.lh_first)) {
    LIST_REMOVE(pc, pc_link);
@@ -87,9 +87,9 @@ AODV_Precursor *pc;
 
 
 void
-aodv_rt_entry::nb_insert(nsaddr_t id)
+proaodv_rt_entry::nb_insert(nsaddr_t id)
 {
-AODV_Neighbor *nb = new AODV_Neighbor(id);
+PROAODV_Neighbor *nb = new PROAODV_Neighbor(id);
         
  assert(nb);
  nb->nb_expire = 0;
@@ -98,10 +98,10 @@ AODV_Neighbor *nb = new AODV_Neighbor(id);
 }
 
 
-AODV_Neighbor*
-aodv_rt_entry::nb_lookup(nsaddr_t id)
+PROAODV_Neighbor*
+proaodv_rt_entry::nb_lookup(nsaddr_t id)
 {
-AODV_Neighbor *nb = rt_nblist.lh_first;
+PROAODV_Neighbor *nb = rt_nblist.lh_first;
 
  for(; nb; nb = nb->nb_link.le_next) {
    if(nb->nb_addr == id)
@@ -113,10 +113,10 @@ AODV_Neighbor *nb = rt_nblist.lh_first;
 
 
 void
-aodv_rt_entry::pc_insert(nsaddr_t id)
+proaodv_rt_entry::pc_insert(nsaddr_t id)
 {
 	if (pc_lookup(id) == NULL) {
-	AODV_Precursor *pc = new AODV_Precursor(id);
+	PROAODV_Precursor *pc = new PROAODV_Precursor(id);
         
  		assert(pc);
  		LIST_INSERT_HEAD(&rt_pclist, pc, pc_link);
@@ -124,10 +124,10 @@ aodv_rt_entry::pc_insert(nsaddr_t id)
 }
 
 
-AODV_Precursor*
-aodv_rt_entry::pc_lookup(nsaddr_t id)
+PROAODV_Precursor*
+proaodv_rt_entry::pc_lookup(nsaddr_t id)
 {
-AODV_Precursor *pc = rt_pclist.lh_first;
+PROAODV_Precursor *pc = rt_pclist.lh_first;
 
  for(; pc; pc = pc->pc_link.le_next) {
    if(pc->pc_addr == id)
@@ -138,8 +138,8 @@ AODV_Precursor *pc = rt_pclist.lh_first;
 }
 
 void
-aodv_rt_entry::pc_delete(nsaddr_t id) {
-AODV_Precursor *pc = rt_pclist.lh_first;
+proaodv_rt_entry::pc_delete(nsaddr_t id) {
+PROAODV_Precursor *pc = rt_pclist.lh_first;
 
  for(; pc; pc = pc->pc_link.le_next) {
    if(pc->pc_addr == id) {
@@ -152,8 +152,8 @@ AODV_Precursor *pc = rt_pclist.lh_first;
 }
 
 void
-aodv_rt_entry::pc_delete(void) {
-AODV_Precursor *pc;
+proaodv_rt_entry::pc_delete(void) {
+PROAODV_Precursor *pc;
 
  while((pc = rt_pclist.lh_first)) {
    LIST_REMOVE(pc, pc_link);
@@ -162,8 +162,8 @@ AODV_Precursor *pc;
 }	
 
 bool
-aodv_rt_entry::pc_empty(void) {
-AODV_Precursor *pc;
+proaodv_rt_entry::pc_empty(void) {
+PROAODV_Precursor *pc;
 
  if ((pc = rt_pclist.lh_first)) return false;
  else return true;
@@ -173,10 +173,10 @@ AODV_Precursor *pc;
   The Routing Table
 */
 
-aodv_rt_entry*
-aodv_rtable::rt_lookup(nsaddr_t id)
+proaodv_rt_entry*
+proaodv_rtable::rt_lookup(nsaddr_t id)
 {
-aodv_rt_entry *rt = rthead.lh_first;
+proaodv_rt_entry *rt = rthead.lh_first;
 
  for(; rt; rt = rt->rt_link.le_next) {
    if(rt->rt_dst == id)
@@ -187,9 +187,9 @@ aodv_rt_entry *rt = rthead.lh_first;
 }
 
 void
-aodv_rtable::rt_delete(nsaddr_t id)
+proaodv_rtable::rt_delete(nsaddr_t id)
 {
-aodv_rt_entry *rt = rt_lookup(id);
+proaodv_rt_entry *rt = rt_lookup(id);
 
  if(rt) {
    LIST_REMOVE(rt, rt_link);
@@ -198,13 +198,13 @@ aodv_rt_entry *rt = rt_lookup(id);
 
 }
 
-aodv_rt_entry*
-aodv_rtable::rt_add(nsaddr_t id)
+proaodv_rt_entry*
+proaodv_rtable::rt_add(nsaddr_t id)
 {
-aodv_rt_entry *rt;
+proaodv_rt_entry *rt;
 
  assert(rt_lookup(id) == 0);
- rt = new aodv_rt_entry;
+ rt = new proaodv_rt_entry;
  assert(rt);
  rt->rt_dst = id;
  LIST_INSERT_HEAD(&rthead, rt, rt_link);
