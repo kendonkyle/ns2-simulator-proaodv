@@ -167,7 +167,7 @@ Node/MobileNode instproc reset {} {
 # if portnumber is 255, default target is set to the routing agent
 #
 Node/MobileNode instproc add-target { agent port } {
-	$self instvar dmux_ imep_ toraDebug_ 
+	$self instvar dmux_ imep_ toraDebug_ mac_
 
 	set ns [Simulator instance]
 	set newapi [$ns imep-support]
@@ -198,10 +198,11 @@ Node/MobileNode instproc add-target { agent port } {
 		$agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC
 	}
     
-    # Special processing for AODV
+    # Special processing for PROAODV
 	set proaodvonly [string first "PROAODV" [$agent info class]] 
-	if {$aodvonly != -1 } {
+	if {$proaodvonly != -1 } {
 		$agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC
+        $agent install-tap $mac_(0)
 	}
 	
 	#<zheng: add>

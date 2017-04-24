@@ -32,9 +32,10 @@ MANDEST	= /usr/local/man
 
 BLANK	= # make a blank space.  DO NOT add anything to this line
 
+
 # The following will be redefined under Windows (see WIN32 lable below)
-CC	= gcc-4.4
-CPP	= g++-4.4
+CC	= gcc-4.4 -w
+CPP	= g++-4.4 -w
 LINK	= $(CPP)
 LINK_SHLIB = gcc-4.4 -shared
 MKDEP	= ./conf/mkdep

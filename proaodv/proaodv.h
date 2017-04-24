@@ -42,6 +42,7 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #include <proaodv/proaodv_rtable.h>
 #include <proaodv/proaodv_rqueue.h>
 #include <classifier/classifier-port.h>
+#include <mac.h>
 
 /*
   Allows local repair of routes 
@@ -191,7 +192,7 @@ LIST_HEAD(aodv_bcache, ProAodvBroadcastID);
 /*
   The Routing Agent
 */
-class PROAODV: public Agent {
+class PROAODV: public Tap, public Agent {
 
   /*
    * make some friends first 
@@ -206,6 +207,8 @@ class PROAODV: public Agent {
 
  public:
         PROAODV(nsaddr_t id);
+        //to support promiscuous mode
+        void        tap(const Packet *p);
 
         void		recv(Packet *p, Handler *);
         bool        isClusterhead();
@@ -213,7 +216,10 @@ class PROAODV: public Agent {
  protected:
         int             command(int, const char *const *);
         int             initialized() { return 1 && target_; }
-
+        // To support promiscuous mode
+        bool promiscuous_mode;
+        Mac *mac_;
+        
         /*
          * Route Table Management
          */

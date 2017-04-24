@@ -1127,7 +1127,7 @@ $arptable_ reset \n\
 }\n\
 \n\
 Node/MobileNode instproc add-target { agent port } {\n\
-$self instvar dmux_ imep_ toraDebug_ \n\
+$self instvar dmux_ imep_ toraDebug_ mac_\n\
 \n\
 set ns [Simulator instance]\n\
 set newapi [$ns imep-support]\n\
@@ -1152,8 +1152,9 @@ $agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC\n\
 }\n\
 \n\
 set proaodvonly [string first \"PROAODV\" [$agent info class]] \n\
-if {$aodvonly != -1 } {\n\
+if {$proaodvonly != -1 } {\n\
 $agent if-queue [$self set ifq_(0)]   ;# ifq between LL and MAC\n\
+$agent install-tap $mac_(0)\n\
 }\n\
 \n\
 \n\

@@ -134,6 +134,11 @@ PROAODV::command(int argc, const char*const* argv) {
 		return TCL_ERROR;
 	}
 	return TCL_OK;
+    } else if (strcmp(argv[1], "install-tap") == 0) {
+      mac_ = (Mac*) TclObject::lookup(argv[2]);
+      if (mac_ == 0) return TCL_ERROR;
+      mac_->installTap(this);
+      return TCL_OK;
     }
   }
   return Agent::command(argc, argv);
@@ -151,6 +156,7 @@ PROAODV::PROAODV(nsaddr_t id) : Agent(PT_PROAODV),
   seqno = 2;
   bid = 1;
   clusterhead = 1;
+  promiscuous_mode = false;
 //  bind("clusterhead_", &clusterhead); 
 
   LIST_INIT(&nbhead);
@@ -220,12 +226,34 @@ struct hdr_ip *ih = HDR_IP( (Packet *)p);
     Packet::free((Packet *)p);
 }
 
+/**
+ * The Handle packets received in Promiscuous mode
+ * @param p
+ */
+void
+PROAODV::tap(const Packet *p) {
+//#ifdef DEBUG
+//      fprintf(stderr,"Promiscuous mode node(%d) got Packet in function %s\n", index,  __FUNCTION__);
+//#endif 
+  
+  if(promiscuous_mode == false) { 
+    return; 
+  }
+  struct hdr_cmn *hdr = HDR_CMN(p);
+  struct hdr_ip *iph = HDR_IP(p);
+  struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+#ifdef DEBUG
+      fprintf(stderr,"Promiscuous mode: node(%d) got Packet with type - %d \n", index, hdr->ptype_);
+      fprintf(stderr,"Promiscuous mode: node(%d) got Packet with nexthop - %d \n", index, hdr->next_hop_);
+      fprintf(stderr,"Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
+      fprintf(stderr,"Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_);
+      fprintf(stderr,"Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_);
+#endif 
+} 
 
 /*
    Broadcast ID Management  Functions
 */
-
-
 void
 PROAODV::id_insert(nsaddr_t id, u_int32_t bid) {
 ProAodvBroadcastID *b = new ProAodvBroadcastID(id, bid);
@@ -642,8 +670,13 @@ PROAODV::recvPROAODV(Packet *p) {
  case PROAODVTYPE_RREP:
    recvReply(p);
    if(this->sendSM){
+     if(isClusterhead()) {
+       this->sendSM = false;
+     } else {
        struct hdr_proaodv_reply *mrp = HDR_PROAODV_REPLY(p);
+       
        sendChMsg(mrp->rp_src);
+     }
    }
    break;
 
@@ -848,6 +881,8 @@ double delay = 0.0;
 	
 #ifdef DEBUG
  fprintf(stderr, "%d - %s: received a REPLY\n", index, __FUNCTION__);
+ fprintf(stderr, "REPLY has dst %d, src %d, hopcount %d \n", rp->rp_dst, rp->rp_src, rp->rp_hop_count);
+ fprintf(stderr, "HDR_IP has dst %d, src %d, hopcount %d \n", ih->dst_, ih->src_, ih->daddr());
 #endif // DEBUG
 
 
@@ -897,6 +932,8 @@ if (ih->daddr() == index) { // If I am the original source
     rt->hist_indx = (rt->hist_indx + 1) % MAX_HISTORY;
   }	
 
+ // rp->rp_dst is the destination for the data packets
+ // rp->rp_src is the source of the data packets
 //  sendChMsg(rp->rp_src);
   this->sendSM = true;
   /*
@@ -1367,10 +1404,8 @@ PROAODV::recvChMsg(Packet *p) {
         struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
         struct hdr_proaodv_sp_msg *sp = HDR_PROAODV_SP_MSG(p);
         PROAODV_Neighbor *nb;
-        //if(rp->clusterhead) {
-        //  // do something
-        //}
          nb = nb_lookup(rp->rp_dst);
+         promiscuous_mode = true;
          if(nb == 0) {
            // neighbor is not in local routing table we should forward the packet to other Clusterheads/
          }
@@ -1387,48 +1422,48 @@ PROAODV::recvChMsg(Packet *p) {
  */
 void 
 PROAODV::sendChMsg(nsaddr_t src) {
-Packet *p = Packet::alloc();
-struct hdr_cmn *ch = HDR_CMN(p);
-struct hdr_ip *ih = HDR_IP(p);
-struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
-struct hdr_proaodv_sp_msg *smh = HDR_PROAODV_SP_MSG(p);
+  Packet *p = Packet::alloc();
+  struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
+  struct hdr_proaodv_sp_msg *smh = HDR_PROAODV_SP_MSG(p);
 
-#ifdef DEBUG
-//fprintf(stderr, "sending Cluster Head a Special Message from %d at %.2f\n", index, Scheduler::instance().clock());
-fprintf(stdout, "sending Cluster Head a Special Message from %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
+  #ifdef DEBUG
+  //fprintf(stderr, "sending Cluster Head a Special Message from %d at %.2f\n", index, Scheduler::instance().clock());
+  fprintf(stdout, "sending Cluster Head a Special Message with src %d from %d at %.2f\n", src, index, Scheduler::instance().clock());
+  #endif // DEBUG
 
- smh->rrp_dst = src;
- rh->rp_type = PROAODVTYPE_SP_MSG;
- rh->rp_hop_count = 1;
- rh->rp_dst = index;
- rh->rp_dst_seqno = seqno;
- rh->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
-#ifdef DEBUG
-fprintf(stdout, "Filled out SP_MSH_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
- // ch->uid() = 0;
- ch->ptype() = PT_PROAODV;
- ch->size() = IP_HDR_LEN + smh->size();
- ch->iface() = -2;
- ch->error() = 0;
- ch->addr_type() = NS_AF_NONE;
- ch->prev_hop_ = index;          // AODV hack
-#ifdef DEBUG
-fprintf(stdout, "Filled out CH FROM %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
+   smh->rrp_dst = src;
+   rh->rp_type = PROAODVTYPE_SP_MSG;
+   rh->rp_hop_count = 1;
+   rh->rp_dst = index;
+   rh->rp_dst_seqno = seqno;
+   rh->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
+  #ifdef DEBUG
+  fprintf(stdout, "Filled out SP_MSH_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
+  #endif // DEBUG
+   // ch->uid() = 0;
+   ch->ptype() = PT_PROAODV;
+   ch->size() = IP_HDR_LEN + smh->size();
+   ch->iface() = -2;
+   ch->error() = 0;
+   ch->addr_type() = NS_AF_NONE;
+   ch->prev_hop_ = index;          // AODV hack
+  #ifdef DEBUG
+  fprintf(stdout, "Filled out CH FROM %d at %.2f\n", index, Scheduler::instance().clock());
+  #endif // DEBUG
 
- ih->saddr() = index;
- ih->daddr() = IP_BROADCAST;
- ih->sport() = RT_PORT;
- ih->dport() = RT_PORT;
- ih->ttl_ = 1;
- 
-#ifdef DEBUG
-fprintf(stdout, "Filled out IP_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
+   ih->saddr() = index;
+   ih->daddr() = IP_BROADCAST;
+   ih->sport() = RT_PORT;
+   ih->dport() = RT_PORT;
+   ih->ttl_ = 1;
 
- Scheduler::instance().schedule(target_, p, 0.0);
+  #ifdef DEBUG
+  fprintf(stdout, "Filled out IP_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
+  #endif // DEBUG
+  this->sendSM = false;
+   Scheduler::instance().schedule(target_, p, 0.0);
 }
 
 void
