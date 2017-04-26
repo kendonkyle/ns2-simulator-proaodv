@@ -259,7 +259,7 @@ class PROAODV: public Tap, public Agent {
          */
         void            forward(proaodv_rt_entry *rt, Packet *p, double delay);
         void            sendHello(void);
-        void            sendChMsg(nsaddr_t src);
+        bool            sendSpecialMsg(proaodv_rt_entry *rt, Packet *p);
         void            sendRequest(nsaddr_t dst);
 
         void            sendReply(nsaddr_t ipdst, u_int32_t hop_count,
@@ -272,7 +272,7 @@ class PROAODV: public Tap, public Agent {
          */
         void            recvPROAODV(Packet *p);
         void            recvHello(Packet *p);
-        void            recvChMsg(Packet *p);
+        void            recvSpecialMsg(Packet *p);
         void            recvRequest(Packet *p);
         void            recvReply(Packet *p);
         void            recvError(Packet *p);
@@ -337,7 +337,7 @@ class PROAODV: public Tap, public Agent {
      * Cluster Head management
      */
     int clusterhead;
-    bool sendSM;
+    
 };
 
 #endif /* __aodv_h__ */

@@ -146,8 +146,12 @@ struct hdr_proaodv_reply {
 };
 
 struct hdr_proaodv_sp_msg {
-        nsaddr_t        rrp_dst;                 // IP Address of node to monitor
-						
+        nsaddr_t        rt_dst;                 // IP Address of final destination 
+        nsaddr_t        rt_nexthop;             // IP Address of node to monitor
+        u_int8_t        sm_hop_count;   // Hop Count
+        u_int32_t       sm_bcast_id;    // Broadcast ID
+        nsaddr_t        sm_src;                 // IP Address of final destination 
+        
   inline int size() { 
   int sz = 0;
   /*
@@ -160,7 +164,7 @@ struct hdr_proaodv_sp_msg {
 	     + sizeof(nsaddr_t)		// rp_src
 	     + sizeof(u_int32_t);	// rp_lifetime
   */
-  	sz = 1*sizeof(nsaddr_t);
+  	sz = 5*sizeof(nsaddr_t);
   	assert (sz >= 0);
 	return sz;
   }
