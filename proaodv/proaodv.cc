@@ -26,7 +26,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 The AODV code developed by the CMU/MONARCH group was optimized and tuned by Samir Das and Mahesh Marina, University of Cincinnati. The work was partially done in Sun Microsystems. Modified for gratuitous replies by Anant Utgikar, 09/16/02.
 
- */
+*/
 
 //#include <ip.h>
 
@@ -236,24 +236,35 @@ PROAODV::tap(const Packet *p) {
   //#ifdef DEBUG
   //      fprintf(stderr,"Promiscuous mode node(%d) got Packet in function %s\n", index,  __FUNCTION__);
   //#endif 
-
   if (promiscuous_mode == false) {
     return;
   }
   struct hdr_cmn *hdr = HDR_CMN(p);
   struct hdr_ip *iph = HDR_IP(p);
   struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+  if (p_info::data_packet(hdr->ptype_)) {
 #ifdef DEBUG
-  fprintf(stderr, "Promiscuous mode: node(%d) got Packet with type - %d \n", index, hdr->ptype_);
-  fprintf(stderr, "Promiscuous mode: node(%d) got Packet with nexthop - %d \n", index, hdr->next_hop_);
-  fprintf(stderr, "Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
-  fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_);
-  fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_);
-#endif 
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with type - %d \n", index, hdr->ptype_);
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with nexthop - %d \n", index, hdr->next_hop_);
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_.addr_);
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_.addr_);
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Reply Src - %d \n", index, rp->rp_src); This is always 0
+#endif
+    
+    if (mi_src == iph->src_.addr_ && mi_dst == iph->dst_.addr_ && mi_nexthop != hdr->next_hop_) {
+#ifdef DEBUG
+      fprintf(stderr, "Promiscuous mode: node(%d) found our packet to from %d to %d nexthop_ not %d \n\n",
+              index, iph->src_.addr_, iph->dst_.addr_, mi_nexthop);
+#endif
+      bool found = true;
+      promiscuous_mode = false;
+    }
+  }
 }
 
 /*
-   Broadcast ID Management  Functions
+ * Broadcast ID Management  Functions
  */
 void
 PROAODV::id_insert(nsaddr_t id, u_int32_t bid) {
@@ -491,6 +502,8 @@ PROAODV::rt_resolve(Packet *p) {
 
   if (rt->rt_flags == RTF_UP) {
     assert(rt->rt_hops != INFINITY2);
+    //TODO Possibly Add the special message sending here?
+//    sendSpecialMsg(rt,p);
     forward(rt, p, NO_DELAY);
   }    /*
   *  if I am the source of the packet, then do a Route Request.
@@ -920,6 +933,10 @@ PROAODV::recvReply(Packet *p) {
      */
     Packet *buf_pkt;
     bool smSent = false;
+    PROAODV_Neighbor *nb = nb_lookup(rt->rt_nexthop);
+    if(rt->rt_nexthop == rt->rt_dst || nb->nb_clusterhead == true) {
+      smSent = true;
+    }
     while ((buf_pkt = rqueue.deque(rt->rt_dst))) {
       if (rt->rt_hops != INFINITY2) {
         assert(rt->rt_flags == RTF_UP);
@@ -1302,7 +1319,7 @@ PROAODV::sendHello() {
   struct hdr_cmn *ch = HDR_CMN(p);
   struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
-
+  struct hdr_proaodv_sp_msg *sh = HDR_PROAODV_SP_MSG(p);
 #ifdef DEBUG
   fprintf(stderr, "sending Hello from %d at %.2f\n", index, Scheduler::instance().clock());
 #endif // DEBUG
@@ -1313,10 +1330,10 @@ PROAODV::sendHello() {
   rh->rp_dst = index;
   rh->rp_dst_seqno = seqno;
   rh->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
-
+  
   // ch->uid() = 0;
   ch->ptype() = PT_PROAODV;
-  ch->size() = IP_HDR_LEN + rh->size();
+  ch->size() = IP_HDR_LEN + rh->size() + sh->size();
   ch->iface() = -2;
   ch->error() = 0;
   ch->addr_type() = NS_AF_NONE;
@@ -1327,7 +1344,10 @@ PROAODV::sendHello() {
   ih->sport() = RT_PORT;
   ih->dport() = RT_PORT;
   ih->ttl_ = 1;
-
+  if(isClusterhead()) {
+    sh->sm_src = index;
+  }
+  
   Scheduler::instance().schedule(target_, p, 0.0);
 }
 
@@ -1335,11 +1355,19 @@ void
 PROAODV::recvHello(Packet *p) {
   //struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+  struct hdr_proaodv_sp_msg *sh = HDR_PROAODV_SP_MSG(p);
   PROAODV_Neighbor *nb;
   nb = nb_lookup(rp->rp_dst);
+#ifdef DEBUG
+  fprintf(stderr, "in function %s (sh->sm_src %d == rp->rp_dst %d) \n",__FUNCTION__, sh->sm_src, rp->rp_dst);
+#endif
+  bool isCH = (sh->sm_src == rp->rp_dst && sh->sm_src != 0);
   if (nb == 0) {
-    nb_insert(rp->rp_dst);
+    nb_insert(rp->rp_dst, isCH);
   } else {
+    if(nb->nb_clusterhead != isCH)  {
+      nb->nb_clusterhead = isCH;
+    }
     nb->nb_expire = CURRENT_TIME +
             (1.5 * ALLOWED_HELLO_LOSS * HELLO_INTERVAL);
   }
@@ -1390,9 +1418,16 @@ PROAODV::recvSpecialMsg(Packet *p) {
     }
     struct hdr_proaodv_sp_msg *sp = HDR_PROAODV_SP_MSG(p);
 #ifdef DEBUG
-    fprintf(stdout, "sp->rt_dst is %d and nexthop %d at %.2f\n", sp->rt_dst, sp->rt_nexthop, Scheduler::instance().clock());
+    fprintf(stdout, "Special message has src %d and nexthop %d at %.2f\n", rq->rq_src, sp->rt_nexthop, Scheduler::instance().clock());
 #endif
-    
+    // if the nexthop is me then it is chilled, just ignore processing
+    if(sp->rt_nexthop == index) {
+    #ifdef DEBUG
+      fprintf(stdout, "nexthop %d is me Dropping packet at %.2f\n", sp->rt_nexthop, Scheduler::instance().clock());
+    #endif
+      Packet::free(p);
+      return;
+    }
     /* 
      * This is generic code from recvRequest function
      * Clusterheads are supposed to be in Broadcast Range of each other so this 
@@ -1500,7 +1535,17 @@ PROAODV::recvSpecialMsg(Packet *p) {
 #endif
     } else {
       promiscuous_mode = true;
+#ifdef DEBUG
+      fprintf(stdout, "We Have this Neighbor and it is not a clusterhead: Monitoring at %.2f\n", Scheduler::instance().clock());
+      fprintf(stdout, "Saving Data: src: %d, dst %d, Nexthop %d \n", rq->rq_src, rq->rq_dst, sp->rt_nexthop);
+#endif
+      // TODO IMplement a queue/list to take care of multiple request that come through at the same time
       // Neighbor is on Local Table We will monitor
+//      mi = new monitor_info;
+      mi_dst = rq->rq_dst;
+      mi_src = rq->rq_src;
+      mi_nexthop = sp->rt_nexthop;
+      
       Packet::free(p);
     }
 
@@ -1653,6 +1698,22 @@ PROAODV::nb_insert(nsaddr_t id) {
   PROAODV_Neighbor *nb = new PROAODV_Neighbor(id);
 
   assert(nb);
+  nb->nb_clusterhead = false;
+  nb->nb_expire = CURRENT_TIME +
+          (1.5 * ALLOWED_HELLO_LOSS * HELLO_INTERVAL);
+  LIST_INSERT_HEAD(&nbhead, nb, nb_link);
+  seqno += 2; // set of neighbors changed
+  assert((seqno % 2) == 0);
+}
+void
+PROAODV::nb_insert(nsaddr_t id, bool clusterhead) {
+  PROAODV_Neighbor *nb = new PROAODV_Neighbor(id);
+
+  assert(nb);
+#ifdef DEBUG
+  fprintf(stderr, "neighbor d% is clusterhead? %d\n", id, clusterhead);
+#endif
+  nb->nb_clusterhead = clusterhead;
   nb->nb_expire = CURRENT_TIME +
           (1.5 * ALLOWED_HELLO_LOSS * HELLO_INTERVAL);
   LIST_INSERT_HEAD(&nbhead, nb, nb_link);

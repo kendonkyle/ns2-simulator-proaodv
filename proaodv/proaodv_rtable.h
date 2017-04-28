@@ -52,6 +52,7 @@ class PROAODV_Neighbor {
  protected:
         LIST_ENTRY(PROAODV_Neighbor) nb_link;
         nsaddr_t        nb_addr;
+        bool            nb_clusterhead; // is a cluster head
         double          nb_expire;      // ALLOWED_HELLO_LOSS * HELLO_INTERVAL
 };
 

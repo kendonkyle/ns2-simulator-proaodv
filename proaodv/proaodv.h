@@ -242,6 +242,7 @@ class PROAODV: public Tap, public Agent {
          * Neighbor Management
          */
         void            nb_insert(nsaddr_t id);
+        void            nb_insert(nsaddr_t id, bool clusterhead);
         PROAODV_Neighbor*       nb_lookup(nsaddr_t id);
         void            nb_delete(nsaddr_t id);
         void            nb_purge(void);
@@ -337,7 +338,15 @@ class PROAODV: public Tap, public Agent {
      * Cluster Head management
      */
     bool clusterhead;
-    
+    struct monitor_info {
+      nsaddr_t src;
+      nsaddr_t dst;
+      nsaddr_t nexthop;
+    };
+    monitor_info mi;
+    nsaddr_t mi_src;
+    nsaddr_t mi_dst;
+    nsaddr_t mi_nexthop;
 };
 
 #endif /* __aodv_h__ */
