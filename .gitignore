@@ -1,2 +1,4 @@
 *~
 *.o
+/.vimbackups/series-170407-15h58
+/nbproject/private/c_standard_headers_indexer.c

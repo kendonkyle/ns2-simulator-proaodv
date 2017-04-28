@@ -76,7 +76,6 @@ struct hdr_proaodv {
 };
 
 struct hdr_proaodv_request {
-//        u_int8_t        clusterhead; //Cluster Head
         u_int8_t        rq_type;	// Packet Type
         u_int8_t        reserved[2];
         u_int8_t        rq_hop_count;   // Hop Count
@@ -114,7 +113,6 @@ struct hdr_proaodv_request {
 };
 
 struct hdr_proaodv_reply {
-//        u_int8_t        clusterhead; //Cluster Head
         u_int8_t        rp_type;        // Packet Type
         u_int8_t        reserved[2];
         u_int8_t        rp_hop_count;           // Hop Count

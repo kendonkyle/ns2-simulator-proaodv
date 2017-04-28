@@ -90,7 +90,7 @@ PROAODV::command(int argc, const char*const* argv) {
     }
     if (strncasecmp(argv[1], "clusterh", 8) == 0) {
       fprintf(stderr, "node %d, has clusterhead = %d : command is %s\n", index, clusterhead, argv[1]);
-      this->clusterhead = 99;
+      this->clusterhead = true;
 #ifdef DEBUG
       fprintf(stderr, "node %d, has clusterhead = %d : command is %s\n", index, clusterhead, argv[1]);
 #endif
@@ -100,10 +100,10 @@ PROAODV::command(int argc, const char*const* argv) {
     if (strncasecmp(argv[1], "start", 2) == 0) {
       btimer.handle((Event*) 0);
 
-#ifndef AODV_LINK_LAYER_DETECTION
+//#ifndef AODV_LINK_LAYER_DETECTION
       htimer.handle((Event*) 0);
       ntimer.handle((Event*) 0);
-#endif // LINK LAYER DETECTION
+//#endif // LINK LAYER DETECTION
 
       rtimer.handle((Event*) 0);
       return TCL_OK;
@@ -153,11 +153,10 @@ PROAODV::command(int argc, const char*const* argv) {
 PROAODV::PROAODV(nsaddr_t id) : Agent(PT_PROAODV),
 btimer(this), htimer(this), ntimer(this),
 rtimer(this), lrtimer(this), rqueue() {
-  //    bind
   index = id;
   seqno = 2;
   bid = 1;
-  clusterhead = 1;
+  clusterhead = false;
   promiscuous_mode = false;
   //  bind("clusterhead_", &clusterhead); 
 
@@ -1309,7 +1308,6 @@ PROAODV::sendHello() {
 #endif // DEBUG
 
   rh->rp_type = PROAODVTYPE_HELLO;
-  // rh->clusterhead = clusterhead;
   //rh->rp_flags = 0x00;
   rh->rp_hop_count = 1;
   rh->rp_dst = index;
@@ -1338,9 +1336,6 @@ PROAODV::recvHello(Packet *p) {
   //struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
   PROAODV_Neighbor *nb;
-  //if(rp->clusterhead) {
-  //  // do something
-  //}
   nb = nb_lookup(rp->rp_dst);
   if (nb == 0) {
     nb_insert(rp->rp_dst);
@@ -1353,7 +1348,7 @@ PROAODV::recvHello(Packet *p) {
 }
 
 /**
- * Reveice Special Message Packet
+ * Receive Special Message Packet
  * @param p
  * @return 
  */
@@ -1369,63 +1364,146 @@ PROAODV::recvSpecialMsg(Packet *p) {
     Packet::free(p);
   } else {
 #ifdef DEBUG
-    fprintf(stdout, "I am a Cluster Head Processing at %.2f\n", Scheduler::instance().clock());
+    fprintf(stdout, "I am a Cluster Head: Processing at %.2f\n", Scheduler::instance().clock());
 #endif
-    //struct hdr_ip *ih = HDR_IP(p);
-    //      struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+    struct hdr_ip *ih = HDR_IP(p);
+    struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+    /*
+     * Drop if:
+     *      - I'm the source
+     *      - I recently got this special Message this .
+     */
+    if (rq->rq_src == index) {
+  #ifdef DEBUG
+      fprintf(stderr, "%s: got my own Special Message\n", __FUNCTION__);
+  #endif // DEBUG
+      Packet::free(p);
+      return;
+    }
+
+    if (id_lookup(rq->rq_src, rq->rq_bcast_id)) {
+  #ifdef DEBUG
+      fprintf(stderr, "%s: Already Seen this special Message \n", __FUNCTION__);
+  #endif // DEBUG
+      Packet::free(p);
+      return;
+    }
     struct hdr_proaodv_sp_msg *sp = HDR_PROAODV_SP_MSG(p);
 #ifdef DEBUG
-    fprintf(stdout, "sp->rt_dst is %d at %.2f\n", sp->rt_dst, Scheduler::instance().clock());
+    fprintf(stdout, "sp->rt_dst is %d and nexthop %d at %.2f\n", sp->rt_dst, sp->rt_nexthop, Scheduler::instance().clock());
 #endif
+    
+    /* 
+     * This is generic code from recvRequest function
+     * Clusterheads are supposed to be in Broadcast Range of each other so this 
+     * should not have to be here, but it is here just in case these 2 have never 
+     * communicated before
+     */
+//    proaodv_rt_entry *rt;
+    
+    /*
+     * Cache the broadcast ID
+     * Using the Same Queue/List that is used RREQ Broadcasts
+     * I have no idea if this will have a negative effect 
+     */
+    id_insert(rq->rq_src, rq->rq_bcast_id);
+
+    /* 
+     * We are either going to forward the Special Message or Begin Monitoring the network
+     * Before we do anything, we make sure that the REVERSE
+     * route is in the route table. the same as  a normal route request
+     */
+    proaodv_rt_entry *rt0; // rt0 is the reverse route 
+
+    rt0 = rtable.rt_lookup(rq->rq_src);
+    if (rt0 == 0) { /* if not in the route table */
+      // create an entry for the reverse route.
+      rt0 = rtable.rt_add(rq->rq_src);
+    }
+
+    rt0->rt_expire = max(rt0->rt_expire, (CURRENT_TIME + REV_ROUTE_LIFE));
+
+    if ((rq->rq_src_seqno > rt0->rt_seqno) ||
+            ((rq->rq_src_seqno == rt0->rt_seqno) &&
+            (rq->rq_hop_count < rt0->rt_hops))) {
+      // If we have a fresher seq no. or lesser #hops for the 
+      // same seq no., update the rt entry. Else don't bother.
+      rt_update(rt0, rq->rq_src_seqno, rq->rq_hop_count, ih->saddr(),
+              max(rt0->rt_expire, (CURRENT_TIME + REV_ROUTE_LIFE)));
+      if (rt0->rt_req_timeout > 0.0) {
+        // Reset the soft state and 
+        // Set expiry time to CURRENT_TIME + ACTIVE_ROUTE_TIMEOUT
+        // This is because route is used in the forward direction,
+        // but only sources get benefited by this change
+        rt0->rt_req_cnt = 0;
+        rt0->rt_req_timeout = 0.0;
+        rt0->rt_req_last_ttl = rq->rq_hop_count;
+        rt0->rt_expire = CURRENT_TIME + ACTIVE_ROUTE_TIMEOUT;
+      }
+
+      /* Find out whether any buffered packet can benefit from the 
+       * reverse route.
+       * May need some change in the following code - Mahesh 09/11/99
+       * Commenting out, but Keeping this here for now. may be of use Later
+       */
+      assert(rt0->rt_flags == RTF_UP);
+      Packet *buffered_pkt;
+      while ((buffered_pkt = rqueue.deque(rt0->rt_dst))) {
+        if (rt0 && (rt0->rt_flags == RTF_UP)) {
+          assert(rt0->rt_hops != INFINITY2);
+          forward(rt0, buffered_pkt, NO_DELAY);
+        }
+      }
+    }
 
     PROAODV_Neighbor *nb;
-    nb = nb_lookup(sp->rt_dst);
+    nb = nb_lookup(sp->rt_nexthop);
     if (nb == 0) {
+        proaodv_rt_entry *rt = rtable.rt_lookup(rq->rq_src);
 
-      struct hdr_ip *ih = HDR_IP(p);
-      struct hdr_proaodv_reply *rh = HDR_PROAODV_REPLY(p);
-      Packet *p1 = Packet::alloc();
-      struct hdr_cmn *ch = HDR_CMN(p1);
-      struct hdr_ip *ih1 = HDR_IP(p1);
-      struct hdr_proaodv_reply *rh1 = HDR_PROAODV_REPLY(p1);
-      struct hdr_proaodv_sp_msg *smh = HDR_PROAODV_SP_MSG(p1);
-      smh->rt_dst = sp->rt_dst;
-      smh->rt_nexthop = sp->rt_nexthop;
-      smh->sm_src = sp->sm_src;
-      rh1->rp_type = PROAODVTYPE_SP_MSG;
-      rh1->rp_hop_count = rh->rp_hop_count + 1;
-      rh1->rp_dst = index;
-      rh1->rp_dst_seqno = seqno;
-      rh1->rp_lifetime = (1 + ALLOWED_HELLO_LOSS) * HELLO_INTERVAL;
-#ifdef DEBUG
-      fprintf(stdout, "Filled out SP_MSH_HDR FROM %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
-      // ch->uid() = 0;
-      ch->ptype() = PT_PROAODV;
-      ch->size() = IP_HDR_LEN + smh->size();
-      ch->iface() = -2;
-      ch->error() = 0;
-      ch->addr_type() = NS_AF_NONE;
-      ch->prev_hop_ = index; // AODV hack
-#ifdef DEBUG
-      fprintf(stdout, "Filled out CH FROM %d at %.2f\n", index, Scheduler::instance().clock());
-#endif // DEBUG
-      // neighbor is not in local routing table we should forward the packet to other Clusterheads/
-      ih1->saddr() = index;
-      ih1->daddr() = IP_BROADCAST;
-      ih1->sport() = RT_PORT;
-      ih1->dport() = RT_PORT;
-      ih1->ttl_ = 1;
-      Scheduler::instance().schedule(target_, p1, 0.0);
+        // First check if I am the destination ..
+        // If this node was the destination it would have received the Route Request (I think ... Revise later)
+//        if (rq->rq_dst == index) {
+//
+//      #ifdef DEBUG
+//          fprintf(stderr, "%d - %s: destination sending reply\n",
+//                  index, __FUNCTION__);
+//      #endif // DEBUG
+//
+//
+//          // Just to be safe, I use the max. Somebody may have
+//          // incremented the dst seqno.
+//          seqno = max(seqno, rq->rq_dst_seqno) + 1;
+//          if (seqno % 2) seqno++;
+//
+//          sendReply(rq->rq_src, // IP Destination
+//                  1, // Hop Count
+//                  index, // Dest IP Address
+//                  seqno, // Dest Sequence Num
+//                  MY_ROUTE_TIMEOUT, // Lifetime
+//                  rq->rq_timestamp); // timestamp
+//
+//          Packet::free(p);
+//        }
+          // I am not the destination, but I may have a fresh enough route.
+
+
+        ih->saddr() = index;
+        ih->daddr() = IP_BROADCAST;
+        rq->rq_hop_count += 1;
+        // Maximum sequence number seen en route
+        if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
+        forward((proaodv_rt_entry*) 0, p, DELAY);
+
 #ifdef DEBUG
       fprintf(stdout, "We Don't Have this Neighbor , SENDING OUR OWN SPECIAL MESSAGE packet at %.2f\n", Scheduler::instance().clock());
 #endif
     } else {
       promiscuous_mode = true;
       // Neighbor is on Local Table We will monitor
+      Packet::free(p);
     }
 
-    Packet::free(p);
   }
 }
 
@@ -1454,36 +1532,36 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
    *  Rate limit sending of Route Requests. We are very conservative
    *  about sending out route requests. 
    */
-
-//  if (rt->rt_flags == RTF_UP) {
-//    assert(rt->rt_hops != INFINITY2);
+//
+////  if (rt->rt_flags == RTF_UP) {
+////    assert(rt->rt_hops != INFINITY2);
+////    Packet::free((Packet *) p);
+////    return true;
+////  }
+//
+//  if (rt->rt_req_timeout > CURRENT_TIME) {
 //    Packet::free((Packet *) p);
 //    return true;
 //  }
-
-  if (rt->rt_req_timeout > CURRENT_TIME) {
-    Packet::free((Packet *) p);
-    return true;
-  }
 
   // rt_req_cnt is the no. of times we did network-wide broadcast
   // RREQ_RETRIES is the maximum number we will allow before 
   // going to a long timeout.
 
-  if (rt->rt_req_cnt > RREQ_RETRIES) {
-    rt->rt_req_timeout = CURRENT_TIME + MAX_RREQ_TIMEOUT;
-    rt->rt_req_cnt = 0;
-    Packet *buf_pkt;
-    while ((buf_pkt = rqueue.deque(rt->rt_dst))) {
-      drop(buf_pkt, DROP_RTR_NO_ROUTE);
-    }
-    Packet::free((Packet *) p);
-    return true;
-  }
+//  if (rt->rt_req_cnt > RREQ_RETRIES) {
+//    rt->rt_req_timeout = CURRENT_TIME + MAX_RREQ_TIMEOUT;
+//    rt->rt_req_cnt = 0;
+//    Packet *buf_pkt;
+//    while ((buf_pkt = rqueue.deque(rt->rt_dst))) {
+//      drop(buf_pkt, DROP_RTR_NO_ROUTE);
+//    }
+//    Packet::free((Packet *) p);
+//    return true;
+//  }
 
 #ifdef DEBUG
-  fprintf(stderr, "(%2d) - %2d sending Special Message Request, dst: %d\n",
-          ++special_message_request, index, rt->rt_dst);
+  fprintf(stderr, "(%2d) - %2d sending Special Message Request, nexthop %d, dst: %d\n",
+          ++special_message_request, index, rt->rt_nexthop, rt->rt_dst);
 #endif // DEBUG
 
   // Determine the TTL to be used this time. 
@@ -1524,9 +1602,9 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
   rt->rt_expire = 0;
 
 #ifdef DEBUG
-  fprintf(stderr, "(%2d) - %2d sending Special Message  Request, dst: %d, tout %f ms\n",
+  fprintf(stderr, "(%2d) - %2d sending Special Message  Request, nexthop %d , dst: %d, tout %f ms\n",
           ++special_message_request,
-          index, rt->rt_dst,
+          index, rt->rt_nexthop, rt->rt_dst,
           rt->rt_req_timeout - CURRENT_TIME);
 #endif // DEBUG
 
@@ -1545,11 +1623,11 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
   ih->sport() = RT_PORT;
   ih->dport() = RT_PORT;
 
-  sm->rt_dst = rt1->rt_dst;
-  sm->sm_src = index;
-  sm->rt_nexthop = rt1->rt_nexthop;
+//  nsaddr_t theroutedest = rt1->rt_dst;
+//  fprintf(stdout,"theroutedest = %d\n", theroutedest);
+ 
   // Fill up some more fields. 
-  rq->rq_type = PROAODVTYPE_SP_MSG;
+  
   rq->rq_hop_count = 1;
   rq->rq_bcast_id = bid++;
   rq->rq_dst = rt1->rt_dst;
@@ -1559,7 +1637,13 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
   assert((seqno % 2) == 0);
   rq->rq_src_seqno = seqno;
   rq->rq_timestamp = CURRENT_TIME;
-  
+  sm->rt_dst = rt1->rt_dst;
+  sm->sm_src = index;
+  sm->rt_nexthop = rt1->rt_nexthop;
+  rq->rq_type = PROAODVTYPE_SP_MSG;
+#ifdef DEBUG
+  fprintf(stdout, "sending special packet with sm->rt_dst = %d sm->sm_src %d, sm->rt_nexthop %d, rt1->rt_dst = %d \n", sm->rt_dst, sm->sm_src, sm->rt_nexthop, rt1->rt_dst );
+#endif
   Scheduler::instance().schedule(target_, p, 0.);
   return true;
 }
@@ -1635,9 +1719,5 @@ PROAODV::nb_purge() {
  */
 bool
 PROAODV::isClusterhead() {
-  if (99 == clusterhead) {
-    return true;
-  } else {
-    return false;
-  }
+    return clusterhead;
 }

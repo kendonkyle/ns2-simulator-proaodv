@@ -1068,10 +1068,10 @@ CMUTrace::format_proaodv(Packet *p, int offset)
                 break;
             case PROAODVTYPE_SP_MSG:
                     sprintf(pt_->buffer() + offset,
-                        "[0x%x %d (rrd %d) [%d %d] %f] (%s)",
+                        "[0x%x %d (nexthop %d) [%d %d] %f] (%s)",
                         rp->rp_type,
                         rp->rp_hop_count,
-                        sp->rrp_dst,
+                        sp->rt_nexthop,
                         rp->rp_dst,
                         rp->rp_dst_seqno,
                         rp->rp_lifetime,

@@ -336,7 +336,7 @@ class PROAODV: public Tap, public Agent {
     /**
      * Cluster Head management
      */
-    int clusterhead;
+    bool clusterhead;
     
 };
 
