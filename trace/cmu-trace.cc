@@ -1067,6 +1067,24 @@ CMUTrace::format_proaodv(Packet *p, int offset)
 		}
                 break;
             case PROAODVTYPE_SP_MSG:
+            case PROAODVTYPE_SP_VREP:
+            case PROAODVTYPE_SP_VREQ:
+            case PROAODVTYPE_SP_ALERT:
+                char *packet_type;
+                switch (rp->rp_type)  {
+                    case PROAODVTYPE_SP_MSG:
+                        packet_type = "SPECIAL_REQ_";
+                        break;
+                    case PROAODVTYPE_SP_VREQ:
+                        packet_type = "VOTEL_REQ_";
+                        break;
+                    case PROAODVTYPE_SP_VREP:
+                        packet_type = "VOTE_REP_";
+                        break;
+                    default:
+                        packet_type = "ALERT_PACKET_";
+                        break;
+                }
                     sprintf(pt_->buffer() + offset,
                         "[0x%x %d (nexthop %d) [%d %d] %f] (%s)",
                         rp->rp_type,
@@ -1075,7 +1093,7 @@ CMUTrace::format_proaodv(Packet *p, int offset)
                         rp->rp_dst,
                         rp->rp_dst_seqno,
                         rp->rp_lifetime,
-                        "SPECIAL_REQ");
+                        packet_type);
                     break;
 		
         default:

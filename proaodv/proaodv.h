@@ -74,6 +74,8 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 
 class PROAODV;
 
+#define SM_DATA_TIMEOUT         1.5                       	// 2 seconds
+#define MAX_VOTE_HOPS           2                       	// 2 seconds
 #define MY_ROUTE_TIMEOUT        10                      	// 100 seconds
 #define ACTIVE_ROUTE_TIMEOUT    10				// 50 seconds
 #define REV_ROUTE_LIFE          6				// 5  seconds
@@ -262,6 +264,9 @@ class PROAODV: public Tap, public Agent {
         void            sendHello(void);
         bool            sendSpecialMsg(proaodv_rt_entry *rt, Packet *p);
         void            sendRequest(nsaddr_t dst);
+        void            sendVoteRequest(nsaddr_t addr);
+        void            sendVoteReply(nsaddr_t addr);
+        void            sendAlarm(nsaddr_t addr);
 
         void            sendReply(nsaddr_t ipdst, u_int32_t hop_count,
                                   nsaddr_t rpdst, u_int32_t rpseq,
@@ -275,6 +280,9 @@ class PROAODV: public Tap, public Agent {
         void            recvHello(Packet *p);
         void            recvSpecialMsg(Packet *p);
         void            recvRequest(Packet *p);
+        void            recvVoteRequest(Packet *p);
+        void            recvVoteReply(Packet *p);
+        void            recvAlert(Packet *p);
         void            recvReply(Packet *p);
         void            recvError(Packet *p);
 
@@ -347,6 +355,7 @@ class PROAODV: public Tap, public Agent {
     nsaddr_t mi_src;
     nsaddr_t mi_dst;
     nsaddr_t mi_nexthop;
+    double   mi_timeout;
 };
 
 #endif /* __aodv_h__ */

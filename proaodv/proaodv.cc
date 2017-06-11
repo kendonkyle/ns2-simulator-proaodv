@@ -249,10 +249,13 @@ PROAODV::tap(const Packet *p) {
     fprintf(stderr, "Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
     fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_.addr_);
     fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_.addr_);
-//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Reply Src - %d \n", index, rp->rp_src); This is always 0
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Reply Src - %d \n", index, rp->rp_src); This is always 0???
 #endif
-    
+    if(mi_timeout > CURRENT_TIME)   {
+        // Send Vote Packet
+    }
     if (mi_src == iph->src_.addr_ && mi_dst == iph->dst_.addr_ && mi_nexthop != hdr->next_hop_) {
+        //TODO add the timing mechanism to trigger the vote
 #ifdef DEBUG
       fprintf(stderr, "Promiscuous mode: node(%d) found our packet to from %d to %d nexthop_ not %d \n\n",
               index, iph->src_.addr_, iph->dst_.addr_, mi_nexthop);
@@ -502,7 +505,7 @@ PROAODV::rt_resolve(Packet *p) {
 
   if (rt->rt_flags == RTF_UP) {
     assert(rt->rt_hops != INFINITY2);
-    //TODO Possibly Add the special message sending here?
+    //TODO Possibly Add the special message sending here (Have to recheck)?
 //    sendSpecialMsg(rt,p);
     forward(rt, p, NO_DELAY);
   }    /*
@@ -600,12 +603,16 @@ PROAODV::rt_purge() {
 void
 PROAODV::recv(Packet *p, Handler*) {
   struct hdr_cmn *ch = HDR_CMN(p);
+//  packet_t ptype = hdr_cmn->ptype();
   struct hdr_ip *ih = HDR_IP(p);
 
   assert(initialized());
   //assert(p->incoming == 0);
-  // XXXXX NOTE: use of incoming flag has been depracated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
-
+  // XXX NOTE: use of incoming flag has been depracated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
+//  if (p_info::data_packet( ptype )) {
+      //do something
+//  }
+      
   if (ch->ptype() == PT_PROAODV) {
     ih->ttl_ -= 1;
     recvPROAODV(p);
@@ -629,14 +636,16 @@ PROAODV::recv(Packet *p, Handler*) {
     if ((u_int32_t) ih->daddr() != IP_BROADCAST) {
       ih->ttl_ = NETWORK_DIAMETER;
     }
-  }    /*
+  }    
+ /*
   *  I received a packet that I sent.  Probably
   *  a routing loop.
   */
   else if (ih->saddr() == index) {
     drop(p, DROP_RTR_ROUTE_LOOP);
     return;
-  }    /*
+  }    
+ /*
   *  Packet I'm forwarding...
   */
   else {
@@ -685,6 +694,18 @@ PROAODV::recvPROAODV(Packet *p) {
 
     case PROAODVTYPE_SP_MSG:
       recvSpecialMsg(p);
+      break;
+      
+    case PROAODVTYPE_SP_VREQ:
+      recvVoteRequest(p);
+      break;
+      
+    case PROAODVTYPE_SP_VREP:
+      recvVoteReply(p);
+      break;
+      
+    case PROAODVTYPE_SP_ALERT:
+      recvAlert(p);
       break;
 
     default:
@@ -833,6 +854,8 @@ PROAODV::recvRequest(Packet *p) {
 
 #ifdef RREQ_GRAT_RREP  
 
+    // WASTODO: send grat RREP to dst if G flag set in RREQ using rq->rq_src_seqno, rq->rq_hop_counT
+    // DONE: Included gratuitous replies to be sent as per IETF aodv draft specification. As of now, G flag has not been dynamically used and is always set or reset in aodv-packet.h --- Anant Utgikar, 09/16/02.
     sendReply(rq->rq_dst,
             rq->rq_hop_count,
             rq->rq_src,
@@ -842,9 +865,6 @@ PROAODV::recvRequest(Packet *p) {
             rq->rq_timestamp);
 #endif
 
-    // TODO: send grat RREP to dst if G flag set in RREQ using rq->rq_src_seqno, rq->rq_hop_counT
-
-    // DONE: Included gratuitous replies to be sent as per IETF aodv draft specification. As of now, G flag has not been dynamically used and is always set or reset in aodv-packet.h --- Anant Utgikar, 09/16/02.
 
     Packet::free(p);
   }    /*
@@ -984,6 +1004,72 @@ PROAODV::recvReply(Packet *p) {
     }
   }
 }
+
+void PROAODV::recvVoteRequest(Packet* p) {
+struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+  proaodv_rt_entry *rt;
+
+  /*
+   * Drop if:
+   *      - I'm the source
+   *      - I recently heard this vote request.
+   */
+
+  if (rq->rq_src == index) {
+#ifdef DEBUG
+    fprintf(stderr, "%s: got my own vote request\n", __FUNCTION__);
+#endif // DEBUG
+    Packet::free(p);
+    return;
+  }
+
+  if (id_lookup(rq->rq_src, rq->rq_bcast_id)) {
+
+#ifdef DEBUG
+    fprintf(stderr, "%s: discarding vote request (seen)\n", __FUNCTION__);
+#endif // DEBUG
+
+    Packet::free(p);
+    return;
+  }
+
+  /*
+   * Cache the broadcast ID
+   */
+  id_insert(rq->rq_src, rq->rq_bcast_id);
+  PROAODV_Neighbor *thenode;
+  thenode = nb_lookup(rq->rq_dst);
+
+  if(rq->rq_hop_count > MAX_VOTE_HOPS)  {
+#ifdef DEBUG
+        fprintf(stderr, "%s: not forwarding vote request\n", __FUNCTION__);
+#endif // DEBUG
+        Packet::free(p);
+        return;
+  }
+  else {
+#ifdef DEBUG
+        fprintf(stderr, "%s: forwarding vote request\n", __FUNCTION__);
+#endif // DEBUG
+    ih->saddr() = index;
+    ih->daddr() = IP_BROADCAST;
+    rq->rq_hop_count += 1;
+    // Maximum sequence number seen en route
+    if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
+    forward((proaodv_rt_entry*) 0, p, DELAY);
+  }
+
+}
+
+void PROAODV::recvVoteReply(Packet* p) {
+    
+}
+
+void PROAODV::recvAlert(Packet* p) {
+
+}
+
 
 void
 PROAODV::recvError(Packet *p) {
@@ -1379,6 +1465,9 @@ PROAODV::recvHello(Packet *p) {
  * Receive Special Message Packet
  * @param p
  * @return 
+ * 
+ * TODO Recheck this method. It should only initiate a CHECK/VOTE when the route generator is not the destination node
+ * TODO RECHECK THE DOCUMENTATION/PAPER
  */
 void
 PROAODV::recvSpecialMsg(Packet *p) {
@@ -1399,7 +1488,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
     /*
      * Drop if:
      *      - I'm the source
-     *      - I recently got this special Message this .
+     *      - I recently got this special Message .
      */
     if (rq->rq_src == index) {
   #ifdef DEBUG
@@ -1409,7 +1498,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
       return;
     }
 
-    if (id_lookup(rq->rq_src, rq->rq_bcast_id)) {
+    if (id_lookup(rq->rq_src, rq->rq_bcast_id)) { // reusing the id_lookup function as I am using a broadcast
   #ifdef DEBUG
       fprintf(stderr, "%s: Already Seen this special Message \n", __FUNCTION__);
   #endif // DEBUG
@@ -1423,7 +1512,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
     // if the nexthop is me then it is chilled, just ignore processing
     if(sp->rt_nexthop == index) {
     #ifdef DEBUG
-      fprintf(stdout, "nexthop %d is me Dropping packet at %.2f\n", sp->rt_nexthop, Scheduler::instance().clock());
+      fprintf(stdout, "Nexthop %d is me dropping special message packet at %.2f\n", sp->rt_nexthop, Scheduler::instance().clock());
     #endif
       Packet::free(p);
       return;
@@ -1446,7 +1535,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
     /* 
      * We are either going to forward the Special Message or Begin Monitoring the network
      * Before we do anything, we make sure that the REVERSE
-     * route is in the route table. the same as  a normal route request
+     * route is in the route table. the same as a normal route request
      */
     proaodv_rt_entry *rt0; // rt0 is the reverse route 
 
@@ -1494,34 +1583,10 @@ PROAODV::recvSpecialMsg(Packet *p) {
     PROAODV_Neighbor *nb;
     nb = nb_lookup(sp->rt_nexthop);
     if (nb == 0) {
+#ifdef DEBUG
+        fprintf(stdout, "We Don't Have this Neighbor , SENDING OUR OWN SPECIAL MESSAGE packet at %.2f\n", Scheduler::instance().clock());
+#endif
         proaodv_rt_entry *rt = rtable.rt_lookup(rq->rq_src);
-
-        // First check if I am the destination ..
-        // If this node was the destination it would have received the Route Request (I think ... Revise later)
-//        if (rq->rq_dst == index) {
-//
-//      #ifdef DEBUG
-//          fprintf(stderr, "%d - %s: destination sending reply\n",
-//                  index, __FUNCTION__);
-//      #endif // DEBUG
-//
-//
-//          // Just to be safe, I use the max. Somebody may have
-//          // incremented the dst seqno.
-//          seqno = max(seqno, rq->rq_dst_seqno) + 1;
-//          if (seqno % 2) seqno++;
-//
-//          sendReply(rq->rq_src, // IP Destination
-//                  1, // Hop Count
-//                  index, // Dest IP Address
-//                  seqno, // Dest Sequence Num
-//                  MY_ROUTE_TIMEOUT, // Lifetime
-//                  rq->rq_timestamp); // timestamp
-//
-//          Packet::free(p);
-//        }
-          // I am not the destination, but I may have a fresh enough route.
-
 
         ih->saddr() = index;
         ih->daddr() = IP_BROADCAST;
@@ -1530,21 +1595,19 @@ PROAODV::recvSpecialMsg(Packet *p) {
         if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
         forward((proaodv_rt_entry*) 0, p, DELAY);
 
-#ifdef DEBUG
-      fprintf(stdout, "We Don't Have this Neighbor , SENDING OUR OWN SPECIAL MESSAGE packet at %.2f\n", Scheduler::instance().clock());
-#endif
     } else {
-      promiscuous_mode = true;
 #ifdef DEBUG
       fprintf(stdout, "We Have this Neighbor and it is not a clusterhead: Monitoring at %.2f\n", Scheduler::instance().clock());
       fprintf(stdout, "Saving Data: src: %d, dst %d, Nexthop %d \n", rq->rq_src, rq->rq_dst, sp->rt_nexthop);
 #endif
-      // TODO IMplement a queue/list to take care of multiple request that come through at the same time
+      promiscuous_mode = true;
+      // TODO Implement a queue/list to take care of multiple request that come through at the same time
       // Neighbor is on Local Table We will monitor
 //      mi = new monitor_info;
       mi_dst = rq->rq_dst;
       mi_src = rq->rq_src;
       mi_nexthop = sp->rt_nexthop;
+      mi_timeout = CURRENT_TIME + SM_DATA_TIMEOUT;
       
       Packet::free(p);
     }
@@ -1554,6 +1617,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
 
 /**
  * Send the Special message to the cluster head
+ * Check recvSpecialMsg as to how this is handled
  */
 bool
 PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
@@ -1572,37 +1636,6 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
   proaodv_rt_entry *rt = rtable.rt_lookup(rt1->rt_dst);
 
   assert(rt);
-
-  /*
-   *  Rate limit sending of Route Requests. We are very conservative
-   *  about sending out route requests. 
-   */
-//
-////  if (rt->rt_flags == RTF_UP) {
-////    assert(rt->rt_hops != INFINITY2);
-////    Packet::free((Packet *) p);
-////    return true;
-////  }
-//
-//  if (rt->rt_req_timeout > CURRENT_TIME) {
-//    Packet::free((Packet *) p);
-//    return true;
-//  }
-
-  // rt_req_cnt is the no. of times we did network-wide broadcast
-  // RREQ_RETRIES is the maximum number we will allow before 
-  // going to a long timeout.
-
-//  if (rt->rt_req_cnt > RREQ_RETRIES) {
-//    rt->rt_req_timeout = CURRENT_TIME + MAX_RREQ_TIMEOUT;
-//    rt->rt_req_cnt = 0;
-//    Packet *buf_pkt;
-//    while ((buf_pkt = rqueue.deque(rt->rt_dst))) {
-//      drop(buf_pkt, DROP_RTR_NO_ROUTE);
-//    }
-//    Packet::free((Packet *) p);
-//    return true;
-//  }
 
 #ifdef DEBUG
   fprintf(stderr, "(%2d) - %2d sending Special Message Request, nexthop %d, dst: %d\n",
@@ -1691,6 +1724,55 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
 #endif
   Scheduler::instance().schedule(target_, p, 0.);
   return true;
+}
+
+void PROAODV::sendVoteRequest(nsaddr_t addr)    {
+  // Allocate a Packet
+  Packet *p = Packet::alloc();
+  struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+  struct hdr_proaodv_sp_msg *sm = HDR_PROAODV_SP_MSG(p);
+  proaodv_rt_entry *rt = rtable.rt_lookup(addr);
+
+  assert(rt);
+  // Fill out the RREQ packet 
+  // ch->uid() = 0;
+  ch->ptype() = PT_PROAODV;
+  ch->size() = IP_HDR_LEN + rq->size() + sm->size();
+  ch->iface() = -2;
+  ch->error() = 0;
+  ch->addr_type() = NS_AF_NONE;
+  ch->prev_hop_ = index; // AODV hack
+
+  ih->saddr() = index;
+  ih->daddr() = IP_BROADCAST;
+  ih->sport() = RT_PORT;
+  ih->dport() = RT_PORT;
+
+  // Fill up some more fields. 
+  rq->rq_type = PROAODVTYPE_SP_VREQ;
+  rq->rq_hop_count = 1;
+  rq->rq_bcast_id = bid++;
+  rq->rq_dst = addr; // This is the route generator
+  rq->rq_dst_seqno = (rt ? rt->rt_seqno : 0);
+  rq->rq_src = index;
+  seqno += 2;
+  assert((seqno % 2) == 0);
+  rq->rq_src_seqno = seqno;
+  rq->rq_timestamp = CURRENT_TIME;
+  sm->sm_src = index;
+
+  Scheduler::instance().schedule(target_, p, 0.);
+  
+}
+
+void PROAODV::sendVoteReply(nsaddr_t addr)  {
+    
+}
+
+void PROAODV::sendAlarm(nsaddr_t addr)  {
+    
 }
 
 void

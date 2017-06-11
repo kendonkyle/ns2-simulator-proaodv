@@ -45,7 +45,9 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #define PROAODVTYPE_RERR   	0x08
 #define PROAODVTYPE_RREP_ACK  	0x10
 #define PROAODVTYPE_SP_MSG  	0x12
-//#define PROAODVTYPE_SP_ALERT  	0x14
+#define PROAODVTYPE_SP_VREQ  	0x14
+#define PROAODVTYPE_SP_VREP  	0x15
+#define PROAODVTYPE_SP_ALERT  	0x16
 
 /*
  * AODV Routing Protocol Header Macros
