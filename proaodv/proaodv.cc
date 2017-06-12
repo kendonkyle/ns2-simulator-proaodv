@@ -228,17 +228,22 @@ ProAodvLocalRepairTimer::handle(Event* p) { // SRD: 5/4/99
 }
 
 void
-ProAodvSendVoteTimer::handle(Event*) {
-  if(agent->mi_nexthop != 0)  {
+ProAodvSendVoteTimer::handle(Event* p) {
+  if(agent->isClusterhead() && agent->mi_nexthop != 0)  {
     agent->sendVoteRequest(agent->mi_nexthop);
+  } else if(!agent->isClusterhead() && agent->mi_nexthop != 0)    {
+      agent->sendVoteReply(agent->mi_nexthop, false);
   }
 }
 
 void
 ProAodvSendAlertTimer::handle(Event* p) {
-  if(agent->mi_nexthop != 0)  {
-    agent->sendVoteRequest(agent->mi_nexthop);
-  }
+    if(agent->isClusterhead() && agent->mi_nexthop != 0)  {
+        PROAODV_Neighbor* nb = agent->nb_lookup(agent->mi_nexthop);
+        //TODO add the count variable and increment it here 
+        //TODO if the count is over thresh send Alert msg
+//        nb->
+    }
 }
 
 /**
@@ -1080,10 +1085,11 @@ struct hdr_ip *ih = HDR_IP(p);
       // wait for the data packet
       // Then send vote Reply
       //maybe stick this in a timer??
-      sendVoteReply(ih->saddr(), 1);
+      mi_nexthop = ih->src_.addr_;
+      Scheduler::instance().schedule(&vrtimer,new Event(), SM_VOTE_TIMEOUT);
     }
     else {
-      sendVoteReply(ih->saddr(), 1);
+      sendVoteReply(ih->src_.addr_, 1);
     }
   }
 
@@ -1829,7 +1835,7 @@ void PROAODV::sendVoteRequest(nsaddr_t addr)    {
   rq->rq_src_seqno = seqno;
   rq->rq_timestamp = CURRENT_TIME;
   sm->sm_src = index;
-
+  Scheduler::instance().schedule(&alerttimer, new Event(), SM_DATA_TIMEOUT);
   Scheduler::instance().schedule(target_, p, 0.);
   
 }
