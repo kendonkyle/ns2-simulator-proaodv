@@ -74,12 +74,14 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 
 class PROAODV;
 
-#define SM_DATA_TIMEOUT         1.5                       	// 2 seconds
-#define MAX_VOTE_HOPS           2                       	// 2 seconds
-#define MY_ROUTE_TIMEOUT        10                      	// 100 seconds
-#define ACTIVE_ROUTE_TIMEOUT    10				// 50 seconds
-#define REV_ROUTE_LIFE          6				// 5  seconds
-#define BCAST_ID_SAVE           6				// 3 seconds
+#define SM_DATA_TIMEOUT          1.5                       	// 2 seconds
+#define SM_VOTE_TIMEOUT          0.15                       // 0.15 seconds
+#define MAX_VOTE_HOPS            2                       	// 2 seconds
+#define BH_CLASSIFICATION_THRESH 2                       	// 2 seconds
+#define MY_ROUTE_TIMEOUT         10                      	// 100 seconds
+#define ACTIVE_ROUTE_TIMEOUT     10				// 50 seconds
+#define REV_ROUTE_LIFE           6				// 5  seconds
+#define BCAST_ID_SAVE            6				// 3 seconds
 
 
 // No. of times to do network-wide search before timing out for 
@@ -172,6 +174,23 @@ private:
         PROAODV    *agent;
 	Event	intr;
 };
+class ProAodvSendVoteTimer : public Handler {
+  public:
+        ProAodvSendVoteTimer(PROAODV* a): agent(a) {}
+        void	handle(Event*);
+  private:
+        PROAODV    *agent;
+        Event	intr;
+};
+
+class ProAodvSendAlertTimer : public Handler {
+  public:
+        ProAodvSendAlertTimer(PROAODV* a) : agent(a) {}
+        void	handle(Event*);
+  private:
+        PROAODV    *agent;
+        Event	intr;
+};
 
 
 /*
@@ -206,6 +225,8 @@ class PROAODV: public Tap, public Agent {
         friend class ProAodvNeighborTimer;
         friend class ProAodvRouteCacheTimer;
         friend class ProAodvLocalRepairTimer;
+        friend class ProAodvSendVoteTimer;
+        friend class ProAodvSendAlertTimer;
 
  public:
         PROAODV(nsaddr_t id);
@@ -247,6 +268,7 @@ class PROAODV: public Tap, public Agent {
         void            nb_insert(nsaddr_t id, bool clusterhead);
         PROAODV_Neighbor*       nb_lookup(nsaddr_t id);
         void            nb_delete(nsaddr_t id);
+        void            nb_update(nsaddr_t id,double received_data_time);
         void            nb_purge(void);
 
         /*
@@ -265,7 +287,7 @@ class PROAODV: public Tap, public Agent {
         bool            sendSpecialMsg(proaodv_rt_entry *rt, Packet *p);
         void            sendRequest(nsaddr_t dst);
         void            sendVoteRequest(nsaddr_t addr);
-        void            sendVoteReply(nsaddr_t addr);
+        void            sendVoteReply(nsaddr_t addr, bool vote);
         void            sendAlarm(nsaddr_t addr);
 
         void            sendReply(nsaddr_t ipdst, u_int32_t hop_count,
@@ -304,11 +326,13 @@ class PROAODV: public Tap, public Agent {
         /*
          * Timers
          */
-        ProAodvBroadcastTimer  btimer;
-        ProAodvHelloTimer      htimer;
-        ProAodvNeighborTimer   ntimer;
-        ProAodvRouteCacheTimer rtimer;
+        ProAodvBroadcastTimer   btimer;
+        ProAodvHelloTimer       htimer;
+        ProAodvNeighborTimer    ntimer;
+        ProAodvRouteCacheTimer  rtimer;
         ProAodvLocalRepairTimer lrtimer;
+        ProAodvSendVoteTimer    vrtimer;
+        ProAodvSendAlertTimer   alerttimer;
 
         /*
          * Routing Table
@@ -356,6 +380,7 @@ class PROAODV: public Tap, public Agent {
     nsaddr_t mi_dst;
     nsaddr_t mi_nexthop;
     double   mi_timeout;
+    int   mi_votecount;
 };
 
 #endif /* __aodv_h__ */

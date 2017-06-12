@@ -151,8 +151,8 @@ PROAODV::command(int argc, const char*const* argv) {
  */
 
 PROAODV::PROAODV(nsaddr_t id) : Agent(PT_PROAODV),
-btimer(this), htimer(this), ntimer(this),
-rtimer(this), lrtimer(this), rqueue() {
+  btimer(this), htimer(this), ntimer(this), rtimer(this), lrtimer(this), vrtimer(this), alerttimer(this), rqueue() {
+  // alerttimer(this),
   index = id;
   seqno = 2;
   bid = 1;
@@ -227,6 +227,20 @@ ProAodvLocalRepairTimer::handle(Event* p) { // SRD: 5/4/99
   Packet::free((Packet *) p);
 }
 
+void
+ProAodvSendVoteTimer::handle(Event*) {
+  if(agent->mi_nexthop != 0)  {
+    agent->sendVoteRequest(agent->mi_nexthop);
+  }
+}
+
+void
+ProAodvSendAlertTimer::handle(Event* p) {
+  if(agent->mi_nexthop != 0)  {
+    agent->sendVoteRequest(agent->mi_nexthop);
+  }
+}
+
 /**
  * The Handle packets received in Promiscuous mode
  * @param p
@@ -244,23 +258,33 @@ PROAODV::tap(const Packet *p) {
   struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
   if (p_info::data_packet(hdr->ptype_)) {
 #ifdef DEBUG
-    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with type - %d \n", index, hdr->ptype_);
-    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with nexthop - %d \n", index, hdr->next_hop_);
-    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
-    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_.addr_);
-    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_.addr_);
+    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with type - %d, nexthop - %d, prevhop - %d, Dst - %d, Src - %d \n",
+            index,
+            hdr->ptype_,
+            hdr->next_hop_,
+            hdr->prev_hop_,
+            iph->dst_.addr_,
+            iph->src_.addr_
+            );
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with nexthop - %d \n", index, hdr->next_hop_);
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with prevhop - %d \n", index, hdr->prev_hop_);
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Dst - %d \n", index, iph->dst_.addr_);
+//    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Src - %d \n", index, iph->src_.addr_);
 //    fprintf(stderr, "Promiscuous mode: node(%d) got Packet with Reply Src - %d \n", index, rp->rp_src); This is always 0???
 #endif
     if(mi_timeout > CURRENT_TIME)   {
-        // Send Vote Packet
+      promiscuous_mode = false;
     }
-    if (mi_src == iph->src_.addr_ && mi_dst == iph->dst_.addr_ && mi_nexthop != hdr->next_hop_) {
+    if (mi_src == iph->src_.addr_ && mi_dst == iph->dst_.addr_ && mi_nexthop != hdr->next_hop_ && hdr->last_hop_ == mi_nexthop) {
         //TODO add the timing mechanism to trigger the vote
 #ifdef DEBUG
-      fprintf(stderr, "Promiscuous mode: node(%d) found our packet to from %d to %d nexthop_ not %d \n\n",
-              index, iph->src_.addr_, iph->dst_.addr_, mi_nexthop);
+      fprintf(stderr, "Promiscuous mode: node(%d) found our packet to from %d to %d nexthop_ not %d and last_hop_ is %d \n\n",
+              index, iph->src_.addr_, iph->dst_.addr_, mi_nexthop, hdr->last_hop_);
 #endif
-      bool found = true;
+//      bool found = true;
+      mi_nexthop = 0;
+      mi_dst = 0;
+      mi_src = 0;
       promiscuous_mode = false;
     }
   }
@@ -603,15 +627,25 @@ PROAODV::rt_purge() {
 void
 PROAODV::recv(Packet *p, Handler*) {
   struct hdr_cmn *ch = HDR_CMN(p);
-//  packet_t ptype = hdr_cmn->ptype();
   struct hdr_ip *ih = HDR_IP(p);
 
   assert(initialized());
   //assert(p->incoming == 0);
-  // XXX NOTE: use of incoming flag has been depracated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
-//  if (p_info::data_packet( ptype )) {
-      //do something
-//  }
+  // XXX NOTE: use of incoming flag has been deprecated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
+  if (p_info::data_packet(ch->ptype())) {
+    #ifdef DEBUG
+        fprintf(stderr, "%s: node(%d) calling nb_update: prev_hop: %d, last_hop: %d, next_hop: %d, dst: %d, src: %d\n", 
+                __FUNCTION__,
+                index,
+                ch->prev_hop_,
+                ch->last_hop_,
+                ch->next_hop_,
+                ih->dst_.addr_,
+                ih->src_.addr_
+                );
+    #endif // DEBUG
+    nb_update(ch->last_hop_, CURRENT_TIME);
+  }
       
   if (ch->ptype() == PT_PROAODV) {
     ih->ttl_ -= 1;
@@ -1039,7 +1073,19 @@ struct hdr_ip *ih = HDR_IP(p);
    */
   id_insert(rq->rq_src, rq->rq_bcast_id);
   PROAODV_Neighbor *thenode;
+//  rq_dst is the neighbor we are interested in
   thenode = nb_lookup(rq->rq_dst);
+  if(thenode != 0)  {
+    if(thenode->nb_received < CURRENT_TIME - SM_DATA_TIMEOUT) {
+      // wait for the data packet
+      // Then send vote Reply
+      //maybe stick this in a timer??
+      sendVoteReply(ih->saddr(), 1);
+    }
+    else {
+      sendVoteReply(ih->saddr(), 1);
+    }
+  }
 
   if(rq->rq_hop_count > MAX_VOTE_HOPS)  {
 #ifdef DEBUG
@@ -1063,7 +1109,26 @@ struct hdr_ip *ih = HDR_IP(p);
 }
 
 void PROAODV::recvVoteReply(Packet* p) {
-    
+  //struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+  struct hdr_proaodv_sp_vote *vp = HDR_PROAODV_SP_VOTE(p);
+  double delay = 0.0;
+
+#ifdef DEBUG
+  fprintf(stderr, "%d - %s: received a VOTE REPLY from\n", index, __FUNCTION__);
+  fprintf(stderr, "REPLY has dst %d, src %d, hopcount %d \n", rp->rp_dst, rp->rp_src, rp->rp_hop_count);
+  fprintf(stderr, "HDR_IP has dst %d, src %d, hopcount %d \n", ih->dst_, ih->src_, ih->daddr());
+#endif // DEBUG
+  if(isClusterhead() && rp->rp_dst == index && mi_nexthop != 0) {
+    if(vp->vote == true) {
+      mi_nexthop = 0;
+      mi_dst = 0;
+      mi_src = 0;
+      mi_timeout = 0;
+      promiscuous_mode = false;
+    }
+  }
 }
 
 void PROAODV::recvAlert(Packet* p) {
@@ -1138,6 +1203,7 @@ void
 PROAODV::forward(proaodv_rt_entry *rt, Packet *p, double delay) {
   struct hdr_cmn *ch = HDR_CMN(p);
   struct hdr_ip *ih = HDR_IP(p);
+  ch->last_hop_ = index;
 
   if (ih->ttl_ == 0) {
 
@@ -1604,6 +1670,7 @@ PROAODV::recvSpecialMsg(Packet *p) {
       // TODO Implement a queue/list to take care of multiple request that come through at the same time
       // Neighbor is on Local Table We will monitor
 //      mi = new monitor_info;
+      Scheduler::instance().schedule(&vrtimer,new Event(), SM_DATA_TIMEOUT);
       mi_dst = rq->rq_dst;
       mi_src = rq->rq_src;
       mi_nexthop = sp->rt_nexthop;
@@ -1680,7 +1747,7 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
   rt->rt_expire = 0;
 
 #ifdef DEBUG
-  fprintf(stderr, "(%2d) - %2d sending Special Message  Request, nexthop %d , dst: %d, tout %f ms\n",
+  fprintf(stderr, "(%2d) - %2d sending Special Message Request, nexthop %d , dst: %d, tout %f ms\n",
           ++special_message_request,
           index, rt->rt_nexthop, rt->rt_dst,
           rt->rt_req_timeout - CURRENT_TIME);
@@ -1767,8 +1834,44 @@ void PROAODV::sendVoteRequest(nsaddr_t addr)    {
   
 }
 
-void PROAODV::sendVoteReply(nsaddr_t addr)  {
-    
+void PROAODV::sendVoteReply(nsaddr_t addr, bool vote)  {
+  Packet *p = Packet::alloc();
+  struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
+  struct hdr_proaodv_sp_vote *vp = HDR_PROAODV_SP_VOTE(p);
+  proaodv_rt_entry *rt = rtable.rt_lookup(addr);
+
+  vp->vote = vote;
+#ifdef DEBUG
+  fprintf(stderr, "sending Reply from %d to %d at %.2f\n", index, addr, Scheduler::instance().clock());
+#endif // DEBUG
+  assert(rt);
+
+  rp->rp_type = PROAODVTYPE_RREP;
+  rp->rp_hop_count = 2;
+  rp->rp_dst = addr;
+  rp->rp_dst_seqno = 1;
+  rp->rp_src = index;
+  rp->rp_lifetime = CURRENT_TIME + SM_DATA_TIMEOUT;
+  rp->rp_timestamp = CURRENT_TIME;
+
+  ch->ptype() = PT_PROAODV;
+  ch->size() = IP_HDR_LEN + rp->size() + vp->size();
+  ch->iface() = -2;
+  ch->error() = 0;
+  ch->addr_type() = NS_AF_INET;
+  ch->next_hop_ = rt->rt_nexthop;
+  ch->prev_hop_ = index; // AODV hack
+  ch->direction() = hdr_cmn::DOWN;
+
+  ih->saddr() = index;
+  ih->daddr() = addr;
+  ih->sport() = RT_PORT;
+  ih->dport() = RT_PORT;
+  ih->ttl_ = MAX_VOTE_HOPS;
+
+  Scheduler::instance().schedule(target_, p, 0.);
 }
 
 void PROAODV::sendAlarm(nsaddr_t addr)  {
@@ -1835,6 +1938,21 @@ PROAODV::nb_delete(nsaddr_t id) {
 
   handle_link_failure(id);
 
+}
+
+/*
+ * Used to update when we the last time was that we receive data from a Neighbor
+ */
+void
+PROAODV::nb_update(nsaddr_t id, double receive_time) {
+  PROAODV_Neighbor *nb = nbhead.lh_first;
+
+  for (; nb; nb = nb->nb_link.le_next) {
+    if (nb->nb_addr == id) {
+      nb->nb_received = receive_time;
+      break;
+    }
+  }
 }
 
 /*

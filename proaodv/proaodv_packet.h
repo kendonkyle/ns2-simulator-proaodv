@@ -58,6 +58,7 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #define HDR_PROAODV_ERROR(p)	((struct hdr_proaodv_error*)hdr_proaodv::access(p))
 #define HDR_PROAODV_RREP_ACK(p)	((struct hdr_proaodv_rrep_ack*)hdr_proaodv::access(p))
 #define HDR_PROAODV_SP_MSG(p)	((struct hdr_proaodv_sp_msg*)hdr_proaodv::access(p))
+#define HDR_PROAODV_SP_VOTE(p)	((struct hdr_proaodv_sp_vote*)hdr_proaodv::access(p))
 //#define HDR_PROAODV_SP_ALERT(p)	((struct hdr_proaodv_rrep_ack*)hdr_proaodv::access(p))
 
 /*
@@ -150,7 +151,7 @@ struct hdr_proaodv_sp_msg {
         nsaddr_t        rt_nexthop;             // IP Address of node to monitor
         u_int8_t        sm_hop_count;   // Hop Count
         u_int32_t       sm_bcast_id;    // Broadcast ID
-        nsaddr_t        sm_src;                 // IP Address of final destination 
+        nsaddr_t        sm_src;                // IP Address of final destination 
         
   inline int size() { 
   int sz = 0;
@@ -169,6 +170,13 @@ struct hdr_proaodv_sp_msg {
 	return sz;
   }
 
+};
+
+struct hdr_proaodv_sp_vote {
+  bool vote;
+  inline int size() {
+    return 1;
+  }
 };
 
 struct hdr_proaodv_error {
