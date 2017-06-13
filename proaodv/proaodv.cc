@@ -40,6 +40,7 @@ The AODV code developed by the CMU/MONARCH group was optimized and tuned by Sami
 #define CURRENT_TIME    Scheduler::instance().clock()
 
 #define DEBUG = true;
+//#define VERBOSE_DEBUG = true;
 //#define ERROR
 
 #ifdef DEBUG
@@ -240,9 +241,11 @@ void
 ProAodvSendAlertTimer::handle(Event* p) {
     if(agent->isClusterhead() && agent->mi_nexthop != 0)  {
         PROAODV_Neighbor* nb = agent->nb_lookup(agent->mi_nexthop);
-        //TODO add the count variable and increment it here 
-        //TODO if the count is over thresh send Alert msg
-//        nb->
+        if(nb->nb_bl_count > 3) {
+          nb->nb_blacklisted = true;
+          agent->sendAlert(nb->nb_addr);
+        }
+        //TODO CALCULATE THE THRESHOLD OVER TIME SO WE DON'T BLACKLIST EVERYBODY :D
     }
 }
 
@@ -252,9 +255,6 @@ ProAodvSendAlertTimer::handle(Event* p) {
  */
 void
 PROAODV::tap(const Packet *p) {
-  //#ifdef DEBUG
-  //      fprintf(stderr,"Promiscuous mode node(%d) got Packet in function %s\n", index,  __FUNCTION__);
-  //#endif 
   if (promiscuous_mode == false) {
     return;
   }
@@ -637,7 +637,7 @@ PROAODV::recv(Packet *p, Handler*) {
   assert(initialized());
   //assert(p->incoming == 0);
   // XXX NOTE: use of incoming flag has been deprecated; In order to track direction of pkt flow, direction_ in hdr_cmn is used instead. see packet.h for details.
-  if (p_info::data_packet(ch->ptype())) {
+  if (p_info::data_packet(ch->ptype()) && ih->src_.addr_ != index) {
     #ifdef DEBUG
         fprintf(stderr, "%s: node(%d) calling nb_update: prev_hop: %d, last_hop: %d, next_hop: %d, dst: %d, src: %d\n", 
                 __FUNCTION__,
@@ -777,7 +777,7 @@ PROAODV::recvRequest(Packet *p) {
   if (id_lookup(rq->rq_src, rq->rq_bcast_id)) {
 
 #ifdef DEBUG
-    fprintf(stderr, "%s: discarding request\n", __FUNCTION__);
+    fprintf(stderr, "%s: %d discarding request from %d\n", __FUNCTION__, index, rq->rq_src);
 #endif // DEBUG
 
     Packet::free(p);
@@ -922,13 +922,22 @@ PROAODV::recvRequest(Packet *p) {
 
 void
 PROAODV::recvReply(Packet *p) {
-  //struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_cmn *ch = HDR_CMN(p);
   struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_reply *rp = HDR_PROAODV_REPLY(p);
   proaodv_rt_entry *rt;
   char suppress_reply = 0;
   double delay = 0.0;
-
+  
+  PROAODV_Neighbor *nbc = nb_lookup(ch->last_hop_);
+  if(nbc != 0 && nbc->nb_blacklisted) {
+  #ifdef DEBUG
+    fprintf(stderr, "%d - %s: received a REPLY\n", index, __FUNCTION__);
+    fprintf(stderr, "%d - %s: dropping reply because neighbor is blacklisted\n", index, __FUNCTION__);
+    fprintf(stderr, "REPLY has dst %d, src %d, hopcount %d \n", rp->rp_dst, rp->rp_src, rp->rp_hop_count);
+    fprintf(stderr, "HDR_IP has dst %d, src %d, hopcount %d \n", ih->dst_, ih->src_, ih->daddr());
+  #endif // DEBUG
+  }
 #ifdef DEBUG
   fprintf(stderr, "%d - %s: received a REPLY\n", index, __FUNCTION__);
   fprintf(stderr, "REPLY has dst %d, src %d, hopcount %d \n", rp->rp_dst, rp->rp_src, rp->rp_hop_count);
@@ -958,11 +967,16 @@ PROAODV::recvReply(Packet *p) {
    * Add a forward route table entry... here I am following 
    * Perkins-Royer AODV paper almost literally - SRD 5/99
    */
+#ifdef VERBOSE_DEBUG
+  fprintf(stderr, "%d - %s:forward route table entry\n", index, __FUNCTION__);
+# endif //VERBOSE_DEBUG
 
   if ((rt->rt_seqno < rp->rp_dst_seqno) || // newer route 
           ((rt->rt_seqno == rp->rp_dst_seqno) &&
           (rt->rt_hops > rp->rp_hop_count))) { // shorter or better route
-
+#ifdef VERBOSE_DEBUG
+  fprintf(stderr, "%d - %s:we have a newer/shorter route\n", index, __FUNCTION__);
+# endif //VERBOSE_DEBUG
     // Update the rt entry 
     rt_update(rt, rp->rp_dst_seqno, rp->rp_hop_count,
             rp->rp_src, CURRENT_TIME + rp->rp_lifetime);
@@ -993,7 +1007,10 @@ PROAODV::recvReply(Packet *p) {
     Packet *buf_pkt;
     bool smSent = false;
     PROAODV_Neighbor *nb = nb_lookup(rt->rt_nexthop);
-    if(rt->rt_nexthop == rt->rt_dst || nb->nb_clusterhead == true) {
+#ifdef VERBOSE_DEBUG
+  fprintf(stderr, "%d - %s:get neighbor from rt_nexthop table entry\n", index, __FUNCTION__);
+# endif //VERBOSE_DEBUG    
+    if(rt->rt_nexthop == rt->rt_dst || nb == 0 || nb->nb_clusterhead == true ) {
       smSent = true;
     }
     while ((buf_pkt = rqueue.deque(rt->rt_dst))) {
@@ -1022,6 +1039,9 @@ PROAODV::recvReply(Packet *p) {
   * Otherwise, forward the Route Reply.
   */
   else {
+#ifdef DEBUG
+      fprintf(stderr, "%s: forwarding Route Reply\n", __FUNCTION__);
+#endif // DEBUG
     // Find the rt entry
     proaodv_rt_entry *rt0 = rtable.rt_lookup(ih->daddr());
     // If the rt is up, forward
@@ -1045,7 +1065,7 @@ PROAODV::recvReply(Packet *p) {
 }
 
 void PROAODV::recvVoteRequest(Packet* p) {
-struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
   proaodv_rt_entry *rt;
 
@@ -1138,12 +1158,26 @@ void PROAODV::recvVoteReply(Packet* p) {
 }
 
 void PROAODV::recvAlert(Packet* p) {
-
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+  struct hdr_proaodv_sp_msg *sh = HDR_PROAODV_SP_MSG(p);
+#ifdef DEBUG
+  fprintf(stderr, "%d - %s: received a blacklist alert from %d\n", index, __FUNCTION__, rq->rq_src);
+#endif  
+  PROAODV_Neighbor *nb = nb_lookup(rq->rq_dst);
+  nb->nb_blacklisted = true;
+  
 }
 
 
 void
 PROAODV::recvError(Packet *p) {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
   struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(p);
   proaodv_rt_entry *rt;
@@ -1214,7 +1248,7 @@ PROAODV::forward(proaodv_rt_entry *rt, Packet *p, double delay) {
   if (ih->ttl_ == 0) {
 
 #ifdef DEBUG
-    fprintf(stderr, "%s: calling drop()\n", __PRETTY_FUNCTION__);
+    fprintf(stderr, "%s: calling drop()\n", __FUNCTION__);
 #endif // DEBUG
 
     drop(p, DROP_RTR_TTL);
@@ -1266,6 +1300,9 @@ PROAODV::forward(proaodv_rt_entry *rt, Packet *p, double delay) {
 
 void
 PROAODV::sendRequest(nsaddr_t dst) {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
   // Allocate a RREQ packet 
   Packet *p = Packet::alloc();
   struct hdr_cmn *ch = HDR_CMN(p);
@@ -1431,6 +1468,9 @@ PROAODV::sendReply(nsaddr_t ipdst, u_int32_t hop_count, nsaddr_t rpdst,
 
 void
 PROAODV::sendError(Packet *p, bool jitter) {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
   struct hdr_cmn *ch = HDR_CMN(p);
   struct hdr_ip *ih = HDR_IP(p);
   struct hdr_proaodv_error *re = HDR_PROAODV_ERROR(p);
@@ -1516,9 +1556,9 @@ PROAODV::recvHello(Packet *p) {
   struct hdr_proaodv_sp_msg *sh = HDR_PROAODV_SP_MSG(p);
   PROAODV_Neighbor *nb;
   nb = nb_lookup(rp->rp_dst);
-#ifdef DEBUG
+#ifdef VERBOSE_DEBUG
   fprintf(stderr, "in function %s (sh->sm_src %d == rp->rp_dst %d) \n",__FUNCTION__, sh->sm_src, rp->rp_dst);
-#endif
+#endif //VERBOSE_DEBUG
   bool isCH = (sh->sm_src == rp->rp_dst && sh->sm_src != 0);
   if (nb == 0) {
     nb_insert(rp->rp_dst, isCH);
@@ -1800,6 +1840,9 @@ PROAODV::sendSpecialMsg(proaodv_rt_entry *rt1, Packet *p1) {
 }
 
 void PROAODV::sendVoteRequest(nsaddr_t addr)    {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
   // Allocate a Packet
   Packet *p = Packet::alloc();
   struct hdr_cmn *ch = HDR_CMN(p);
@@ -1841,6 +1884,9 @@ void PROAODV::sendVoteRequest(nsaddr_t addr)    {
 }
 
 void PROAODV::sendVoteReply(nsaddr_t addr, bool vote)  {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
   Packet *p = Packet::alloc();
   struct hdr_cmn *ch = HDR_CMN(p);
   struct hdr_ip *ih = HDR_IP(p);
@@ -1850,17 +1896,20 @@ void PROAODV::sendVoteReply(nsaddr_t addr, bool vote)  {
 
   vp->vote = vote;
 #ifdef DEBUG
-  fprintf(stderr, "sending Reply from %d to %d at %.2f\n", index, addr, Scheduler::instance().clock());
+  fprintf(stderr, "sending Vote Reply from %d to %d at %.2f\n", index, addr, Scheduler::instance().clock());
 #endif // DEBUG
   assert(rt);
 
-  rp->rp_type = PROAODVTYPE_RREP;
+  rp->rp_type = PROAODVTYPE_SP_VREP;
   rp->rp_hop_count = 2;
   rp->rp_dst = addr;
   rp->rp_dst_seqno = 1;
   rp->rp_src = index;
   rp->rp_lifetime = CURRENT_TIME + SM_DATA_TIMEOUT;
   rp->rp_timestamp = CURRENT_TIME;
+//#ifdef DEBUG
+//  fprintf(stderr, "sending Vote Reply from %d to %d at %.2f\n", index, addr, Scheduler::instance().clock());
+//#endif // DEBUG
 
   ch->ptype() = PT_PROAODV;
   ch->size() = IP_HDR_LEN + rp->size() + vp->size();
@@ -1869,6 +1918,7 @@ void PROAODV::sendVoteReply(nsaddr_t addr, bool vote)  {
   ch->addr_type() = NS_AF_INET;
   ch->next_hop_ = rt->rt_nexthop;
   ch->prev_hop_ = index; // AODV hack
+//  ch->last_hop_ = index; // AODV hack
   ch->direction() = hdr_cmn::DOWN;
 
   ih->saddr() = index;
@@ -1880,8 +1930,41 @@ void PROAODV::sendVoteReply(nsaddr_t addr, bool vote)  {
   Scheduler::instance().schedule(target_, p, 0.);
 }
 
-void PROAODV::sendAlarm(nsaddr_t addr)  {
-    
+void PROAODV::sendAlert(nsaddr_t addr)  {
+#ifdef VERBOSE_DEBUG
+    fprintf(stderr, "in function %s\n", __FUNCTION__);
+#endif // VERBOSE_DEBUG
+  // Allocate a Special Message Packet
+  Packet *p = Packet::alloc();
+  struct hdr_cmn *ch = HDR_CMN(p);
+  struct hdr_ip *ih = HDR_IP(p);
+  struct hdr_proaodv_request *rq = HDR_PROAODV_REQUEST(p);
+  struct hdr_proaodv_sp_msg *sm = HDR_PROAODV_SP_MSG(p);
+
+  ch->ptype() = PT_PROAODV;
+  ch->size() = IP_HDR_LEN + rq->size() + sm->size();
+  ch->iface() = -2;
+  ch->error() = 0;
+  ch->addr_type() = NS_AF_NONE;
+  ch->prev_hop_ = index; // AODV hack
+
+  ih->saddr() = index;
+  ih->daddr() = IP_BROADCAST;
+  ih->sport() = RT_PORT;
+  ih->dport() = RT_PORT;
+
+  // Fill up some more fields. 
+  rq->rq_type = PROAODVTYPE_SP_ALERT;
+  rq->rq_hop_count = 2;
+  rq->rq_bcast_id = bid++;
+  rq->rq_dst = addr; // This is a node to blacklist
+  rq->rq_dst_seqno = 0;
+  rq->rq_src = index;
+  seqno += 2;
+  assert((seqno % 2) == 0);
+  rq->rq_src_seqno = seqno;
+  rq->rq_timestamp = CURRENT_TIME;
+  sm->sm_src = index;
 }
 
 void

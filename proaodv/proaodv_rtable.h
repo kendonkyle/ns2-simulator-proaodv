@@ -50,14 +50,16 @@ class PROAODV_Neighbor {
         PROAODV_Neighbor(u_int32_t a) { 
             nb_addr = a; 
             nb_clusterhead = false;
-            nb_blacklisted = false; 
+            nb_blacklisted = false;
+            nb_bl_count = 0;
             nb_received = false; }
 
- protected:
+ public:
         LIST_ENTRY(PROAODV_Neighbor) nb_link;
         nsaddr_t        nb_addr;
         bool            nb_clusterhead; // is a cluster head
         bool            nb_blacklisted; // is a malicious node
+        int             nb_bl_count;
         double          nb_received;      // LAST time we received data from this host
         double          nb_expire;      // ALLOWED_HELLO_LOSS * HELLO_INTERVAL
 };
