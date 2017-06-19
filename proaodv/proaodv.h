@@ -369,6 +369,12 @@ class PROAODV: public Tap, public Agent {
      * Cluster Head management
      */
     bool clusterhead;
+    
+    /**
+     * New Blackhole node addition
+     */
+    bool blackhole;
+    
     struct monitor_info {
       nsaddr_t src;
       nsaddr_t dst;

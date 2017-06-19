@@ -97,6 +97,14 @@ PROAODV::command(int argc, const char*const* argv) {
 #endif
       return TCL_OK;
     }
+    if (strncasecmp(argv[1], "blackhole", 8) == 0) {
+      fprintf(stderr, "node %d, has blackhole = %d : command is %s\n", index, blackhole, argv[1]);
+      this->blackhole = true;
+#ifdef DEBUG
+      fprintf(stderr, "node %d, has blackhole = %d : command is %s\n", index, blackhole, argv[1]);
+#endif
+      return TCL_OK;
+    }
 
     if (strncasecmp(argv[1], "start", 2) == 0) {
       btimer.handle((Event*) 0);
@@ -158,6 +166,7 @@ PROAODV::PROAODV(nsaddr_t id) : Agent(PT_PROAODV),
   seqno = 2;
   bid = 1;
   clusterhead = false;
+  blackhole = false;
   promiscuous_mode = false;
   //  bind("clusterhead_", &clusterhead); 
 
@@ -658,7 +667,15 @@ PROAODV::recv(Packet *p, Handler*) {
     return;
   }
 
-
+  //execute this if I am a blackhole node 
+  if(this->blackhole) {
+    if ( (u_int32_t)ih->saddr() == index) {
+      forward((proaodv_rt_entry*) 0, p, NO_DELAY);
+    } else {
+      drop(p, DROP_RTR_ROUTE_LOOP);
+    }
+  }
+  
   /*
    *  Must be a packet I'm originating...
    */
@@ -910,12 +927,23 @@ PROAODV::recvRequest(Packet *p) {
   * Can't reply. So forward the  Route Request
   */
   else {
-    ih->saddr() = index;
-    ih->daddr() = IP_BROADCAST;
-    rq->rq_hop_count += 1;
-    // Maximum sequence number seen en route
-    if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
-    forward((proaodv_rt_entry*) 0, p, DELAY);
+    if(this->blackhole)  {
+      sendReply(rq->rq_src,		// IP Destination
+        1,			// Hop Count
+        rq->rq_dst,		// Dest IP Address
+        4294967295,		// Highest Dest Sequence Num that is largest 32-bit integers from -2147483647 to +2147483647
+        MY_ROUTE_TIMEOUT,	// Lifetime
+        rq->rq_timestamp); // timestamp
+ 
+      Packet::free(p);
+    } else {
+      ih->saddr() = index;
+      ih->daddr() = IP_BROADCAST;
+      rq->rq_hop_count += 1;
+      // Maximum sequence number seen en route
+      if (rt) rq->rq_dst_seqno = max(rt->rt_seqno, rq->rq_dst_seqno);
+      forward((proaodv_rt_entry*) 0, p, DELAY);
+    }
   }
 
 }
