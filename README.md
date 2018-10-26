@@ -1,7 +1,7 @@
 # Implementing PROAODV Routing Protocol
 
 ## Description
-This is an implementation of a Novel Routing protocol in NS2. The protocol has a built in 
+This is an implementation of a novel routing protocol in NS2. The protocol has a built in 
 mechanisim to detect and mitigate blackhole atacks in Mobile Ad-hoc Networks.
 
 
